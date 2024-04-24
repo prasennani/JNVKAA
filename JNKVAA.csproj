@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E5490BAD-7076-4FC4-AE5F-7A74582D7917}</ProjectGuid>
-    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{9A19103F-16F7-4668-BE54-9A1E7A4F7556}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JNKVAA</RootNamespace>
@@ -180,7 +180,6 @@
     <Content Include="donate.html" />
     <Content Include="events.html" />
     <Content Include="events\event1.png" />
-    <Content Include="events_out.html" />
     <Content Include="gallery.html" />
     <Content Include="img\1.png" />
     <Content Include="img\2.png" />

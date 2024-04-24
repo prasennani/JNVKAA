@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="users/settings.html">
+    <Files>
+      <File FileName="WebService.asmx.cs" Line="9" Column="28" />
+      <File FileName="Web.config" Line="1" Column="1" />
+      <File FileName="users/settings.html" Line="390" Column="33" />
+      <File FileName="js/users/settings.js" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="JNVKAA">
+            <Node name="JNKVAA" expanded="True">
+              <Node name="js">
+                <Node name="users" expanded="True" />
+              </Node>
+              <Node name="users">
+                <Node name="settings.html" selected="True" />
+              </Node>
+              <Node name="WebService.asmx" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

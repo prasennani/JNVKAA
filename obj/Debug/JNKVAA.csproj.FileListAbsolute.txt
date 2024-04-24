@@ -55,3 +55,10 @@ E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
 /Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csproj.CopyComplete
 /Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
 /Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+/Users/prasennani/Projects/JNVKAA/bin/JNKVAA.dll
+/Users/prasennani/Projects/JNVKAA/bin/JNKVAA.pdb
+/Users/prasennani/Projects/JNVKAA/obj/Debug/JNKVAA.csproj.AssemblyReference.cache
+/Users/prasennani/Projects/JNVKAA/obj/Debug/JNKVAA.csproj.CoreCompileInputs.cache
+/Users/prasennani/Projects/JNVKAA/obj/Debug/JNKVAA.csproj.CopyComplete
+/Users/prasennani/Projects/JNVKAA/obj/Debug/JNKVAA.dll
+/Users/prasennani/Projects/JNVKAA/obj/Debug/JNKVAA.pdb

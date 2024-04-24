@@ -305,4 +305,5 @@ function getDonationData() {
 
 	function hideLoadingSpinner() {
 		$("#loadingSpinner").hide();
-	}
+    }
+
