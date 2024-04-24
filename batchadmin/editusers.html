@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usera - JNVKAA</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+        <script src="../js/batchadmin/userProperty.js"></script>
+    
+
+</head>
+
+<body>
+      <div id="preloader" class="show  position-fixed  translate-middle w-100 vh-100 top-50 start-50  align-items-center justify-content-center" style="z-index:5; background:rgb(255, 255, 255);display:none ;">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <script src="../js/batchadmin/editUser.js"></script>
+    <script src="../js/batchadmin/notification.js"></script>
+    <script src="../js/batchadmin/signout.js"></script>
+    <div>
+          <!--navigation bar-->
+        <div class="navigation">
+            <ul>
+                <li><span class="icon">
+
+                        <a href="/mpanel.html">
+                            <img src="../assets/imgs/logo 1.png" style="width: 55px;">
+                            <span
+                                style="padding-top:25px; font-size: 20px;padding-left:10px; font-weight: 1000;">JNVKAA</span>
+                        </a>
+
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="users.html">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#" id="signout">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+<!-- end of navigation bar-->
+        <!-- ========================= Main ==================== -->
+        <div class="main" style="background-color: #12919827;">
+            <div class="topbar" style="background-color: #12919838;">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                
+                
+
+               <div class="user">
+                    <img src="../assets/imgs/profile pic.png" alt="" id="profileicon">
+                </div>
+            </div>
+
+            <!-- ============ Body Content======== -->
+            <div class="container p-3 ps-5   justify-content-center">
+               
+   
+                
+                <h2 style="text-align: center;color: #129298;">Edit User</h2>
+                <div class="container   my-4 row g-3 " style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                    <div class="col-md-5  wow fadeIn" data-wow-delay="0.5s">
+                        <img src="../assets/imgs/profile pic.png"
+                            style="width: 300px; height: 300px; contain: cover;padding: 20px; border-radius: 50%;"
+                            class="img-fluid " id="imgprofile" alt="Preview Image">
+
+                        <button class="btn btn-outline-primary " style="margin-left: 70px;" id="del">Delete profile-pic</button>
+                        <div class="form-group px-4 m-3">
+                            <input type="file" class="form-control-file " accept="image/*" id="fileprofile"
+                                onchange="validateFileType(event)">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id=instaid
+                                       placeholder="https://www.instagram.com/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsI()">Insta ID</button>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="fbid"
+                                       placeholder="https://www.facebook.com/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsF()">FB ID</button>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="lnkid"
+                                       placeholder="https://www.linkedin.com/in/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsL()">Linkdin ID</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-7">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class=" form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="fname"
+                                           placeholder="First Name">
+                                    <label for="email">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="sname"
+                                           placeholder="Sur Name">
+                                    <label for="email">First Name</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="gender"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Gender</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>
+                                    <label for="email">Gender</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control bg-light border-2" id="dob"
+                                           placeholder="DOB">
+                                    <label for="email">DOB</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="maritalstatus"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Marital status</option>
+                                        <option value="1">Married</option>
+                                        <option value="2">Unmarried</option>
+                                    </select>
+                                    <label for="email">Marital Status</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="bloodgroup"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Blood group</option>
+                                        <option value="1">O+</option>
+                                        <option value="2">O-</option>
+                                        <option value="3">A+</option>
+                                        <option value="4">A-</option>
+                                        <option value="5">B+</option>
+                                        <option value="6">B-</option>
+                                        <option value="7">AB+</option>
+                                        <option value="8">AB-</option>
+                                    </select>
+                                    <label for="email">Blood Group</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="workingas"
+                                            aria-label="Floating label select example" disabled>
+                                        <option value="0" selected> Designation in JNVKAA</option>
+                                        <option value="1">User</option>
+                                        <option value="2">President</option>
+                                        <option value="3">Vice-president</option>
+                                        <option value="4">Treasurer</option>
+                                        <option value="5">Secretary</option>
+                                        <option value="6">Joint-Secretary</option>
+                                        <option value="7">Executive</option>
+                                        <option value="8">Volunteer</option>
+                                    </select>
+                                    <label for="email">Designation in JNVKAA</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="country_code"
+                                           placeholder="Your Email">
+                                    <label for="email">Code</label>
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="phno"
+                                           placeholder="Mobile no">
+                                    <label for="email">Mobile No.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control bg-light border-2" id="email"
+                                           placeholder="Email id">
+                                    <label for="email">Email Id</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="city"
+                                           placeholder="Current city">
+                                    <label for="email">Current City</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="profession"
+                                           placeholder="Current profession">
+                                    <label for="email">Current Profession</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="workingin"
+                                           placeholder="Working Organization">
+                                    <label for="email">Working Organization</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="lclass"
+                                            aria-label="Floating label select example">
+                                        <option value="0" selected>Last class in JNVK</option>
+                                        <option value="1">6</option>
+                                        <option value="2">7</option>
+                                        <option value="3">8</option>
+                                        <option value="4">9</option>
+                                        <option value="5">10</option>
+                                        <option value="6">11</option>
+                                        <option value="7">12</option>
+                                    </select>
+                                    <label for="email">Last Class</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="batchNo"
+                                           placeholder="BatchNo">
+                                    <label for="email">Batch No</label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="MediInsurP"
+                                           placeholder="Medical Insurance Provider">
+                                    <label for="email">Medical Insurance Provider</label>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control bg-light border-2" id="dateExpiry"
+                                           placeholder="Medical Insurance Expiry">
+                                    <label for="email">Ins Expry</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="ExpertIn"
+                                           placeholder="Expert In">
+                                    <label for="email">Expert In</label>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group mb-3 col-11 m-4">
+                                <label for="exampleFormControlTextarea1">Bio</label>
+                                <textarea class="form-control bg-light border-2" id="bio"
+                                          rows="4"></textarea>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <div class="container col-md-7 ">
+                                    <div class="input-group mb-3 ">
+
+                                        <div class="input-group-text"><h6 id="Pstatus">Pending</h6></div>
+                                        <select class="form-select form-control bg-light border-2" id="ustatus"
+                                                aria-label="Floating label select example">
+                                            <option selected> Change status</option>
+                                            <option value="1">Approve</option>
+                                            <option value="0">Block</option>
+                                        </select>
+                                        <button class="btn btn-outline-primary" id="changeStaus">Change</button>
+
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-outline-dark col-md-2 ps-3 mb-3 " id="Savebtn">
+                                    Save
+                                </button>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <!--  -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var image = document.getElementById('preview');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    image.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+        function getDetailsI() {
+            let insta = $("#instaid").val();
+            if (insta == "") {
+                $("#instaid").val("enter proper url");
+                $("#instaid").css("color", "red");
+            }
+            else {
+                var val = $("#instaid").val();
+                const w = window.open(val, "_blank");
+                w, focus();
+            }
+        };
+        $("#instaid").on("click", function () {
+            let val = $("#instaid").val();
+            if (val == "enter proper url") {
+                $("#instaid").val("");
+                $("#instaid").css("color", "black");
+            }
+        });
+
+        function getDetailsF() {
+            let fb = $("#fbid").val();
+            if (fb == "") {
+                $("#fbid").val("enter proper url");
+                $("#fbid").css("color", "red");
+            }
+            else {
+                var val = $("#fbid").val();
+                const w = window.open(val, "_blank");
+                w, focus();
+            }
+        };
+        $("#fbid").on("click", function () {
+            let val = $("#fbid").val();
+            if (val == "enter proper url") {
+                $("#fbid").val("");
+                $("#fbid").css("color", "black");
+            }
+        });
+
+
+        function getDetailsL() {
+            let lnk = $("#lnkid").val();
+            if (lnk == "") {
+                $("#lnkid").val("enter proper url");
+                $("#lnkid").css("color", "red");
+            }
+            else {
+                var val = $("#lnkid").val();
+                const w = window.open(val, "_blank");
+                w, focus();
+            }
+        };
+        $("#lnkid").on("click", function () {
+            let val = $("#lnkid").val();
+            if (val == "enter proper url") {
+                $("#lnkid").val("");
+                $("#lnkid").css("color", "black");
+            }
+        });
+    </script>
+</body>
+
+</html>

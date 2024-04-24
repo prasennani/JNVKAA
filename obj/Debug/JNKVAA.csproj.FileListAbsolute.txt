@@ -1,0 +1,57 @@
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/JNKVAA/bin/Newtonsoft.Json.dll
+D:/Project JNKV/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/Project JNKV/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/Project JNKV/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/Project JNKV/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/Project JNKV/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/2-12-2023/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/2-12-2023/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/2-12-2023/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/2-12-2023/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/2-12-2023/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/Project JNKV/JNKVAA/JNKVAA/bin/Newtonsoft.Json.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/08-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/08-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/08-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/08-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/08-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/09-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/09-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/09-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/09-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/09-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/bin/Newtonsoft.Json.dll
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/Project JNKV/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/11-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/11-01-2024/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/11-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/11-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/AOffice/Kranthi Automations/JNKVAA/Staff Update/11-01-2024/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.dll
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/Newtonsoft.Json.dll
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+D:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.dll
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/bin/Newtonsoft.Json.dll
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csprojResolveAssemblyReference.cache
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+E:/NarneTech/JNKVAA/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb
+/Library/WebServer/Documents/JNKVAA/JNKVAA/bin/JNKVAA.dll
+/Library/WebServer/Documents/JNKVAA/JNKVAA/bin/JNKVAA.pdb
+/Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csproj.AssemblyReference.cache
+/Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csproj.CoreCompileInputs.cache
+/Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.csproj.CopyComplete
+/Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.dll
+/Library/WebServer/Documents/JNKVAA/JNKVAA/obj/Debug/JNKVAA.pdb

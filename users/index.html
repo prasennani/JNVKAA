@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>JNV Krishna Alumni Association</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="JNV Krishna Alumni Association, JNVKAA, JNV Krishna, JNVK" name="keywords">
+    <meta content="" name="description">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="../js/users/index.js"></script>
+    <!-- Favicon -->
+    <link href="../img/favicon.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/variables.css" rel="stylesheet">
+    <script src="../js/users/signout.js"></script>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="preloader" class="show  position-fixed  translate-middle w-100 vh-100 top-50 start-50  align-items-center justify-content-center" style="z-index:2; background:rgb(255, 255, 255,0.7);display:none ;">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+    <!-- Navbar Start -->
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
+            <div class="col-lg-6 px-5 text-start">
+                <small>
+                    <i class="bi bi-telephone-fill me-2"></i>
+                    <a href="tel:+917075341606">+91 7075341606</a>
+                </small>
+                <small class="ms-4">
+                    <a style="color:white; " href="mailto:info@jnvkaa.org" target="_blank">
+                        <i class="fa fa-envelope me-3"></i>
+                    </a>info@jnvkaa.org
+                </small>
+            </div>
+            <div class="col-lg-6 px-5 text-end">
+                <small>Follow us:</small>
+                <a class="text-white-50 ms-3" href="https://www.facebook.com/jnvvkaa" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-white-50 ms-3" target="_blank" href="https://instagram.com/jnvvkaa"><i class="fab fa-instagram"></i></a>
+                <a class="text-white-50 ms-3" href="https://youtube.com/@jnvvkaa" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a class="text-white-50 ms-3" href="https://www.whatsapp.com/channel/0029VaKcujeGOj9x9C8qOB2B" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a class="text-white-50 ms-3" href="https://twitter.com/jnvvkaa" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg bg-white py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 me-1">
+
+                <h1 class="m-0 text-primary heading1" style="font-size: 42px;">
+                    <img src="../img/logo.png" class="logo"
+                         alt="logo"> JNVKAA
+                </h1>
+            </a>
+            <button type="button" class="navbar-toggler me-1" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars" style="color: #129298;"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarCollapse">
+
+                <div class="navbar-nav ms-auto p-4 p-lg-0 case2">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link ">About</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="gallery.html" class="nav-item nav-link">Gallery</a>
+                    <a href="donate.html" class="nav-item nav-link">Donate</a>
+                    <a href="events.html" class="nav-item nav-link ">Events</a>
+                    <a href="stories.html" class="nav-item nav-link">Stories</a>
+
+                </div>
+                <div class="d-none d-lg-flex ms-2 mt-3">
+                    <div class="nav-item dropdown text-center ">
+                        <div class="row">
+                            <div class="col">
+                                <span class="dropdown-toggle d-flex align-items-center " data-bs-ride="dropdown">
+                                    <img src="../assets/imgs/profile pic.png" height="50px" id="profileicon"
+                                         style="border-radius:25%;margin-bottom: 1rem;" />
+                                    <p class="text-dark ms-2" ><span id="puname">User</span> <small class="text-body"></small><br><span id="amount" class="badge bg-success rounded-pill">Please</span> <span id="donate1" class="badge bg-warning rounded-pill text-dark">Donate</span></p>
+                                </span>
+
+
+                                <div class="dropdown-menu m-0">
+                                    <a href="batchmates.html" class="dropdown-item">Batchmates</a>
+                                    <a href="alumnimembers.html" class="dropdown-item">Alumini members</a>
+                                    <a href="boardmembers.html" class="dropdown-item">Board Members</a>
+                                    <a href="settings.html" class="dropdown-item">User Settings</a>
+                                    <a href="#" class="dropdown-item" id="signout">SIGN OUT</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="navbar-nav ms-auto p-4 p-lg-0 case1">
+                    <div class="row">
+                        <div class="col">
+                            <span class="dropdown-toggle d-flex align-items-center " data-bs-ride="dropdown">
+                                <img src="../img/download.jpg" height="50px" id="profileicon2"
+                                     style="border-radius:25%;margin-bottom: 1rem;" />
+                                <p class="text-dark ms-2" ><span id="puname2">User</span> <small class="text-body"></small><br><span id="amount2" class="badge bg-success rounded-pill">Please</span> <span id="donate2" class="badge bg-warning rounded-pill text-dark">Donate</span></p>
+
+                            </span>
+
+                        </div>
+                    </div>
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link ">About</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="gallery.html" class="nav-item nav-link">Gallery</a>
+                    <a href="donate.html" class="nav-item nav-link">Donate</a>
+                    <a href="events.html" class="nav-item nav-link">Events</a>
+                    <a href="stories.html" class="nav-item nav-link">Stories</a>
+                    <a href="batchmates.html" class="nav-item nav-link">Batchmates</a>
+                    <a href="boardmembers.html" class="nav-item nav-link">Board Members</a>
+                    <a href="alumnimembers.html" class="nav-item nav-link">Alumini members</a>
+                    <a href="settings.html" class="nav-item nav-link mt-2">Settings</a>
+
+                    <a href="#" class="nav-item nav-link rounded-pill bg-secondary text-center" id="signout2">SIGN OUT</a>
+
+                    <a href="#" class="nav-item nav-link"></a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </div>
+    <!-- Navbar End -->
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5">
+        <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="w-100" src="../img/hero1.png" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10 pt-5">
+                                    <h1 class="display-4 text-white mb-3 animated slideInDown">
+                                        Jawahar Navodaya Vidyalaya Krishna
+                                        Alumni Association
+                                    </h1>
+                                    <p class="fs-5 text-white-50 mb-3 animated slideInDown">Welcome to the official JNVKAA Website! Together, we're a strong community committed to fostering connections, memories, and opportunities for all alumni of JNV Krishna. Let's celebrate our shared legacy and continue to make a difference. 🏫✨ #JNVKAA #AlumniPride</p>
+                                    <a class="btn btn-primary py-2 px-3 animated slideInDown"
+                                       style="background-color: #129298;" href="about.html">
+                                        Know More
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+    <!-- ======= Our Vision Section ======= -->
+    <section id="cta" class="cta">
+        <div class="section-header wow fadeInUp" data-wow-delay="0.5s">
+            <h2>Our Vision</h2>
+        </div>
+        <div class="container wow zoomOut1" data-wow-delay="0.5s">
+
+            <div class="row g-5">
+
+                <div class="col-lg-8 col-md-6 content d-flex flex-column justify-content-center order-last order-md-first">
+                    <h3><em>Empowering Lives,</em> Enriching Futures</h3>
+                    <p> We envision the Jawahar Navodaya Vidyalaya Krishna Alumni Association as a dynamic and inclusive community committed to empowering the lives of its members and enriching the futures of the broader society. We aspire to create a vibrant network that fosters lifelong connections, encourages continuous learning, and contributes positively to the growth and development of our alma mater.</p>
+                    <div class="cta-btns align-self-start">
+                        <a class="cta-btn" href="donate.html">Tap To Support</a>
+                        <a class="cta-btn" href="about.html">More About Us</a>
+                        <a class="cta-btn" href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 order-first order-md-last d-flex align-items-center">
+                    <div class="img">
+                        <img src="../img/hands.png" alt="" class="img-fluid">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- ======= End of Our Vision Section ======= -->
+    <!-- ======= M1ission part 1 Section ======= -->
+    <section id="services" class="services">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-header wow fadeInUp" data-wow-delay="0.2s">
+                <h2>Our Mission</h2>
+            </div>
+
+            <div class="row gy-5">
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.4s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/1_foster.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <h3>Foster Lifelong Connections</h3>
+                            <p>Cultivate a sense of belonging and camaraderie among alumni, promoting enduring connections that transcend time and distance.</p>
+                            <a href="batchmates.html" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/2_growth.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+
+                            <h3>Empower Personal and Professional Growth</h3>
+
+                            <p>Provide platforms for mentoring, knowledge-sharing, and collaboration, supporting the personal and professional development of our alumni.</p>
+                            <a href="stories.html" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.8s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/3_school.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-calendar4-week"></i>
+                            </div>
+
+                            <h3>Contribute to JNV Krishna's Excellence</h3>
+
+                            <p>Collaborate with the school administration, faculty, and students to contribute to the continuous improvement and excellence of Jawahar Navodaya Vidyalaya Krishna.</p>
+                            <a href="events.html" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.4s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/4_collaboration.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-bounding-box-circles"></i>
+                            </div>
+
+                            <h3>Facilitate Networking and Collaboration</h3>
+
+                            <p>Establish a robust network that facilitates networking, collaboration, and resource-sharing among alumni, fostering opportunities for career advancement and entrepreneurship.</p>
+                            <a target="_blank" href="https://chat.whatsapp.com/FbTIoXukvDZBef9xMXtkVV" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/5_social.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-shield-plus"></i>
+                            </div>
+
+                            <h3>Encourage Social Responsibility</h3>
+
+                            <p>Promote a sense of social responsibility among alumni, encouraging active participation in community service, philanthropy, and social causes for the greater good.</p>
+                            <a target="_blank" href="https://www.youtube.com/@jnvvkaa" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-4 col-md-6 wow zoomIn" data-wow-delay="0.8s">
+                    <div class="service-item">
+                        <div class="img">
+                            <img src="../img/6_students.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="details position-relative">
+                            <div class="icon">
+                                <i class="bi bi-chat-square-text"></i>
+                            </div>
+
+                            <h3>Support Current Students</h3>
+
+                            <p>Extend support to current students through mentorship programs, scholarships, and initiatives that enhance their academic, personal, and extracurricular growth.</p>
+                            <a href="donate.html" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div><!-- End Service Item -->
+
+            </div>
+
+        </div>
+    </section><!-- End M1ission part 1 Section -->
+    <!-- ======= M1ission part 2 Section ======= -->
+    <section id="featured-services" class="featured-services">
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-xl-3 col-md-6 d-flex wow zoomOut1" data-wow-delay="0.2s">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-award"></i></div>
+                        <h4><a href="events.html" class="stretched-link">Celebrate Achievements</a></h4>
+                        <p>Acknowledge and celebrate the achievements and successes of our alumni, showcasing inspiring stories that serve as a source of motivation for current students and the wider community.</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex wow zoomOut1" data-wow-delay="0.4s">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-lightbulb"></i></div>
+                        <h4><a href="stories.html" class="stretched-link">Cultivate a Culture of Continuous Learning</a></h4>
+                        <p>Promote a culture of continuous learning and intellectual curiosity, organizing events, workshops, and discussions that contribute to the intellectual growth of our alumni community.</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex wow zoomOut1" data-wow-delay="0.6s">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-emoji-sunglasses"></i></div>
+                        <h4><a href="alumnimembers.html" class="stretched-link">Enhance Alumni Visibility</a></h4>
+                        <p>Increase the visibility and recognition of JNV Krishna Alumni Association, both within the alumni community and the broader society, showcasing the positive impact and contributions of our members.</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex wow zoomOut1" data-wow-delay="0.8s">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+                        <h4><a href="boardmembers.html" class="stretched-link">Preserve and Promote JNV Krishna's Legacy</a></h4>
+                        <p>Actively contribute to the preservation and promotion of the rich legacy, traditions, and values of Jawahar Navodaya Vidyalaya Krishna, ensuring they are passed down to future generations</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+            </div>
+
+        </div>
+    </section><!-- End of M1ission part 2 Section -->
+
+    <!-- Causes Start -->
+    <div class="container-xxl bg-light my-5 py-5">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Feature Causes</div>
+                <h1 class="display-6 mb-5">Our Collections and Targets</h1>
+            </div>
+            <div class="row g-4 justify-content-center" id="donate-cards">
+
+            </div>
+        </div>
+    </div>
+    <!-- Causes End -->
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5  wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h1 class="fw-bold text-primary mb-4">JNVK<span class="text-white">AA</span></h1>
+                    <p>We aim to create a thriving and influential Alumni Association that leaves a lasting legacy, not only within the walls of JNV Krishna but in the lives of our alumni and the communities they serve</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square me-1" target="_blank" href="https://facebook.com/jnvvkaa"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square me-1" target="_blank" href="https://instagram.com/@jnvvkaa"><i class="fab fa-instagram"></i></a>
+                        <a class="btn btn-square me-1" target="_blank" href="https://youtube.com/@jnvvkaa"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square me-1" target="_blank" href="https://www.whatsapp.com/channel/0029VaKcujeGOj9x9C8qOB2B"><i class="fab fa-whatsapp"></i></a>
+                        <a class="btn btn-square me-1" href="https://twitter.com/jnvvkaa" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Address</h5>
+                    <p>
+                        <a style="color:white; " href="https://maps.app.goo.gl/o9up3xR8vqMJw8E48?g_st=ic" target="_blank"> <i class="fa fa-map-marker-alt me-3"></i></a>#202, Sri Sai Residency, Balaji Nagar, Salipet, Poranki, Vijayawada, AP – 521137
+                    </p>
+
+                    <p> <a style="color:white; " href="tel:+917075341606" target="_blank"> <i class="fa fa-phone-alt me-3"></i></a><a href="tel:+917075341606" target="_blank">+91 7075341606</a></p>
+
+                    <p><a style="color:white; " href="mailto:info@jnvkaa.org" target="_blank"> <i class="fa fa-envelope me-3"></i></a>info@jnvkaa.org</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Quick Links</h5>
+                    <a class="btn btn-link" href="about.html">About Us</a>
+                    <a class="btn btn-link" href="contact.html">Contact Us</a>
+                    <a class="btn btn-link" href="termsandconditions.html">Terms & Condition</a>
+                    <a class="btn btn-link" href="privacyPolicy.html">Privacy Policy</a>
+                    <a class="btn btn-link" href="cookiepolicy.html">Cookie Policy</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+
+                    <h5 class="text-light mb-4">Important Links</h5>
+
+                    <a class="btn btn-link" target="_blank" href="https://navodaya.gov.in/">NV Samiti Official Site</a>
+                    <a class="btn btn-link" target="_blank" href="https://navodaya.gov.in/nvs/nvs-school/KRISHNA/en/home/">JNV Krishna Official Site</a>
+                    <a class="btn btn-link" target="_blank" href="https://jnvkrishna.com/">School Activities</a>
+                    <form class="mt-3">
+                    <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_NQP5eiT3g5HjHv" async></script> </form>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="https://jnvkaa.org">JNVKAA</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        Designed By <a href="https://narnetech.com">NarneTech</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <div class="wdiv">
+        <a href="https://wa.me/917075341606?text=Hey%20there%20I%20have%20just%20visited%20our%20Website%20(jnvkaa.org)" target="_blank">
+            <img alt="Whatsapp us" src="../img/wimg2.png" style="width:200px; height:50px;">
+        </a>
+    </div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/wow/wow.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/parallax/parallax.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
