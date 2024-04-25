@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 
 using System.Data;
+
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Globalization;
@@ -15,6 +16,8 @@ using System.Net.Mail;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Web.Script.Serialization;
+using static JNKVAA.WebService;
+using System.Net.Sockets;
 
 namespace JNKVAA
 {
@@ -859,7 +862,7 @@ namespace JNKVAA
             public string medinsuexp { get; set; }
             public string medinsupro { get; set; }
             public string expertin { get; set; }
-            public string hob1 { get; set; }
+            public string native { get; set; }
             public string batchNo { get; set; }
             public string hob2 { get; set; }
             public string country_code { get; set; }
@@ -952,7 +955,7 @@ namespace JNKVAA
 
                         uData.medinsupro = rdr["MedicalInsuranceProvider"].ToString();
                         uData.expertin = rdr["ExpertIn"].ToString();
-                        uData.hob1 = rdr["Hobbies1"].ToString();
+                        uData.native = rdr["NativePlace"].ToString();
                         uData.hob2 = rdr["Hobbies2"].ToString();
                         uData.batchNo = rdr["BatchNo"].ToString();
                         uData.country_code = rdr["country_code"].ToString();
@@ -2159,8 +2162,6 @@ namespace JNKVAA
         }
 
 
-
-
         [WebMethod(EnableSession = true)]
         public string addDonation(string donationtitle, string category, string targetamount, string description, string photo, string ExpendLink)
         {
@@ -2216,7 +2217,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string updateUserDataByUserSettings(string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string instaurl, string fbookurl, string linkdnurl, string medinsuexp, string medinsupro, string expertin, string hob1, string hob2, string designation, string country_code)
+        public string updateUserDataByUserSettings(string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string instaurl, string fbookurl, string linkdnurl, string medinsuexp, string medinsupro, string expertin, string native, string hob2, string designation, string country_code)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
             System.Web.Script.Serialization.JavaScriptSerializer oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -2230,7 +2231,7 @@ namespace JNKVAA
                         con.Open();
                         using (SqlCommand cmd = new SqlCommand("", con))
                         {
-                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, Hobbies1=@hob1, Hobbies2=@hob2, Designation=@desig, country_code=@country_code WHERE UserId=@uid;";
+                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, NativePlace=@native, Hobbies2=@hob2, Designation=@desig, country_code=@country_code WHERE UserId=@uid;";
 
                             cmd.Parameters.AddWithValue("uid", Session["userid"].ToString());
                             cmd.Parameters.AddWithValue("fname", string.IsNullOrEmpty(fname) ? (object)DBNull.Value : (object)fname);
@@ -2254,7 +2255,7 @@ namespace JNKVAA
                             cmd.Parameters.AddWithValue("medinsuexp", string.IsNullOrEmpty(medinsuexp) ? (object)DBNull.Value : (object)medinsuexp);
                             cmd.Parameters.AddWithValue("medinsupro", string.IsNullOrEmpty(medinsupro) ? (object)DBNull.Value : (object)medinsupro);
                             cmd.Parameters.AddWithValue("expertin", string.IsNullOrEmpty(expertin) ? (object)DBNull.Value : (object)expertin);
-                            cmd.Parameters.AddWithValue("hob1", string.IsNullOrEmpty(hob1) ? (object)DBNull.Value : (object)hob1);
+                            cmd.Parameters.AddWithValue("native", string.IsNullOrEmpty(native) ? (object)DBNull.Value : (object)native);
                             cmd.Parameters.AddWithValue("hob2", string.IsNullOrEmpty(hob2) ? (object)DBNull.Value : (object)hob2);
                             cmd.Parameters.AddWithValue("country_code", string.IsNullOrEmpty(country_code) ? (object)DBNull.Value : (object)country_code);
 
@@ -2534,6 +2535,80 @@ namespace JNKVAA
             }
         }
 
+        public class DesignationClass
+        {
+            public string designation { get; set; }
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string getDesignations()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            //string val = "0";
+            string retval = "";
+            System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            DesignationClass designationClass;
+            List<DesignationClass> designationList = new List<DesignationClass>();
+
+
+
+            using (con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+                    cmd = new SqlCommand("", con);
+                    cmd.CommandText = "SELECT DISTINCT Designation FROM TB_Users WHERE Designation IS NOT NULL";
+
+                    rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        designationClass = new DesignationClass();
+                        designationClass.designation = rdr["Designation"].ToString();
+
+
+                        designationList.Add(designationClass);
+                    }
+                    rdr.Close();
+                    cmd.Parameters.Clear();
+                    if (designationList.Count > 0)
+                    {
+                        int result = 0;
+
+                        con.Close();
+                        var json = JsonConvert.SerializeObject(designationList);
+                        retval = json.ToString();
+                        return oSerializer.Serialize(retval);
+                    }
+                    else
+                    {
+                        con.Close();
+                        designationClass = new DesignationClass();
+                        designationClass.designation = "521";
+                        designationList.Add(designationClass);
+                        var json = JsonConvert.SerializeObject(designationList);
+                        retval = json.ToString();
+                        return oSerializer.Serialize(retval);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("VIRTUAL: Ex: " + ex.Message);
+                    designationClass = new DesignationClass();
+                    designationClass.designation = "522";
+                    designationList.Add(designationClass);
+                    var json = JsonConvert.SerializeObject(designationList);
+                    retval = json.ToString();
+                    return oSerializer.Serialize(retval);
+                }
+            }
+        }
+
+      
         public class BatchNoClass
         {
             public string batchno { get; set; }

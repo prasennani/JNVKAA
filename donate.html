@@ -171,21 +171,56 @@
             </div>
         </div>
     </div>
-
     <!-- Carousel End -->
-    <!-- Causes Start -->
-    <div class="container-xxl bg-light my-1 py-1">
-        <div class="container py-1">
-            <div class="text-center mx-auto mb-1 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-6 mb-3">Causes for Donation</h1>
-            </div>
-            <div class="row g-4 justify-content-center" id="donate-cards-d">
+    <!-- Preferred payment Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
+                        <img class="position-absolute w-100 h-100 pt-5 pe-5" src="../img/donate.png" alt=""
+                             style="object-fit: cover;">
+                        <img class="position-absolute top-0 end-0 bg-white ps-2 pb-2" src="../img/phonepe.png" alt=""
+                             style="width: 200px; height: 200px;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Support Our Cause</div>
+                        <h1 class="display-6 mb-5">Preferred Payment Methods</h1>
 
+                        <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
+                            <h5 class="text-dark mb-2">For those who are outside India</h5>
+                            <h6 class="text-dark mb-2">Bank Transfer (SBI):</h6>
+                            <p class="text-dark mb-2"><b>Account Number: </b>41282202953</p>
+                            <p class="text-dark mb-2"><b>IFSC Code: </b>SBIN0007899</p>
+                            <p class="text-dark mb-2"><b>Account Holder Name: </b>Jawahar Navodaya Vidyalaya Krishna Alumni Association</p>
+                        </div>
+                        <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
+                            <h5 class="text-dark mb-2">For those who are within India</h5>
+                            <h6 class="text-dark mb-2">PhonePe QR Code:</h6>
+                            <p class="text-dark mb-2">Scan the PhonePe QR code to make a donation using any UPI app. Your support is highly appreciated.</p>
+                            <h6 class="text-dark mb-2">Phonepe Payment Gateway:</h6>
+                            <p class="text-dark mb-2">If you prefer to donate using a <b>Credit Card, Debit Card</b> or <b>Net Banking</b>,you can use the Phonepe Payment Gateway. Your contribution helps us further our cause.</p>
+                        </div>
+
+
+                        <a class="btn btn-outline-primary py-2 px-3 me-3 mb-2" target="_blank" href="https://wa.me/919059635007?text=Hey%20there%20Please%20Send%20Phonepe%20Gateway%20link%20For%20Donation">
+                            Click here to ask for Phonepe Gateway Link
+                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-    <!-- Causes End -->
-    <!-- Donate Form Start -->
+    <!-- preffered payment End mt-2-->
+    <!--Donate form Start -->
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
@@ -238,8 +273,8 @@
 
                 </div>
             </div>
-            <div class="col-lg-6 wow fadeIn " data-wow-delay="0.5s">
-                <div class="bg-secondary text-primary py-1 px-3  mx-5 rounded-pill text-center">Please fill the form after Donation</div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="bg-secondary text-primary py-1 px-3 mb-1 mx-5 rounded-pill text-center">Please fill the form after Donation</div>
                 <div class="h-100 bg-white px-5 py-3">
                     <form>
                         <div class="row g-3">
@@ -275,9 +310,7 @@
                                 <div class="form-floating">
                                     <select class="form-select bg-light border-0 align-text-center " id="donatePurpose" aria-label="mode of Payment">
                                         <option selected value="0">Select Donation Purpose</option>
-
                                     </select>
-
                                 </div>
                             </div>
                             <div class="col-12">
@@ -290,7 +323,6 @@
                                         <option value="4">Razor Pay</option>
                                         <option value="5" disabled>Phonepay App(upcoming) </option>
                                     </select>
-
                                 </div>
                             </div>
                             <div class="col-12">
@@ -309,44 +341,29 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-
-
                                     <input type="file" class="bg-light border-0 form-control file" name="myImage" accept="image/png, image/gif, image/jpeg" />
                                     <label class="label-ss">Payment ScreenShot</label>
                                 </div>
                             </div>
-
                             <div class="col-12">
                                 <a class="btn btn-outline-primary py-2 px-3 mt-2" id="donate">
                                     Submit
                                     <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
-                                    <div id="loadingSpinner" style="display: none;">
-                                        Please wait...
-                                    </div>
                                 </a>
-
-
                             </div>
                             <div class="col-12">
-                                <a class="btn btn-outline-primary py-2 px-3 mt-2" id="donatephonepe">
-                                    PhonePe
+                                <a class="btn btn-outline-primary py-2 px-3 mt-2" id="phonepedonate">
+                                    Submit
                                     <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
-                                    <div id="loadingSpinner" style="display: none;">
-                                        Please wait...
-                                    </div>
                                 </a>
-
-
                             </div>
                         </div>
                     </form>
-
                 </div>
-
             </div>
         </div>
         <div>
@@ -356,65 +373,19 @@
             </h4>
         </div>
     </div>
-    <!-- Donetion Form End -->
-    <!-- Preferred payment Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
-                        <img class="position-absolute w-100 h-100 pt-5 pe-5" src="img/donate.png" alt=""
-                             style="object-fit: cover;">
-                        <img class="position-absolute top-0 end-0 bg-white ps-2 pb-2" src="img/phonepe.png" alt=""
-                             style="width: 200px; height: 200px;">
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="h-100">
-                        <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Support Our Cause</div>
-                        <h1 class="display-6 mb-5">Preferred Payment Methods</h1>
-
-                        <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
-                            <h5 class="text-dark mb-2">For those who are outside India</h5>
-                            <h6 class="text-dark mb-2">Bank Transfer (SBI):</h6>
-                            <p class="text-dark mb-2"><b>Account Number: </b>41282202953</p>
-                            <p class="text-dark mb-2"><b>IFSC Code: </b>SBIN0007899</p>
-                            <p class="text-dark mb-2"><b>Account Holder Name: </b>Jawahar Navodaya Vidyalaya Krishna Alumni Association</p>
-                        </div>
-                        <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
-                            <h5 class="text-dark mb-2">For those who are within India</h5>
-                            <h6 class="text-dark mb-2">PhonePe QR Code:</h6>
-                            <p class="text-dark mb-2">Scan the PhonePe QR code to make a donation using any UPI app. Your support is highly appreciated.</p>
-                            <h6 class="text-dark mb-2">SBI Collect Button:</h6>
-                            <p class="text-dark mb-2">If you prefer to donate using a <b>Credit Card, Debit Card</b> or <b>Net Banking</b>,you can use the SBI Collect button below. Your contribution helps us further our cause.</p>
-                        </div>
-                        <a class="btn btn-outline-primary py-2 px-3 me-3 mb-2" target="_blank" href="https://www.onlinesbi.sbi/sbicollect/icollecthome.htm?corpID=5103008">
-                            SBI COLLECT LINK FOR CREDIT CARD AND NET BANKING
-                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                <i class="fa fa-arrow-right"></i>
-                            </div>
-                        </a>
-                        <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
-                            <h5 class="text-dark mb-2">Our Last Preferance</h5>
-                            <h6 class="text-dark mb-2">Using Gateway like Razorpay or Paypal</h6>
-                            <p class="text-dark mb-2">If you wish to pay by Razorpay, please note that a 2% will be charged from your donation amount. Your donation helps us cover operational costs and continue our work.</p>
-                            <p class="text-dark mb-2">You can donate using <b>Credit Card, Debit Card</b> or <b>Net Banking</b>,you can use Razorpay button below. Your contribution helps us further our cause.</p>
-                        </div>
-
-                        <a>
-                            <form class="mt-3">
-                                <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_NQP5eiT3g5HjHv" async></script>
-                            </form>
-                        </a>
-
-                    </div>
-                </div>
+    <!--Donate form End -->
+    <!-- Causes Start -->
+    <div class="container-xxl bg-light my-1 py-1">
+        <div class="container py-1">
+            <div class="text-center mx-auto mb-1 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-6 mb-3">Causes for Donation</h1>
             </div>
-        </div><!--Donation Graph -->
+            <div class="row g-4 justify-content-center" id="donate-cards-d">
 
+            </div>
+        </div>
     </div>
-    <!-- Preferred payment End -->
-
+    <!-- Causes End -->
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-white-50 footer mt-5  wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">

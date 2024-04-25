@@ -9,6 +9,7 @@ $(document).ready(function () {
 
     getuserAccessLevel();
     getAllProfessions();
+    getAllDesignations();
 
     $('#Savebtn').click(function(){
         UpdateData();
@@ -76,7 +77,7 @@ function showUserData(){
                 $('#medinsuexp').val(user[0].medinsuexp);
                 $('#medinsupro').val(user[0].medinsupro);
                 $('#expertin').val(user[0].expertin);
-                $('#hob1').val(user[0].hob1);
+                $('#native').val(user[0].native);
                 $('#hob2').val(user[0].hob2);
                 $('#batchno').val(user[0].batchNo);
                 $('#country_code').val(user[0].country_code);
@@ -134,21 +135,79 @@ function getAllProfessions() {
 
 }
 
+function getAllDesignations() {
+    $.ajax({
+        url: '../WebService.asmx/getDesignations',
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].designation.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].designation.localeCompare("522") === 0)
+                alert("Something went wrong. Please try again.");
+            else {
 
-$(document).ready(function() {
-    $('#profession').select2({
-        placeholder: "Select a profession",
-        allowClear: true // This option allows clearing the selection
+                for (i = 0; i < user.length; i++) {
+
+
+                    var txt = '<option value="' + user[i].designation + '">' + user[i].designation + '</option>';
+
+
+
+                    $('#designation').append(txt);
+                }
+                //j = i;
+            }
+
+        }
+
+    }).done(function () {
+
+
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
     });
-});
+
+
+    //Edit user data and getting data using button 
+
+
+
+
+}
+
+//$(document).ready(function() {
+  //  $('#profession').select2({
+    //    placeholder: "Select a profession",
+      //  allowClear: true // This option allows clearing the selection
+ //   });
+//});
 
 $(document).ready(function () {
     // Show/hide input field based on selection
     $('#profession').change(function () {
         if ($(this).val() === 'other') {
             $('#otherProfessionInput').show();
+            $('#otherProfessionInput').attr('placeholder', 'Enter your profession');
+            $('#otherProfessionLabel').text('Please type your current profession here');
         } else {
             $('#otherProfessionInput').hide();
+            $('#otherProfessionInput').removeAttr('placeholder');
+            $('#otherProfessionLabel').text('');
+        }
+    });
+
+    $('#designation').change(function () {
+        if ($(this).val() === 'other') {
+            $('#otherDesignationInput').show();
+            $('#otherDesignationInput').attr('placeholder', 'Enter your designation');
+            $('#otherDesignationLabel').text('Please type your Designation here');
+        } else {
+            $('#otherDesignationInput').hide();
+            $('#otherDesignationInput').removeAttr('placeholder');
+            $('#otherDesignationLabel').text('');
         }
     });
 
@@ -158,19 +217,26 @@ $(document).ready(function () {
             alert('Please enter your profession');
             return false; // Prevent form submission
         }
+        if ($('#designationSelect').val() === 'other' && $('#otherDesignationInput').val() === '') {
+            alert('Please enter your designation');
+            return false; // Prevent form submission
+        }
     });
 });
 
 
 
-
-
 function UpdateData() {
     var professionValue = $('#profession').val();
+    var designationValue = $('#designation').val();
     // Check if the profession value is 'other'
     if (professionValue === 'other') {
         // Get the value from the otherProfessionInput field
         professionValue = $('#otherProfessionInput').val();
+    }
+    if (designationValue === 'other') {
+        // Get the value from the otherProfessionInput field
+        designationValue = $('#otherDesignationInput').val();
     }
 
     $.ajax({
@@ -198,9 +264,9 @@ function UpdateData() {
             'medinsuexp': $('#medinsuexp').val(),
             'medinsupro': $('#medinsupro').val(),
             'expertin': $('#expertin').val(),
-            'hob1': $('#hob1').val(),
+            'native': $('#native').val(),
             'hob2': $('#hob2').val(),
-            'designation': $('#designation').val(),
+            'designation': designationValue, // Use the designationValue variable
             'country_code': $('#country_code').val()
         }),
         dataType: "json",

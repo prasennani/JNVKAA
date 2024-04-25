@@ -3,24 +3,23 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="users/settings.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
       <File FileName="WebService.asmx.cs" Line="9" Column="28" />
-      <File FileName="Web.config" Line="1" Column="1" />
-      <File FileName="users/settings.html" Line="390" Column="33" />
+      <File FileName="Web.config" Line="10" Column="53" />
+      <File FileName="users/settings.html" Line="385" Column="73" />
       <File FileName="js/users/settings.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
-            <Node name="JNKVAA" expanded="True">
-              <Node name="js">
+            <Node name="JNKVAA">
+              <Node name="js" expanded="True">
                 <Node name="users" expanded="True" />
               </Node>
-              <Node name="users">
-                <Node name="settings.html" selected="True" />
-              </Node>
+              <Node name="users" expanded="True" />
+              <Node name="Web.config" selected="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>

@@ -1982,7 +1982,6 @@
     <Content Include="thankyou.html" />
     <Content Include="js\thankyou.js" />
     <Content Include="users\thankyou.html" />
-    <Content Include="js\users\thankyou.js" />
     <Content Include="singleStory.html" />
   </ItemGroup>
   <ItemGroup>
