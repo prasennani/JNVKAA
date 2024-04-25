@@ -1942,7 +1942,6 @@
     <Content Include="readstory.html" />
     <Content Include="refundpolicy.html" />
     <Content Include="signup.html" />
-    <Content Include="Stage.html" />
     <Content Include="stories.html" />
     <Content Include="termsandconditions.html" />
     <Content Include="users\about.html" />
@@ -1963,7 +1962,6 @@
     <Content Include="users\viewevent.html" />
     <Content Include="users\viewuser.html" />
     <Content Include="viewevent.html" />
-    <Content Include="viewuser.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1977,12 +1975,10 @@
     <Content Include="js\batchadmin\users.js" />
     <Content Include="js\batchadmin\userProperty.js" />
     <Content Include="js\batchadmin\notification.js" />
-    <Content Include="support.html" />
     <Content Include="js\support.js" />
     <Content Include="thankyou.html" />
     <Content Include="js\thankyou.js" />
     <Content Include="users\thankyou.html" />
-    <Content Include="singleStory.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

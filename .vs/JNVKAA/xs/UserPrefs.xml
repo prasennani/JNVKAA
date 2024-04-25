@@ -2,19 +2,27 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="WebService.asmx.cs" Line="9" Column="28" />
+      <File FileName="WebService.asmx.cs" Line="7" Column="19" />
       <File FileName="Web.config" Line="10" Column="53" />
-      <File FileName="users/settings.html" Line="385" Column="73" />
-      <File FileName="js/users/settings.js" Line="1" Column="1" />
+      <File FileName="users/settings.html" Line="551" Column="6" />
+      <File FileName="js/users/settings.js" Line="80" Column="50" />
+      <File FileName="users/thankyou.html" Line="306" Column="21" />
+      <File FileName="css/style.css" Line="1" Column="1" />
+      <File FileName="donate.html" Line="357" Column="88" />
+      <File FileName="js/donate.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
             <Node name="JNKVAA">
+              <Node name="css" expanded="True" />
               <Node name="js" expanded="True">
                 <Node name="users" expanded="True" />
               </Node>
@@ -27,7 +35,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
