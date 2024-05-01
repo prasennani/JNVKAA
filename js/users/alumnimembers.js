@@ -153,7 +153,7 @@ function getAllBatchmates() {
                         } else {
                             txt += '  <img class="img-fluid  mb-4 " style="max-height: 160px;" src="' + user[i].photo + '" alt="">';
                         }
-                        txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + user[i].fname + ' ' + user[i].sname + '</h5>';
+                        txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + user[i].sname + ' ' + user[i].fname + '</h5>';
                         txt += '  </div>';
                         txt += ' <div class="d-flex justify-content-center bg-primary p-3">';
                         txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '"><i class="fab fa-facebook-f"></i></a>';

@@ -2323,7 +2323,7 @@ namespace JNKVAA
                 {
                     con.Open();
                     cmd = new SqlCommand("", con);
-                    cmd.CommandText = "select * from TB_Users where BatchNo=@batchno";
+                    cmd.CommandText = "select * from TB_Users where BatchNo=@batchno ORDER BY Surname ASC";
                     if (Session["batchno"] != null)
                     {
                         cmd.Parameters.AddWithValue("@batchno", Session["batchno"].ToString());
@@ -2404,7 +2404,7 @@ namespace JNKVAA
                 {
                     con.Open();
                     cmd = new SqlCommand("", con);
-                    cmd.CommandText = "select * from TB_Users where BatchNo=@batchno";
+                    cmd.CommandText = "select * from TB_Users where BatchNo=@batchno ORDER BY Surname ASC";
                     cmd.Parameters.AddWithValue("batchno", batchno);
 
                     rdr = cmd.ExecuteReader();
