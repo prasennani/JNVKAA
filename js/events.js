@@ -103,8 +103,9 @@ function getAllEvents() {
 					txt += '</div>';
                     txt += ' <span>' + event[i].organizedby + '</span>';
 
-
-                    txt += '<div class="d-flex justify-content-around align-items-center"><a class="btn btn-primary mt-3" href="viewevent.html?eid=' + event[i].eventid + '" role="button" style="color: var(--primary);">more details</a> ';
+                    txt += '<div class="d-flex justify-content-around align-items-right">';
+                    txt += '<a class="btn btn-primary mt-6" target="_blank" href="' + event[i].description + '" role="button" style="color: var(--primary);">Go to Post</a>';
+                    txt += '<a class="btn btn-primary mt-6" href="viewevent.html?eid=' + event[i].eventid + '" role="button" style="color: var(--primary);">More Details</a>';
                     if (event[i].EventStatus == '2') {
 
                         txt += '<span class="text-danger pt-3"> &nbsp;Cancelled</span>';

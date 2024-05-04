@@ -1401,6 +1401,7 @@ namespace JNKVAA
             public string organizedby { get; set; }
             public string LocationLink { get; set; }
             public string EventStatus { get; set; }
+            public string description { get; set; }
         }
 
         [WebMethod(EnableSession = true)]
@@ -1438,6 +1439,7 @@ namespace JNKVAA
                         allEvents.LocationLink = rdr["LocationLink"].ToString();
                         allEvents.organizedby = rdr["OrganizedBy"].ToString();
                         allEvents.EventStatus = rdr["EventStatus"].ToString();
+                        allEvents.description = rdr["Description"].ToString();
 
                         /* Session["userid"] = rdr["UserId"].ToString();
                          Session["uname"] = rdr["Name"].ToString()[0] + ". " + rdr["SurName"].ToString();
@@ -1787,6 +1789,7 @@ namespace JNKVAA
             public string storyid { get; set; }
             public string title { get; set; }
             public string postedby { get; set; }
+            public string postedon { get; set; }
             public string photo { get; set; }
             public string description1 { get; set; }
             public string description2 { get; set; }
@@ -1823,6 +1826,7 @@ namespace JNKVAA
                     story.storyid = rdr["StoryId"].ToString();
                     story.title = rdr["Title"].ToString();
                     story.postedby = rdr["PostedBy"].ToString();
+                    story.postedon = Convert.ToDateTime(rdr["PostedOn"].ToString()).ToString("yyyy-MM-dd").Replace(" 12:00:00 AM", "");
                     story.photo = rdr["Photo"].ToString();
                     story.description1 = rdr["Description1"].ToString();
                     story.description2 = rdr["Description2"].ToString();
@@ -1878,6 +1882,7 @@ namespace JNKVAA
             public string postedby { get; set; }
             public string photo { get; set; }
             public string description1 { get; set; }
+            public string description3 { get; set; }
         }
 
         [WebMethod(EnableSession = true)]
@@ -1912,6 +1917,7 @@ namespace JNKVAA
                         allStories.photo = rdr["Photo"].ToString();
                         allStories.postedon = Convert.ToDateTime(rdr["PostedOn"].ToString()).ToString("yyyy-MM-dd").Replace(" 12:00:00 AM", "");
                         allStories.description1 = rdr["Description1"].ToString();
+                        allStories.description3 = rdr["Description3"].ToString();
 
                         /* Session["userid"] = rdr["UserId"].ToString();
                          Session["uname"] = rdr["Name"].ToString()[0] + ". " + rdr["SurName"].ToString();

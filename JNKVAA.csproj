@@ -263,10 +263,8 @@
     <Content Include="js\users\boardmembers.js" />
     <Content Include="js\users\contact.js" />
     <Content Include="js\users\donate.js" />
-    <Content Include="js\users\events.js" />
     <Content Include="js\users\gallery.js" />
     <Content Include="js\users\signout.js" />
-    <Content Include="js\users\stories.js" />
     <Content Include="js\users\userProperty.js" />
     <Content Include="js\users\index.js" />
     <Content Include="js\users\settings.js" />
@@ -1979,6 +1977,8 @@
     <Content Include="thankyou.html" />
     <Content Include="js\thankyou.js" />
     <Content Include="users\thankyou.html" />
+    <Content Include="dophonepe.html" />
+    <Content Include="js\dophonepe.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

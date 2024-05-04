@@ -45,12 +45,6 @@ function showUserStory() {
                 $('#description3').text(story[0].description3);
 
 
-
-
-
-
-
-
             }
             $('#preloader').css('display', 'none');
         }

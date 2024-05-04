@@ -1,22 +1,35 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="js/admin/users.js">
+    <Files>
+      <File FileName="WebService.asmx.cs" Line="1442" Column="46" />
+      <File FileName="Web.config" Line="10" Column="66" />
+      <File FileName="dophonepe.html" Line="239" Column="66" />
+      <File FileName="admin/addevent.html" Line="212" Column="68" />
+      <File FileName="admin/editevents.html" Line="214" Column="68" />
+      <File FileName="js/admin/users.js" Line="50" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="JNVKAA" expanded="True">
+            <Node name="JNKVAA">
+              <Node name="js">
+                <Node name="admin" expanded="True">
+                  <Node name="users.js" selected="True" />
+                </Node>
+                <Node name="users" expanded="True" />
+              </Node>
+              <Node name="WebService.asmx" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebService.asmx.cs">
-    <Files>
-      <File FileName="WebService.asmx.cs" Line="1110" Column="23" />
-      <File FileName="Web.config" Line="10" Column="53" />
-      <File FileName="users/index.html" Line="433" Column="21" />
-      <File FileName="users/privacypolicy.html" Line="230" Column="6" />
-      <File FileName="users/readstory.html" Line="302" Column="6" />
-      <File FileName="users/stories.html" Line="241" Column="6" />
-      <File FileName="users/termsandconditions.html" />
-      <File FileName="users/thankyou.html" />
-      <File FileName="users/viewevent.html" />
-      <File FileName="users/viewuser.html" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

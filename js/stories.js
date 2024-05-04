@@ -65,8 +65,12 @@ function getAllStories() {
                     storiesCard += '   <div class=" row mt-3">';
                     storiesCard += '<div class="col-md-9">';
                     storiesCard += '  </div>';
-                    storiesCard += ' <div class="col-md-3">';
 
+                    storiesCard += ' <div class="col-md-6">';
+                    storiesCard += '  <a class="btn btn-outline-primary" target="_blank" href="' + story[i].description3 + '">Go to Post</a>'
+                    storiesCard += '</div>';
+
+                    storiesCard += ' <div class="col-md-3">';
                     storiesCard += '  <a class="btn btn-outline-primary" href="readstory.html?storyid=' + story[i].storyid + '">Read More</a>'
                     storiesCard += '</div> </div> </div> </div> </div> </div></div>';
 
