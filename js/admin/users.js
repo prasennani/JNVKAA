@@ -69,26 +69,21 @@ function getAllUser() {
 
                 for (i = 0; i < user.length; i++) {
                     var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
-                    txt += '<td>' + user[i].fname + '</td>';
-                    txt += '<td>' + user[i].sname + '</td>';
+                    txt += '<td>' + user[i].fname +" "+ user[i].sname + '</td>';
                     txt += '<td>' + user[i].batchno + '</td>';
-                    txt += '<td>' + user[i].uphno + '</td>';
-                    txt += '<td>' + user[i].uemail + '</td>';
+                    txt += '<td>' + user[i].country_code + user[i].uphno + '</td>';
+                    txt += '<th><p><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WhatsApp </a></p></th>';
                     switch (parseInt(user[i].ustatus)) {
                         case -2:
-                            txt += '<td><div class="pending">Pending </div> </td>';
                             txt += '<td> <div class="pending"> Pending </div></td>';
                             break;
                         case -1:
-                            txt += '<td><div class="approved">Approved </div> </td>';
                             txt += '<td> <div class="pending"> Pending </div></td>';
                             break;
                         case 1:
-                            txt += '<td><div class="approved">Approved </div> </td>';
                             txt += '<td> <div class="approved"> Approved </div></td>';
                             break;
                         case 0:
-                            txt += '<td><div class="blocked">Blocked</div> </td>';
                             txt += '<td> <div class="blocked"> Blocked </div></td>';
                             break;
                     }
@@ -143,26 +138,21 @@ function getUser() {
 
                 for (i = 0; i < user.length; i++) {
                     var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
-                    txt += '<td>' + user[i].fname + '</td>';
-                    txt += '<td>' + user[i].sname + '</td>';
+                    txt += '<td>' + user[i].fname +" "+ user[i].sname + '</td>';
                     txt += '<td>' + user[i].batchno + '</td>';
-                    txt += '<td>' + user[i].uphno + '</td>';
-                    txt += '<td>' + user[i].uemail + '</td>';
+                    txt += '<td>' + user[i].country_code + user[i].uphno + '</td>';
+                    txt += '<th><p><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WhatsApp </a></p></th>';
                     switch (parseInt(user[i].ustatus)) {
                         case -2:
-                            txt += '<td><div class="pending">Pending </div> </td>';
                             txt += '<td> <div class="pending"> Pending </div></td>';
                             break;
                         case -1:
-                            txt += '<td><div class="approved">Approved </div> </td>';
                             txt += '<td> <div class="pending"> Pending </div></td>';
                             break;
                         case 1:
-                            txt += '<td><div class="approved">Approved </div> </td>';
                             txt += '<td> <div class="approved"> Approved </div></td>';
                             break;
                         case 0:
-                            txt += '<td><div class="blocked">Blocked</div> </td>';
                             txt += '<td> <div class="blocked"> Blocked </div></td>';
                             break;
                     }

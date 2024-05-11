@@ -42,10 +42,6 @@ function showUserData() {
 
                 $('#preloader').css('display', 'none');
 
-
-
-
-
             }
         }
 

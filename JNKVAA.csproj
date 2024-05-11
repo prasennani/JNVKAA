@@ -1979,6 +1979,7 @@
     <Content Include="users\thankyou.html" />
     <Content Include="dophonepe.html" />
     <Content Include="js\dophonepe.js" />
+    <Content Include="users\idcard.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,6 +8,8 @@ $(document).ready(function () {
     let param = searchParams.get('e');
     userid = param;
     initProfilePic();
+    getAllProfessions();
+    getAllDesignations();
     
     //getuserAccessLevel();
     showUserData();
@@ -100,6 +102,7 @@ function showUserData(){
                 $('#email').val(user[0].uemail);
                 $('#city').val(user[0].ucity);
                 $('#profession').val(user[0].profession);
+                $('#designation').val(user[0].designation);
                 $('#workingin').val(user[0].workingin);
                 $('#lclass').val(user[0].lclass).change();
                 $('#workingas').val(user[0].workingas).change();
@@ -125,7 +128,7 @@ function showUserData(){
                 $('#MediInsurP').val(user[0].medinsupro);
                 $('#ExpertIn').val(user[0].expertin);
                 $('#dateExpiry').val(user[0].medinsuexp);
-                
+                $('#native').val(user[0].native);
                 $('#batchNo').val(user[0].batchNo);
                 $('#country_code').val(user[0].country_code);
                 
@@ -180,23 +183,57 @@ function changeStatus(status){
 }
 
 
-function UpdateData(){
-    
-    
-    if(userid.length>0){
-       // alert("uid"+userid+"fname"+$('#fname').val()+"sname"+$('#sname').val()+"gender"+$('#gender').val()+"dob"+$('#dob').val()+"maritalstatus"+$('#maritalstatus').val()+"bgroup"+$('#bloodgroup').val()+"phno"+$('#phno').val());
+function UpdateData() {
+    var professionValue = $('#profession').val();
+    var designationValue = $('#designation').val();
+
+    // Assuming userid is defined and contains the correct value
+    if (userid.length > 0) {
+        if (professionValue === 'other') {
+            // Get the value from the otherProfessionInput field
+            professionValue = $('#otherProfessionInput').val();
+        }
+        if (designationValue === 'other') {
+            // Get the value from the otherProfessionInput field
+            designationValue = $('#otherDesignationInput').val();
+        }
+
         $.ajax({
             url: '../WebService.asmx/updateUserData',
-            type: "POST", // type of the data we send (POST/GET)
+            type: "POST",
             contentType: "application/json",
-            data: "{ 'uid': '" + userid + "', 'fname': '" + $('#fname').val() + "', 'sname': '" + $('#sname').val() + "', 'gender': '" + $('#gender').val() + "', 'dob': '" + $('#dob').val() + "', 'maritalstatus': '" + $('#maritalstatus').val() + "', 'bgroup': '" + $('#bloodgroup').val() + "', 'phno': '" + $('#phno').val() + "', 'email': '" + $('#email').val() + "', 'city': '" + $('#city').val() + "', 'profession': '" + $('#profession').val() + "', 'workingin': '" + $('#workingin').val() + "', 'workingas': '" + $('#workingas').val() + "', 'lclass': '" + $('#lclass').val() + "', 'bio': '" + $('#bio').val() + "', 'instaurl': '" + $('#instaid').val() + "', 'fbookurl': '" + $('#fbid').val() + "', 'medicalInsurProvi': '" + $('#MediInsurP').val() + "', 'medicalInsurExpire': '" + $('#dateExpiry').val() + "', 'ExpertIn': '" + $('#ExpertIn').val() + "', 'linkdnurl': '" + $('#lnkid').val() + "', 'batchNo': '" + $('#batchNo').val() + "', 'country_code': '" + $('#country_code').val() + "'}",
-            datatype: "json",
-            success: function (response) { // when successfully sent data and returned
-                // alert("Res: " + response.d);
+            data: JSON.stringify({
+                uid: userid,
+                fname: $('#fname').val(),
+                sname: $('#sname').val(),
+                gender: $('#gender').val(),
+                dob: $('#dob').val(),
+                maritalstatus: $('#maritalstatus').val(),
+                bgroup: $('#bloodgroup').val(),
+                phno: $('#phno').val(),
+                email: $('#email').val(),
+                city: $('#city').val(),
+                profession: professionValue,
+                designation: designationValue,
+                workingin: $('#workingin').val(),
+                workingas: $('#workingas').val(),
+                lclass: $('#lclass').val(),
+                bio: $('#bio').val(),
+                instaurl: $('#instaid').val(),
+                fbookurl: $('#fbid').val(),
+                medicalInsurProvi: $('#MediInsurP').val(),
+                medicalInsurExpire: $('#dateExpiry').val(),
+                ExpertIn: $('#ExpertIn').val(),
+                linkdnurl: $('#lnkid').val(),
+                batchNo: $('#batchNo').val(),
+                country_code: $('#country_code').val()
+            }),
+            dataType: "json",
+            success: function (response) {
                 switch (parseInt(JSON.parse(response.d))) {
                     case 1:
                         alert("User Data Updated");
-                        window.location='users.html';
+                        window.location = 'users.html';
                         showUserData();
                         break;
                     case 0:
@@ -205,18 +242,14 @@ function UpdateData(){
                     case -1:
                         alert("Unable to update Data, Please Contact to Admin");
                         break;
-                    
                 }
-
-            } // success close
-        }).done(function () {
+            }
         }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("Status: " + textStatus + ", Error: " + errorThrown);
-            //alert("Something went wrong. Please contact Admin.");
-        }).always(function () {
-        }); // ajax call ends
-    }else
+        });
+    } else {
         alert("Invalid user details");
+    }
 }
 
 
@@ -357,3 +390,135 @@ function deleteImage(){
             alert("Invalid user details");
     
 }
+
+function getAllProfessions() {
+    $.ajax({
+        url: '../WebService.asmx/getProfessions',
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].profession.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].profession.localeCompare("522") === 0)
+                alert("Something went wrong. Please try again.");
+            else {
+
+                for (i = 0; i < user.length; i++) {
+
+
+                    var txt = '<option value="' + user[i].profession + '">' + user[i].profession + '</option>';
+
+
+
+                    $('#profession').append(txt);
+                }
+                //j = i;
+            }
+
+        }
+
+    }).done(function () {
+
+
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
+    });
+
+
+    //Edit user data and getting data using button 
+
+
+
+
+}
+
+function getAllDesignations() {
+    $.ajax({
+        url: '../WebService.asmx/getDesignations',
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].designation.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].designation.localeCompare("522") === 0)
+                alert("Something went wrong. Please try again.");
+            else {
+
+                for (i = 0; i < user.length; i++) {
+
+
+                    var txt = '<option value="' + user[i].designation + '">' + user[i].designation + '</option>';
+
+
+
+                    $('#designation').append(txt);
+                }
+                //j = i;
+            }
+
+        }
+
+    }).done(function () {
+
+
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
+    });
+
+
+    //Edit user data and getting data using button 
+
+
+
+
+}
+
+//$(document).ready(function() {
+//  $('#profession').select2({
+//    placeholder: "Select a profession",
+//  allowClear: true // This option allows clearing the selection
+//   });
+//});
+
+$(document).ready(function () {
+    // Show/hide input field based on selection
+    $('#profession').change(function () {
+        if ($(this).val() === 'other') {
+            $('#otherProfessionInput').show();
+            $('#otherProfessionInput').attr('placeholder', 'Enter your profession');
+            $('#otherProfessionLabel').text('Please type your current profession here');
+        } else {
+            $('#otherProfessionInput').hide();
+            $('#otherProfessionInput').removeAttr('placeholder');
+            $('#otherProfessionLabel').text('');
+        }
+    });
+
+    $('#designation').change(function () {
+        if ($(this).val() === 'other') {
+            $('#otherDesignationInput').show();
+            $('#otherDesignationInput').attr('placeholder', 'Enter your designation');
+            $('#otherDesignationLabel').text('Please type your Designation here');
+        } else {
+            $('#otherDesignationInput').hide();
+            $('#otherDesignationInput').removeAttr('placeholder');
+            $('#otherDesignationLabel').text('');
+        }
+    });
+
+    // Validate the form before submission
+    $('form').submit(function () {
+        if ($('#professionSelect').val() === 'other' && $('#otherProfessionInput').val() === '') {
+            alert('Please enter your profession');
+            return false; // Prevent form submission
+        }
+        if ($('#designationSelect').val() === 'other' && $('#otherDesignationInput').val() === '') {
+            alert('Please enter your designation');
+            return false; // Prevent form submission
+        }
+    });
+});

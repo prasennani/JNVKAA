@@ -194,6 +194,7 @@ namespace JNKVAA
             public string uemail { get; set; }
             public string jnvkdesign { get; set; }
             public string adminStatus { get; set; }
+            public string country_code { get; set; }
 
         }
 
@@ -481,26 +482,6 @@ namespace JNKVAA
             }
         }
 
-
-        /*[WebMethod(EnableSession = true)]
-        public string getUsername()
-        {
-            if (Session != null)
-            {
-                if (Session["uname"] != null)
-                {
-                    if (Session["desig"] != null)
-                        return Session["uname"].ToString() + "-" + Session["desig"].ToString();
-                    else
-                        return "-1";
-                }
-                else
-                    return "-1";//login
-            }
-            else
-                return "-2";//login redirect 
-        }*/
-
         [WebMethod(EnableSession = true)]
         public string getUsername()
         {
@@ -610,7 +591,7 @@ namespace JNKVAA
                         uClass.uphno = rdr["Mobile"].ToString();
                         uClass.uemail = rdr["Email"].ToString();
                         uClass.batchno = rdr["BatchNo"].ToString();
-                        uClass.batchno = rdr["BatchNo"].ToString();
+                        uClass.country_code = rdr["country_code"].ToString();
                         /*Session["userid"] = rdr["UserId"].ToString();
                         Session["uname"] = rdr["Name"].ToString(); //[0] + ". " + rdr["SurName"].ToString();
                         Session["batchno"] = rdr["BatchNo"].ToString();*/
@@ -713,7 +694,7 @@ namespace JNKVAA
                         uClass.uphno = rdr["Mobile"].ToString();
                         uClass.uemail = rdr["Email"].ToString();
                         uClass.batchno = rdr["BatchNo"].ToString();
-                        uClass.batchno = rdr["BatchNo"].ToString();
+                        uClass.country_code = rdr["country_code"].ToString();
                         /*Session["userid"] = rdr["UserId"].ToString();
                         Session["uname"] = rdr["Name"].ToString(); //[0] + ". " + rdr["SurName"].ToString();
                         Session["batchno"] = rdr["BatchNo"].ToString();*/

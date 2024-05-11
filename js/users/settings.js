@@ -6,7 +6,7 @@ var userid = "";
 $(document).ready(function () {
     $('#preloader').css('display', 'flex');
     
-
+   
     getuserAccessLevel();
     getAllProfessions();
     getAllDesignations();
@@ -23,6 +23,7 @@ $(document).ready(function () {
     $('#updatePassword').click(function () {
         changePassword();
     });
+
 
 });
 
@@ -43,18 +44,28 @@ function showUserData(){
             else {
                 $('#fname').val(user[0].fname);
                 $('#sname').val(user[0].sname);
+                $('#idno').text("JNVKAA ID No.: " + user[0].uid);
+                $('#fullname1').text(user[0].fname + " " + user[0].sname);
+                $('#fullname2').text(user[0].fname + " " + user[0].sname);
                 $('#gender').val(user[0].gender).change();
                 $('#dob').val(user[0].dob);
                 $('#maritalstatus').val(user[0].marriagestatus).change();
                 $('#bloodgroup').val(user[0].bgroup).change();
+                $('#bloodgroup1').text("Blood Group: " + getBloodGroup(user[0].bgroup));
                 $('#phno').val(user[0].uphno);
+                $('#phno1').text(user[0].country_code + " " + user[0].uphno);
                 $('#email').val(user[0].uemail);
+                $('#email1').text(user[0].uemail);
                 $('#city').val(user[0].ucity);
+                $('#city1').text("City: " + user[0].ucity);
                 $('#profession').val(user[0].profession);
+                $('#profession1').text(user[0].profession);
                 $('#workingin').val(user[0].workingin);
+                $('#workingin1').text(user[0].workingin);
                 $('#lclass').val(user[0].lclass).change();
                 $('#workingas').val(user[0].workingas).change();
                 $('#bio').val(user[0].ubio);
+                $('#bio1').text(user[0].ubio);
                 switch (parseInt(user[0].ustatus)) {
                     case -2:
                         $('#Pstatus').text("Pending");
@@ -74,13 +85,36 @@ function showUserData(){
                 $('#lnkid').val(user[0].linkdnurl);
 
                 $('#designation').val(user[0].designation);
+                $('#designation1').text(user[0].designation);
                 $('#medinsuexp').val(user[0].medinsuexp);
                 $('#medinsupro').val(user[0].medinsupro);
                 $('#expertin').val(user[0].expertin);
+                $('#expertin1').text(user[0].expertin);
                 $('#native').val(user[0].native);
+                $('#native1').text(user[0].native);
                 $('#hob2').val(user[0].hob2);
                 $('#batchno').val(user[0].batchNo);
+                $('#batchno1').text("Batch No: " + user[0].batchNo);
                 $('#country_code').val(user[0].country_code);
+
+                var instaUrl = user[0].instaurl;
+                var fbookUrl = user[0].fbookurl;
+                var linkdnUrl = user[0].linkdnurl;
+                $('.instagram').attr('href', instaUrl);
+                $('.facebook').attr('href', fbookUrl);
+                $('.twitter').attr('href', linkdnUrl);
+                $('.instagram').click(function (event) {
+                    event.preventDefault(); // Prevent the default action of the anchor tag
+                    window.open(instaUrl, '_blank'); // Open the link in a new tab
+                });
+                $('.facebook').click(function (event) {
+                    event.preventDefault(); // Prevent the default action of the anchor tag
+                    window.open(fbookUrl, '_blank'); // Open the link in a new tab
+                });
+                $('.twitter').click(function (event) {
+                    event.preventDefault(); // Prevent the default action of the anchor tag
+                    window.open(linkdnUrl, '_blank'); // Open the link in a new tab
+                });
             }
             $('#preloader').css('display', 'none');
         }
@@ -89,6 +123,29 @@ function showUserData(){
     }).fail(function (XMLHttpRequest, status, error) {
         console.log("Status " + status + "Error" + error);
     });
+}
+
+function getBloodGroup(value) {
+    switch (value) {
+        case '1':
+            return 'O+';
+        case '2':
+            return 'O-';
+        case '3':
+            return 'A+';
+        case '4':
+            return 'A-';
+        case '5':
+            return 'B+';
+        case '6':
+            return 'B-';
+        case '7':
+            return 'AB+';
+        case '8':
+            return 'AB-';
+        default:
+            return 'Unknown';
+    }
 }
 
 
@@ -366,12 +423,14 @@ function getProfilePic() {
 
             if (response.d.length > 20) {
                 $('#imgprofile').attr('src', String(response.d).replaceAll('"', ''));
+                $('#imgprofile1').attr('src', String(response.d).replaceAll('"', ''));
                 $('#profileicon').attr('src', String(response.d).replaceAll('"', ''));
                 $('#profileicon2').attr('src', String(response.d).replaceAll('"', ''));
 
                 //$("#tarea").val(String(response.d).replaceAll('"', ''));
             } else {
                 $('#imgprofile').attr('src', "../assets/imgs/profile pic.png");
+                $('#imgprofile1').attr('src', "../assets/imgs/profile pic.png");
                 $('#profileicon2').attr('src', "../assets/imgs/profile pic.png");
                 $('#profileicon').attr('src', "../assets/imgs/profile pic.png");
             }
@@ -394,7 +453,9 @@ function getuser() {
         success: function (response) {
             user = response.d;
             $('#puname').text(user);
+            $('#puname1').text(user);
             $('#puname2').text(user);
+            $('#puname3').text(user);
             /*var vals = user.split("-");
 
             if (vals.length == 2) {
@@ -519,6 +580,7 @@ function compressImage() {
         reader.readAsDataURL(file);
     }
 }
+
 
 function dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
@@ -647,3 +709,40 @@ function hideModal() {
 
 
 }
+
+function printCard() {
+    const card = document.getElementById('profileCard');
+    const cardClone = card.cloneNode(true);
+    const printWindow = window.open('', '_blank');
+
+    // Define CSS styles to center content
+    const styles = `
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .card {
+                width: 50%; /* Adjust as needed */
+            }
+        </style>
+    `;
+
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Profile Card</title>
+                ${styles}
+            </head>
+            <body>${cardClone.outerHTML}</body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+}
+
+
