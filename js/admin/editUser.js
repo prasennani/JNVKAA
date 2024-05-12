@@ -27,6 +27,12 @@ $(document).ready(function () {
        changeStatus(status);
     });
 
+    $('#changeCallDispoStaus').click(function () {
+        var status = $('#calldispo').val();
+
+        changeCallDispo(status);
+    });
+
     $('#del').click(function(){
         deleteImage();
     });
@@ -107,6 +113,11 @@ function showUserData(){
                 $('#lclass').val(user[0].lclass).change();
                 $('#workingas').val(user[0].workingas).change();
                 $('#bio').val(user[0].ubio);
+                $('#adminnotes').val(user[0].uadminnotes);
+                $('#adminnoteddate').val(user[0].uadminnoteddate);
+                $('#userupdated').val(user[0].auserupdated).change();
+                $('#userupdatedon').val(user[0].auserupdatedon);
+                $('#calldispodate').val(user[0].calldispodate);
                 switch (parseInt(user[0].ustatus)) {
                     case -2:
                         $('#Pstatus').text("Pending");
@@ -119,6 +130,20 @@ function showUserData(){
                         break;
                     case 0:
                         $('#Pstatus').text("Blocked");
+                        break;
+                }
+                switch (parseInt(user[0].calldispo)) {
+                    case 0:
+                        $('#acalldispo').text("Un Answered");
+                        break;
+                    case 1:
+                        $('#acalldispo').text("He/she Updates");
+                        break;
+                    case 2:
+                        $('#acalldispo').text("Admin updated");
+                        break;
+                    case 3:
+                        $('#acalldispo').text("Call Back");
                         break;
                 }
                 $('#instaid').val(user[0].instaurl);
@@ -166,7 +191,7 @@ function changeStatus(status){
                             
                         break;
                     case 0:
-                        alert("Unable to update Profile Pic. Try after sometime.");
+                        alert("Unable to update User Status. Try after sometime.");
                         break;
                     
                 }
@@ -179,6 +204,38 @@ function changeStatus(status){
         }).always(function () {
         }); // ajax call ends
     }else
+        alert("Invalid user details");
+}
+
+
+function changeCallDispo(status) {
+    if (userid.length > 0) {
+        $.ajax({
+            url: '../WebService.asmx/updatecalldispoStatus',
+            type: "POST", // type of the data we send (POST/GET)
+            contentType: "application/json",
+            data: "{ 'uid': '" + userid + "', 'calldispo': '" + status + "'}",
+            datatype: "json",
+            success: function (response) { // when successfully sent data and returned
+                //    alert("Res: " + response.d);
+                switch (parseInt(JSON.parse(response.d))) {
+                    case 1:
+                        showUserData();
+                        break;
+                    case 0:
+                        alert("Unable to update Call Dispo. Try after sometime.");
+                        break;
+
+                }
+
+            } // success close
+        }).done(function () {
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus + ", Error: " + errorThrown);
+            //alert("Something went wrong. Please contact Admin.");
+        }).always(function () {
+        }); // ajax call ends
+    } else
         alert("Invalid user details");
 }
 
@@ -219,6 +276,7 @@ function UpdateData() {
                 workingas: $('#workingas').val(),
                 lclass: $('#lclass').val(),
                 bio: $('#bio').val(),
+                adminnotes: $('#adminnotes').val(),
                 instaurl: $('#instaid').val(),
                 fbookurl: $('#fbid').val(),
                 medicalInsurProvi: $('#MediInsurP').val(),
@@ -226,6 +284,7 @@ function UpdateData() {
                 ExpertIn: $('#ExpertIn').val(),
                 linkdnurl: $('#lnkid').val(),
                 batchNo: $('#batchNo').val(),
+                userupdated: $('#userupdated').val(),
                 country_code: $('#country_code').val()
             }),
             dataType: "json",

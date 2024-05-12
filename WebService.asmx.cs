@@ -195,6 +195,7 @@ namespace JNKVAA
             public string jnvkdesign { get; set; }
             public string adminStatus { get; set; }
             public string country_code { get; set; }
+            public string callDispo { get; set; }
 
         }
 
@@ -514,7 +515,7 @@ namespace JNKVAA
 
         // admin module
         [WebMethod(EnableSession = true)]
-        public string getAllusers(string utype , string batchNo)
+        public string getAllusers(string utype , string batchNo, string calldispo)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
             //string val = "0";
@@ -534,49 +535,106 @@ namespace JNKVAA
                     con.Open();
                     cmd = new SqlCommand("", con);
 
-                    if (Convert.ToInt32(batchNo)==0)
+                    if (Convert.ToInt32(calldispo) == -1)
                     {
 
-                        switch (Convert.ToInt32(utype))
+                        if (Convert.ToInt32(batchNo) == 0)
                         {
-                            case 0:
-                                cmd.CommandText = "select * from TB_Users where UStatus=0  order by BatchNo";
-                                break;
-                            case 1:
-                                cmd.CommandText = "select * from TB_Users where UStatus=1 order by BatchNo";
-                                break;
-                            case 2:
-                                cmd.CommandText = "select * from TB_Users order by BatchNo";
-                                break;
-                            case -1:
-                                cmd.CommandText = "select * from TB_Users where UStatus=-1 or UStatus=-2  order by BatchNo";
-                                break;
+
+                            switch (Convert.ToInt32(utype))
+                            {
+                                case 0:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=0  order by BatchNo";
+                                    break;
+                                case 1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=1 order by BatchNo";
+                                    break;
+                                case 2:
+                                    cmd.CommandText = "select * from TB_Users order by BatchNo";
+                                    break;
+                                case -1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=-1 or UStatus=-2  order by BatchNo";
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (Convert.ToInt32(utype))
+                            {
+                                case 0:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=0 and  BatchNo=@batchno";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    break;
+                                case 1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=1 and  BatchNo=@batchno";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    break;
+                                case 2:
+                                    cmd.CommandText = "select * from TB_Users where  BatchNo=@batchno";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    break;
+                                case -1:
+                                    cmd.CommandText = "select * from TB_Users where (UStatus=-1 or UStatus=-2)  and  BatchNo=@batchno";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    break;
+                            }
+
+
                         }
                     }
                     else
                     {
-                        switch (Convert.ToInt32(utype))
+                        if (Convert.ToInt32(batchNo) == 0)
                         {
-                            case 0:
-                                 cmd.CommandText = "select * from TB_Users where UStatus=0 and  BatchNo=@batchno";
-                                 cmd.Parameters.AddWithValue("batchno", batchNo);
-                                break;
-                            case 1:
-                                 cmd.CommandText = "select * from TB_Users where UStatus=1 and  BatchNo=@batchno";
-                                 cmd.Parameters.AddWithValue("batchno", batchNo);
-                                break;
-                            case 2:
-                                 cmd.CommandText = "select * from TB_Users where  BatchNo=@batchno";
-                                 cmd.Parameters.AddWithValue("batchno", batchNo);
-                                break;
-                            case -1:
-                                cmd.CommandText = "select * from TB_Users where  order by BatchNo";
-                                cmd.CommandText = "select * from TB_Users where (UStatus=-1 or UStatus=-2)  and  BatchNo=@batchno";
-                                cmd.Parameters.AddWithValue("batchno", batchNo);
-                                break;
-                        }
-                       
 
+                            switch (Convert.ToInt32(utype))
+                            {
+                                case 0:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=0 and CallDispo=@calldispo order by BatchNo";
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case 1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=1 and CallDispo=@calldispo order by BatchNo";
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case 2:
+                                    cmd.CommandText = "select * from TB_Users where CallDispo=@calldispo order by BatchNo";
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case -1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=-1 or UStatus=-2 and CallDispo=@calldispo order by BatchNo";
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (Convert.ToInt32(utype))
+                            {
+                                case 0:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=0 and  BatchNo=@batchno and CallDispo=@calldispo";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case 1:
+                                    cmd.CommandText = "select * from TB_Users where UStatus=1 and  BatchNo=@batchno and CallDispo=@calldispo";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case 2:
+                                    cmd.CommandText = "select * from TB_Users where  BatchNo=@batchno and CallDispo=@calldispo";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                                case -1:
+                                    cmd.CommandText = "select * from TB_Users where (UStatus=-1 or UStatus=-2)  and  BatchNo=@batchno and CallDispo=@calldispo";
+                                    cmd.Parameters.AddWithValue("batchno", batchNo);
+                                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                                    break;
+                            }
+
+
+                        }
                     }
 
                     rdr = cmd.ExecuteReader();
@@ -592,6 +650,7 @@ namespace JNKVAA
                         uClass.uemail = rdr["Email"].ToString();
                         uClass.batchno = rdr["BatchNo"].ToString();
                         uClass.country_code = rdr["country_code"].ToString();
+                        uClass.callDispo = rdr["CallDispo"].ToString();
                         /*Session["userid"] = rdr["UserId"].ToString();
                         Session["uname"] = rdr["Name"].ToString(); //[0] + ". " + rdr["SurName"].ToString();
                         Session["batchno"] = rdr["BatchNo"].ToString();*/
@@ -838,7 +897,7 @@ namespace JNKVAA
             public string instaurl { get; set; }
             public string fbookurl { get; set; }
             public string linkdnurl { get; set; }
-
+            public string calldispo { get; set; }
             public string designation { get; set; }
             public string medinsuexp { get; set; }
             public string medinsupro { get; set; }
@@ -847,6 +906,11 @@ namespace JNKVAA
             public string batchNo { get; set; }
             public string hob2 { get; set; }
             public string country_code { get; set; }
+            public string uadminnotes { get; set; }
+            public string auserupdatedon { get; set; }
+            public string auserupdated { get; set; }
+            public string uadminnoteddate { get; set; }
+            public string calldispodate { get; set; }
 
         }
 
@@ -889,6 +953,7 @@ namespace JNKVAA
                         uData.fname = rdr["Name"].ToString();
                         uData.sname = rdr["SurName"].ToString();
                         uData.ustatus = rdr["UStatus"].ToString();
+                        uData.calldispo = rdr["CallDispo"].ToString();
                         uData.uphno = rdr["Mobile"].ToString();
                         uData.uemail = rdr["Email"].ToString();
 
@@ -919,6 +984,11 @@ namespace JNKVAA
                         uData.workingin = rdr["WorkingIn"].ToString();
                         uData.workingas = rdr["WorkingAs"].ToString();
                         uData.ubio = rdr["Biodata"].ToString();
+                        uData.uadminnotes = rdr["AdminNotes"].ToString();
+                        uData.uadminnoteddate = rdr["AdminNotedDate"].ToString();
+                        uData.auserupdated = rdr["UserUpdated"].ToString();
+                        uData.auserupdatedon = rdr["UserUpdatedOn"].ToString();
+                        uData.calldispodate = rdr["CallDispoDate"].ToString();
                         uData.instaurl = rdr["InstaUrl"].ToString();
                         uData.fbookurl = rdr["FbookUrl"].ToString();
                         uData.linkdnurl = rdr["LinkdnUrl"].ToString();
@@ -1068,9 +1138,50 @@ namespace JNKVAA
                     con.Open();
                     cmd = new SqlCommand("", con);
 
-                    cmd.CommandText = "update TB_Users set UStatus=@ustatus where UserId=@uid";
+                    cmd.CommandText = "update TB_Users set UStatus=@ustatus, ActivatedBy=@userid, ActivatedOn=@activatedon where UserId=@uid";
                     cmd.Parameters.AddWithValue("ustatus", ustatus);
                     cmd.Parameters.AddWithValue("uid", uid);
+                    cmd.Parameters.AddWithValue("activatedon", DateTime.Now);
+                    cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
+                    int res = cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                    con.Close();
+                    if (res > 0)
+                        return oSerializer.Serialize("1");
+                    else
+                        return oSerializer.Serialize("0");
+                }
+                catch (Exception ex)
+                {
+
+                    return oSerializer.Serialize("-1" + ex.Message);
+                }
+            }
+        }
+
+        //update User status for account code is here
+        [WebMethod(EnableSession = true)]
+        public string updatecalldispoStatus(string uid, string calldispo)
+        {
+
+
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            using (con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+                    cmd = new SqlCommand("", con);
+
+                    cmd.CommandText = "update TB_Users set CallDispo=@calldispo, CallMadeBy=@userid, CallDispoDate=@calldispodate where UserId=@uid";
+                    cmd.Parameters.AddWithValue("calldispo", calldispo);
+                    cmd.Parameters.AddWithValue("uid", uid);
+                    cmd.Parameters.AddWithValue("calldispodate", DateTime.Now);
+                    cmd.Parameters.AddWithValue("userid", Session["userid"].ToString());
                     int res = cmd.ExecuteNonQuery();
                     cmd.Parameters.Clear();
                     con.Close();
@@ -1088,7 +1199,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string updateUserData(string uid, string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string instaurl, string fbookurl, string medicalInsurProvi,string medicalInsurExpire,string ExpertIn, string linkdnurl, string batchNo, string country_code)
+        public string updateUserData(string uid, string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string adminnotes, string instaurl, string fbookurl, string medicalInsurProvi,string medicalInsurExpire,string ExpertIn, string linkdnurl, string batchNo,string userupdated, string country_code)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
 
@@ -1102,8 +1213,9 @@ namespace JNKVAA
                     con.Open();
                     cmd = new SqlCommand("", con);
 
-                    cmd.CommandText = "update TB_Users set Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob,MaritalStatus=@maritalstatus, BloodGroup=@bgroup,Mobile=@phno, Email=@email ,City=@city,Profession=@profession,WorkingIn=@workingin,JNVLastClass=@lclass,WorkingAs=@workingas,Biodata=@bio,InstaUrl=@instaurl,FbookUrl=@fbookurl,LinkdnUrl=@linkdnurl,MedicalInsuranceProvider=@medicalInsurP,ExpertIn=@expertIn,MedicalInsuranceExpiry=@medicalInsExp,BatchNo=@batchNo,country_code=@country_code  where UserId=@uid;";
+                    cmd.CommandText = "update TB_Users set Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email ,City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, AdminNotes=@adminnotes, AdminNotedDate=@adminnoteddate, UserUpdated=@userupdated, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceProvider=@medicalInsurP, ExpertIn=@expertIn, MedicalInsuranceExpiry=@medicalInsExp, BatchNo=@batchNo, country_code=@country_code  where UserId=@uid;";
                     cmd.Parameters.AddWithValue("uid", uid);
+                    cmd.Parameters.AddWithValue("adminnoteddate", DateTime.Now);
                     cmd.Parameters.AddWithValue("fname", fname);
                     cmd.Parameters.AddWithValue("sname", sname);
                     cmd.Parameters.AddWithValue("gender", gender);
@@ -1118,12 +1230,14 @@ namespace JNKVAA
                     cmd.Parameters.AddWithValue("lclass", lclass);
                     cmd.Parameters.AddWithValue("workingas", workingas);
                     cmd.Parameters.AddWithValue("bio", bio);
+                    cmd.Parameters.AddWithValue("adminnotes", adminnotes);
                     cmd.Parameters.AddWithValue("instaurl", instaurl);
                     cmd.Parameters.AddWithValue("fbookurl", fbookurl);
                     cmd.Parameters.AddWithValue("linkdnurl", linkdnurl);
                     cmd.Parameters.AddWithValue("medicalInsurP", medicalInsurProvi);
                     cmd.Parameters.AddWithValue("expertIn", ExpertIn);
                     cmd.Parameters.AddWithValue("batchNo", batchNo);
+                    cmd.Parameters.AddWithValue("userupdated", userupdated);
                     cmd.Parameters.AddWithValue("country_code", country_code);
                     cmd.Parameters.AddWithValue("medicalInsExp", medicalInsurExpire);
                     int res = cmd.ExecuteNonQuery();
@@ -2218,9 +2332,10 @@ namespace JNKVAA
                         con.Open();
                         using (SqlCommand cmd = new SqlCommand("", con))
                         {
-                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, NativePlace=@native, Hobbies2=@hob2, Designation=@desig, country_code=@country_code WHERE UserId=@uid;";
+                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, UserUpdatedOn=@userupdatedon, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, NativePlace=@native, Hobbies2=@hob2, Designation=@desig, country_code=@country_code WHERE UserId=@uid;";
 
                             cmd.Parameters.AddWithValue("uid", Session["userid"].ToString());
+                            cmd.Parameters.AddWithValue("userupdatedon", DateTime.Now);
                             cmd.Parameters.AddWithValue("fname", string.IsNullOrEmpty(fname) ? (object)DBNull.Value : (object)fname);
                             cmd.Parameters.AddWithValue("sname", string.IsNullOrEmpty(sname) ? (object)DBNull.Value : (object)sname);
                             cmd.Parameters.AddWithValue("gender", string.IsNullOrEmpty(gender) ? (object)DBNull.Value : (object)gender);

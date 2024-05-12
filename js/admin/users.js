@@ -1,7 +1,8 @@
 ﻿var selectUser = "";
 var batchno = "";
+var calldispo = "";
+
 $(document).ready(function () {
-    // $('#preloader').css('display', 'flex');
     $('.loader').css('display', 'flex');
     var j = 0;
     getAllUser();
@@ -15,32 +16,20 @@ $(document).ready(function () {
         
     });
     $('#selectUser').on('change', function () {
-     //   $('#preloader').css('display', 'flex');
-       // selectUser = $('#selectUser').val();
-        // alert(selectUser);
         
         getUser();
 
     });
-    /*$('#selectUser').on('change', function () {
-        selectUser = $('#selectUser').val();
-        // alert(selectUser);
-        $('#selectbatch').on('change', function () {
-            batchno = $('#selectbatch').val();
-            // alert(selectUser);
-
-            getUser();
-
-        });
-
-
-    });*/
     $('#selectbatch').on('change', function () {
         batchno = $('#selectbatch').val();
         $('.loader').css('display', 'flex');
-        // alert(selectUser);
-      //  $('#preloader').css('display', 'flex');
+        getUser();
 
+    });
+    $('#selectDispo').on('change', function () {
+        batchno = $('#selectbatch').val();
+        calldispo = $('#selectDispo').val();
+        $('.loader').css('display', 'flex');
         getUser();
 
     });
@@ -55,7 +44,7 @@ function getAllUser() {
         type: "POST",
         contentType: "application/json",
         dataType: "json",
-        data: "{'utype': '2','batchNo':'0'}",
+        data: "{'utype': '2','batchNo':'0','calldispo':'-1'}",
         success: function (response) {
            // alert(response.d);
             user = JSON.parse(JSON.parse(response.d));
@@ -69,26 +58,43 @@ function getAllUser() {
 
                 for (i = 0; i < user.length; i++) {
                     var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
-                    txt += '<td>' + user[i].fname +" "+ user[i].sname + '</td>';
-                    txt += '<td>' + user[i].batchno + '</td>';
-                    txt += '<td>' + user[i].country_code + user[i].uphno + '</td>';
-                    txt += '<th><p><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WhatsApp </a></p></th>';
-                    switch (parseInt(user[i].ustatus)) {
-                        case -2:
-                            txt += '<td> <div class="pending"> Pending </div></td>';
-                            break;
-                        case -1:
-                            txt += '<td> <div class="pending"> Pending </div></td>';
+                    switch (parseInt(user[i].callDispo)) {
+                        case 0:
+                            txt += '<td> <div class="approved"> Un Answered </div></td>';
                             break;
                         case 1:
-                            txt += '<td> <div class="approved"> Approved </div></td>';
+                            txt += '<td> <div class="approved"> User will update </div></td>';
+                            break;
+                        case 2:
+                            txt += '<td> <div class="approved"> Admin will update </div></td>';
+                            break;
+                        case 3:
+                            txt += '<td> <div class="blocked"> Call Back </div></td>';
+                            break;
+                        default:
+                            txt += '<td> <div class="pending"> Undailed </div></td>';
+                            break;
+                    }
+                    txt += '<td>' + user[i].fname +" "+ user[i].sname + '</td>';
+                    txt += '<td>' + user[i].batchno + '</td>';
+                    txt += '<td><a href="tel:' + user[i].country_code + user[i].uphno + '">' + user[i].country_code + user[i].uphno + '</a></td>';
+                    txt += '<th><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WA </a></th>';
+                    switch (parseInt(user[i].ustatus)) {
+                        case -2:
+                            txt += '<td> <div class="pending"> P </div></td>';
+                            break;
+                        case -1:
+                            txt += '<td> <div class="pending"> P </div></td>';
+                            break;
+                        case 1:
+                            txt += '<td> <div class="approved"> A </div></td>';
                             break;
                         case 0:
-                            txt += '<td> <div class="blocked"> Blocked </div></td>';
+                            txt += '<td> <div class="blocked"> B </div></td>';
                             break;
                     }
                     //alert(user[i].uid);
-                    txt += '<th><p><a class="link-info link-opacity-50-hover" id="editUser" href="editusers.html?e=' + user[i].uid + '"> Edit </a></p></th>';
+                    txt += '<th><a class="link-info link-opacity-50-hover" id="editUser" href="editusers.html?e=' + user[i].uid + '"> Edit </a></th>';
                     $('#usertable tr:last').after(txt);
                 }
                 $('.loader').css('display', 'none');
@@ -123,7 +129,7 @@ function getUser() {
         type: "POST",
         contentType: "application/json",
         dataType: "json",
-        data: "{'utype': '" + $('#selectUser').val() + "','batchNo':'" + $('#selectbatch').val() + "'}",
+        data: "{'utype': '" + $('#selectUser').val() + "','calldispo': '" + $('#selectDispo').val() + "','batchNo':'" + $('#selectbatch').val() + "'}",
         success: function (response) {
           //  alert(response.d);
             user = JSON.parse(JSON.parse(response.d));
@@ -138,26 +144,43 @@ function getUser() {
 
                 for (i = 0; i < user.length; i++) {
                     var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
-                    txt += '<td>' + user[i].fname +" "+ user[i].sname + '</td>';
-                    txt += '<td>' + user[i].batchno + '</td>';
-                    txt += '<td>' + user[i].country_code + user[i].uphno + '</td>';
-                    txt += '<th><p><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WhatsApp </a></p></th>';
-                    switch (parseInt(user[i].ustatus)) {
-                        case -2:
-                            txt += '<td> <div class="pending"> Pending </div></td>';
-                            break;
-                        case -1:
-                            txt += '<td> <div class="pending"> Pending </div></td>';
+                    switch (parseInt(user[i].callDispo)) {
+                        case 0:
+                            txt += '<td> <div class="approved"> Un Answered </div></td>';
                             break;
                         case 1:
-                            txt += '<td> <div class="approved"> Approved </div></td>';
+                            txt += '<td> <div class="approved"> User will update </div></td>';
+                            break;
+                        case 2:
+                            txt += '<td> <div class="approved"> Admin will update </div></td>';
+                            break;
+                        case 3:
+                            txt += '<td> <div class="blocked"> Call Back </div></td>';
+                            break;
+                        default:
+                            txt += '<td> <div class="pending"> Undailed </div></td>';
+                            break;
+                    }
+                    txt += '<td>' + user[i].fname + " " + user[i].sname + '</td>';
+                    txt += '<td>' + user[i].batchno + '</td>';
+                    txt += '<td><a href="tel:' + user[i].country_code + user[i].uphno + '">' + user[i].country_code + user[i].uphno + '</a></td>';
+                    txt += '<th><a class="link-info link-opacity-50-hover" target="_blank" href="https://wa.me/' + user[i].country_code + user[i].uphno + '"> WA </a></th>';
+                    switch (parseInt(user[i].ustatus)) {
+                        case -2:
+                            txt += '<td> <div class="pending"> P </div></td>';
+                            break;
+                        case -1:
+                            txt += '<td> <div class="pending"> P </div></td>';
+                            break;
+                        case 1:
+                            txt += '<td> <div class="approved"> A </div></td>';
                             break;
                         case 0:
-                            txt += '<td> <div class="blocked"> Blocked </div></td>';
+                            txt += '<td> <div class="blocked"> B </div></td>';
                             break;
                     }
                     //alert(user[i].uid);
-                    txt += '<th><p><a class="link-info link-opacity-50-hover" id="editUser" href="editusers.html?e=' + user[i].uid + '"> Edit </a></p></th>';
+                    txt += '<th><a class="link-info link-opacity-50-hover" id="editUser" href="editusers.html?e=' + user[i].uid + '"> Edit </a></th>';
                     $('#usertable tr:last').after(txt);
                 }
                 $('.loader').css('display', 'none');
@@ -173,11 +196,6 @@ function getUser() {
         console.log("Status " + status + "Error" + error);
     });
     
-
-    //Edit user data and getting data using button 
-
-
-
 
 }
 

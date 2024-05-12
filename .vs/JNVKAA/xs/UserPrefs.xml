@@ -1,31 +1,28 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="js/users/settings.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="users/idcard.html" Line="636" Column="47" />
-      <File FileName="WebService.asmx.cs" Line="4472" Column="24" />
-      <File FileName="Web.config" Line="1" Column="1" />
-      <File FileName="users/settings.html" Line="688" Column="6" />
-      <File FileName="js/viewuser.js" Line="43" Column="56" />
-      <File FileName="users/viewuser.html" Line="218" Column="33" />
-      <File FileName="js/users/settings.js" Line="242" Column="10" />
+      <File FileName="WebService.asmx.cs" Line="697" Column="44" />
+      <File FileName="Web.config" Line="10" Column="53" />
+      <File FileName="users/settings.html" Line="389" Column="29" />
+      <File FileName="users/idcard.html" Line="383" Column="129" />
+      <File FileName="admin/editusers.html" Line="158" Column="61" />
+      <File FileName="js/admin/editUser.js" Line="254" Column="1" />
+      <File FileName="js/users/settings.js" Line="11" Column="5" />
+      <File FileName="batchadmin/editusers.html" Line="1" Column="1" />
+      <File FileName="batchadmin/users.html" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="JNVKAA" expanded="True">
-            <Node name="JNKVAA" expanded="True">
-              <Node name="admin" expanded="True" />
-              <Node name="js" expanded="True">
-                <Node name="users" expanded="True">
-                  <Node name="settings.js" selected="True" />
-                </Node>
-              </Node>
+          <Node name="JNVKAA">
+            <Node name="JNKVAA">
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -33,5 +30,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

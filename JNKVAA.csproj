@@ -75,7 +75,6 @@
     <Content Include="admin\events.html" />
     <Content Include="admin\gallery.html" />
     <Content Include="admin\galleryfolder.html" />
-    <Content Include="admin\home.html" />
     <Content Include="admin\login.html" />
     <Content Include="admin\messages.html" />
     <Content Include="admin\stories.html" />
