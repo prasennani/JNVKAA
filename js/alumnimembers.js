@@ -158,7 +158,7 @@ function getAllBatchmates() {
                         txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '"><i class="fab fa-facebook-f"></i></a>';
                         txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].linkdnurl + '"><i class="fab fa-twitter"></i></a>';
                         txt += '  <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].instaurl + '"><i class="fab fa-instagram"></i></a>';
-                        txt += '  <a class="btn btn-square text-primary bg-white m-1" href="viewuser.html?user=' + user[i].uid + '"><i class="fas fa-eye"></i></a>';
+                        txt += '  <a class="btn btn-square text-primary bg-white m-1" href="login.html"><i class="fas fa-eye"></i></a>';
                         txt += '    </div> </div> </div>';
                         $('#alumnimembers').append(txt);
                     }

@@ -663,7 +663,7 @@ function changePassword() {
             url: '../WebService.asmx/updatePassword',
             type: "POST", // type of the data we send (POST/GET)
             contentType: "application/json",
-            data: "{ 'userEmail': '" + $('#phno').val() + "', 'userPass': '" + $('#confirmPass').val() + "'}",
+            data: "{ 'userPass': '" + $('#confirmPass').val() + "'}",
             datatype: "json",
             success: function (response) { // when successfully sent data and returned
                 //  alert("Res: " + response.d);
@@ -715,18 +715,27 @@ function printCard() {
     const cardClone = card.cloneNode(true);
     const printWindow = window.open('', '_blank');
 
-    // Define CSS styles to center content
+    // Define CSS styles for A5 size
     const styles = `
         <style>
+
+            @page {
+                size: A5 portrait; /* Set page size to A5 and portrait orientation */
+                margin: 0; /* Remove default margin */
+            }
             body {
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                height: 100vh;
+                width: 148mm; /* Set width to match A5 size */
+                height: 210mm; /* Set height to match A5 size */
+                margin: 0; /* Remove default margin */
+                padding: 10mm; /* Add padding to maintain spacing */
             }
             .card {
-                width: 50%; /* Adjust as needed */
+                width: 100%; /* Set card width to fill page */
+                height: 100%; /* Set card height to fill page */
             }
+            /* Adjust other styles as needed */
         </style>
     `;
 
@@ -734,6 +743,11 @@ function printCard() {
         <html>
             <head>
                 <title>Profile Card</title>
+                <link href="../css/bootstrap.min.css" rel="stylesheet">
+                <link href="../css/style.css" rel="stylesheet">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+          rel="stylesheet">
                 ${styles}
             </head>
             <body>${cardClone.outerHTML}</body>
@@ -744,5 +758,6 @@ function printCard() {
     printWindow.print();
     printWindow.close();
 }
+
 
 

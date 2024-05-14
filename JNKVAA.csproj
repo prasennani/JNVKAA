@@ -242,7 +242,6 @@
     <Content Include="js\admin\viewgallery.js" />
     <Content Include="js\alumnimembers.js" />
     <Content Include="js\auth.js" />
-    <Content Include="js\batchmates.js" />
     <Content Include="js\boardmembers.js" />
     <Content Include="js\contact.js" />
     <Content Include="js\CountryCode.xml" />
@@ -1953,7 +1952,7 @@
     <Content Include="users\index.html" />
     <Content Include="users\privacypolicy.html" />
     <Content Include="users\readstory.html" />
-    <Content Include="users\settings.html" />
+    <Content Include="users\changepassword.html" />
     <Content Include="users\stories.html" />
     <Content Include="users\termsandconditions.html" />
     <Content Include="users\viewevent.html" />
@@ -1978,7 +1977,8 @@
     <Content Include="users\thankyou.html" />
     <Content Include="dophonepe.html" />
     <Content Include="js\dophonepe.js" />
-    <Content Include="users\idcard.html" />
+    <Content Include="users\settings.html" />
+    <Content Include="users\oldsettings.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

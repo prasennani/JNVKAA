@@ -4585,7 +4585,7 @@ namespace JNKVAA
          }
 
          [WebMethod(EnableSession = true)]
-         public string updatePassword(string userEmail, string userPass)
+         public string updatePassword(string userPass)
          {
              string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
 
@@ -4599,9 +4599,9 @@ namespace JNKVAA
                      con.Open();
                      cmd = new SqlCommand("", con);
 
-                     cmd.CommandText = "UPDATE TB_Users SET Pwd = @userPass WHERE Mobile = @userEmail;";
+                     cmd.CommandText = "UPDATE TB_Users SET Pwd = @userPass WHERE UserId = @uid;";
+                     cmd.Parameters.AddWithValue("uid", Session["userid"].ToString());
                      cmd.Parameters.AddWithValue("userPass", userPass);
-                     cmd.Parameters.AddWithValue("userEmail", userEmail);
                      int res = cmd.ExecuteNonQuery();
                      cmd.Parameters.Clear();
                      con.Close();

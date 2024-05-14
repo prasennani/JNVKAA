@@ -147,7 +147,6 @@ function getPresident() {
                     txt += '  <h5 class="fw-bold mb-1 text-primary">' + user[i].fname + ' ' + user[i].sname + '</h5>';
                     txt += '  <small>PRESIDENT</small>';
                     txt += '  </div>';
-                    txt += '  <p class="mb-4 ms-3 me-4 text-primary text-center bio1 " >"' + user[i].bio + '"</p>';
                     txt += '  <div class="d-flex justify-content-center bg-primary p-3">';
                     txt += '  <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '"><i class="fab fa-facebook-f"></i></a>';
                     txt += '  <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].linkdnurl + '"><i class="fab fa-twitter"></i></a>';
@@ -233,7 +232,6 @@ function getBoardMembers() {
 
                     }
                     txt += '  </div>';
-                    txt += '  <p class="mb-4 ms-3 me-4 text-primary text-center bio1 " >"' + user[i].bio + '"</p>';
                     txt += '  <div class="d-flex justify-content-center bg-primary p-3">';
                     txt += '  <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '"><i class="fab fa-facebook-f"></i></a>';
                     txt += '  <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].linkdnurl + '"><i class="fab fa-twitter"></i></a>';
