@@ -307,3 +307,43 @@ function getDonationData() {
 		$("#loadingSpinner").hide();
     }
 
+
+$(document).ready(function () {
+    $('#dophonepe').click(function (e) {
+        e.preventDefault();
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var mobileNo = $('#mobileno').val();
+        var batchNo = $('#batchNo').val();
+        var donatePurpose = $('#donatePurpose').val();
+        var donationAmount = $('#donationAmount').val();
+
+        var data = {
+            name: name,
+            email: email,
+            mobileNo: mobileNo,
+            batchNo: batchNo,
+            donatePurpose: donatePurpose,
+            donationAmount: donationAmount
+        };
+
+        $.ajax({
+            url: 'WebService.asmx/InitiatePayment',
+            method: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (response) {
+                if (response.d.success) {
+                    window.location.href = response.d.redirectUrl;
+                } else {
+                    alert('Payment initiation failed. Please try again.');
+                }
+            },
+            error: function (err) {
+                console.error(err);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+});

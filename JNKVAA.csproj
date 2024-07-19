@@ -3506,6 +3506,7 @@
     <Folder Include="payments\wp-content\upgrade\" />
     <Folder Include="payments\wp-content\uploads\2023\11\" />
     <Folder Include="js\batchadmin\" />
+    <Folder Include="App_Start\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

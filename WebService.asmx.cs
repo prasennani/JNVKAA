@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
-
 using System.Data;
-
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Globalization;
 using Newtonsoft.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
@@ -18,30 +17,141 @@ using System.Xml.Linq;
 using System.Web.Script.Serialization;
 using static JNKVAA.WebService;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+
 
 namespace JNKVAA
 {
-    /// <summary>
-    /// Summary description for WebService
-    /// </summary>
+    
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
     public class WebService : System.Web.Services.WebService
     {
-       
+
+        private readonly string merchantId = "PGTESTPAYUAT";
+        private readonly string apiKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
+        private readonly string apiKeyIndex = "1";
+        private readonly string hostUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox";
+
         SqlConnection con;
         SqlCommand cmd;
         SqlDataReader rdr;
 
+        [WebMethod(EnableSession = true)]
+        public string InitiatePayment(string name, string mobileNo, string email, string batchNo, string donatePurpose, string donationAmount)
+        {
+            string transactionId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);
+            string donateId = Guid.NewGuid().ToString();
+
+            try
+            {
+                string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+                using (con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    cmd = new SqlCommand("INSERT INTO TB_DonationAmount (DonateId, Name, MobileNo, Email, BatchNo, PaymentMode, DonationAmount, ReferenceNumber, PaymentScreenshot, paymentStatus, datee, DonationPurpose, timee, TransactionId) OUTPUT inserted.RowId VALUES (@DonateId, @Name, @MobileNo, @Email, @BatchNo, @PaymentMode, @DonationAmount, @ReferenceNumber, @PaymentScreenshot, @paymentStatus, @datee, @DonationPurpose, @timee, @TransactionId)", con);
+
+                    cmd.Parameters.AddWithValue("DonateId", donateId);
+                    cmd.Parameters.AddWithValue("Name", name);
+                    cmd.Parameters.AddWithValue("MobileNo", mobileNo);
+                    cmd.Parameters.AddWithValue("Email", email);
+                    cmd.Parameters.AddWithValue("BatchNo", batchNo);
+                    cmd.Parameters.AddWithValue("PaymentMode", "PhonePe");
+                    cmd.Parameters.AddWithValue("DonationAmount", int.Parse(donationAmount));
+                    cmd.Parameters.AddWithValue("ReferenceNumber", DBNull.Value);
+                    cmd.Parameters.AddWithValue("PaymentScreenshot", DBNull.Value);
+                    cmd.Parameters.AddWithValue("paymentStatus", 0); // Pending
+                    cmd.Parameters.AddWithValue("datee", DateTime.Now);
+                    cmd.Parameters.AddWithValue("DonationPurpose", donatePurpose);
+                    cmd.Parameters.AddWithValue("timee", DateTime.Now.TimeOfDay);
+                    cmd.Parameters.AddWithValue("TransactionId", transactionId);
+
+                    int rowId = (int)cmd.ExecuteScalar();
+
+                    if (rowId > 0)
+                    {
+                        var payload = new
+                        {
+                            merchantId = merchantId,
+                            transactionId = transactionId,
+                            merchantUserId = email,
+                            amount = int.Parse(donationAmount) * 100, // in paise
+                            merchantOrderId = donateId,
+                            mobileNumber = mobileNo,
+                            message = $"Donation by {name}",
+                            email = email,
+                            shortName = name,
+                            paymentScope = "PHONEPE",
+                            deviceContext = new
+                            {
+                                phonePeVersionCode = 303391
+                            }
+                        };
+
+                        string payloadJson = JsonConvert.SerializeObject(payload);
+                        string base64Payload = Convert.ToBase64String(Encoding.UTF8.GetBytes(payloadJson));
+                        string xVerify = GenerateXVerify(base64Payload, "/pg/v1/pay", apiKey) + "###" + apiKeyIndex;
+
+                        var response = new
+                        {
+                            success = true,
+                            redirectUrl = $"{hostUrl}/pg/v1/pay?payload={base64Payload}&X-VERIFY={xVerify}"
+                        };
+
+                        return JsonConvert.SerializeObject(response);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { success = false, message = ex.Message });
+            }
+
+            return JsonConvert.SerializeObject(new { success = false });
+        }
+
+        private string GenerateXVerify(string payload, string url, string apiKey)
+        {
+            string data = payload + url + apiKey;
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(data));
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void HandleCallback()
+        {
+            var request = HttpContext.Current.Request;
+            var responseBody = new System.IO.StreamReader(request.InputStream).ReadToEnd();
+
+            dynamic response = JsonConvert.DeserializeObject(responseBody);
+            string transactionId = response.transactionId;
+            string status = response.status;
+
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            using (con = new SqlConnection(constr))
+            {
+                con.Open();
+                cmd = new SqlCommand("UPDATE TB_DonationAmount SET paymentStatus = @status, ReferenceNumber = @ReferenceNumber WHERE TransactionId = @TransactionId", con);
+
+                cmd.Parameters.AddWithValue("status", status);
+                cmd.Parameters.AddWithValue("ReferenceNumber", response.referenceNumber);
+                cmd.Parameters.AddWithValue("TransactionId", transactionId);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
 
         [WebMethod]
         public string HelloWorld()
         {
             return "Hello World";
         }
+
         [WebMethod]
          protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,6 +159,7 @@ namespace JNKVAA
             HttpContext.Current.Response.AppendHeader("Pragma", "no-cache");
             HttpContext.Current.Response.AppendHeader("Expires", "0");
         }
+
 
         [WebMethod(EnableSession = true)]
         public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd,string CountryCode)
@@ -306,7 +417,6 @@ namespace JNKVAA
             }
         }
 
-
         [WebMethod(EnableSession = true)]
         public string authenticateAdmin(string ph, string pwd)
         {
@@ -393,8 +503,6 @@ namespace JNKVAA
                 }
             }
         }
-
-
 
         [WebMethod(EnableSession = true)]
         public string authenticateBatchAdmin(string ph, string pwd)
@@ -693,7 +801,6 @@ namespace JNKVAA
             }
         }
 
-
         // admin module
         [WebMethod(EnableSession = true)]
         public string getAllBatchusers(string utype)
@@ -913,10 +1020,6 @@ namespace JNKVAA
             public string calldispodate { get; set; }
 
         }
-
-
-
-
 
         [WebMethod(EnableSession = true)]
         public string getuserdata(string uid)
@@ -1199,7 +1302,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string updateUserData(string uid, string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string adminnotes, string instaurl, string fbookurl, string medicalInsurProvi,string medicalInsurExpire,string ExpertIn, string linkdnurl, string batchNo,string userupdated, string country_code)
+        public string updateUserData(string uid, string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string designation, string workingin, string lclass, string workingas, string bio, string adminnotes, string instaurl, string fbookurl, string medicalInsurProvi,string medicalInsurExpire,string ExpertIn, string linkdnurl, string batchNo, string native, string userupdated, string country_code)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
 
@@ -1213,7 +1316,7 @@ namespace JNKVAA
                     con.Open();
                     cmd = new SqlCommand("", con);
 
-                    cmd.CommandText = "update TB_Users set Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email ,City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, AdminNotes=@adminnotes, AdminNotedDate=@adminnoteddate, UserUpdated=@userupdated, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceProvider=@medicalInsurP, ExpertIn=@expertIn, MedicalInsuranceExpiry=@medicalInsExp, BatchNo=@batchNo, country_code=@country_code  where UserId=@uid;";
+                    cmd.CommandText = "update TB_Users set Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, Designation=@designation, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, AdminNotes=@adminnotes, AdminNotedDate=@adminnoteddate, UserUpdated=@userupdated, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceProvider=@medicalInsurP, ExpertIn=@expertIn, MedicalInsuranceExpiry=@medicalInsExp, BatchNo=@batchNo, NativePlace=@native, country_code=@country_code where UserId=@uid";
                     cmd.Parameters.AddWithValue("uid", uid);
                     cmd.Parameters.AddWithValue("adminnoteddate", DateTime.Now);
                     cmd.Parameters.AddWithValue("fname", fname);
@@ -1226,6 +1329,7 @@ namespace JNKVAA
                     cmd.Parameters.AddWithValue("email", email);
                     cmd.Parameters.AddWithValue("city", city);
                     cmd.Parameters.AddWithValue("profession", profession);
+                    cmd.Parameters.AddWithValue("designation", designation);
                     cmd.Parameters.AddWithValue("workingin", workingin);
                     cmd.Parameters.AddWithValue("lclass", lclass);
                     cmd.Parameters.AddWithValue("workingas", workingas);
@@ -1237,6 +1341,7 @@ namespace JNKVAA
                     cmd.Parameters.AddWithValue("medicalInsurP", medicalInsurProvi);
                     cmd.Parameters.AddWithValue("expertIn", ExpertIn);
                     cmd.Parameters.AddWithValue("batchNo", batchNo);
+                    cmd.Parameters.AddWithValue("native", native);
                     cmd.Parameters.AddWithValue("userupdated", userupdated);
                     cmd.Parameters.AddWithValue("country_code", country_code);
                     cmd.Parameters.AddWithValue("medicalInsExp", medicalInsurExpire);
@@ -1296,9 +1401,7 @@ namespace JNKVAA
                 return oSerializer.Serialize("520");
         }
 
-
         //Events Functionality Code is Here
-
         [WebMethod(EnableSession = true)]
         public string addEvent(string title, string date, string time, string location, string organizedby, string description, string descdetails, string locationLink, string photo)
         {
@@ -1784,11 +1887,7 @@ namespace JNKVAA
             }
         }
 
-
-
-
         //Events Stories Code is Here
-
         [WebMethod(EnableSession = true)]
         public string addStories(string storytitle, string postedby, string description1, string description2, string description3, string photo)
         {
@@ -1891,6 +1990,7 @@ namespace JNKVAA
             public string description3 { get; set; }
             public string showonsite { get; set; }
         }
+
         [WebMethod(EnableSession = true)]
         public string GetStory(string storyid)
         {
@@ -1967,7 +2067,6 @@ namespace JNKVAA
                 }*/
             }
         }
-
 
         public class AllStoriesClass
         {
@@ -2168,9 +2267,7 @@ namespace JNKVAA
             }
         }
 
-
         //Donation functionalities Code is Here
-
         public class DonationsClass
         {
             public string donationid { get; set; }
@@ -2183,7 +2280,6 @@ namespace JNKVAA
             public string donateamount { get; set; }
             public string expendLink { get; set; }
         }
-
 
         [WebMethod(EnableSession = true)]
         public string getDonations()
@@ -2261,7 +2357,6 @@ namespace JNKVAA
                 }*/
             }
         }
-
 
         [WebMethod(EnableSession = true)]
         public string addDonation(string donationtitle, string category, string targetamount, string description, string photo, string ExpendLink)
@@ -2381,13 +2476,8 @@ namespace JNKVAA
                 return oSerializer.Serialize("520");
             }
         }
-
-
-
         
         //get batchmates data here 
-
-
         public class BatchMatesClass
         {
             public string uid { get; set; }
@@ -2405,6 +2495,7 @@ namespace JNKVAA
             public string linkdnurl { get; set; }
 
         }
+
         [WebMethod(EnableSession = true)]
         public string batchmates()
         {
@@ -2484,7 +2575,6 @@ namespace JNKVAA
                 }
             }
         }
-
 
         [WebMethod(EnableSession = true)]
         public string getBatchmemeber(string batchno)
@@ -2955,6 +3045,7 @@ namespace JNKVAA
 
 
         }
+
         [WebMethod(EnableSession = true)]
         public string showGalleryImages(string folderid)
         {
@@ -3023,8 +3114,6 @@ namespace JNKVAA
                 }
             }
         }
-
-
 
         public class galleryManagementClass
         {
@@ -3122,9 +3211,6 @@ namespace JNKVAA
                 return oSerializer.Serialize("1");
         }
 
-
-
-
         public class FolderClass
         {
             public string folderid { get; set; }
@@ -3132,6 +3218,7 @@ namespace JNKVAA
 
 
         }
+
         [WebMethod(EnableSession = true)]
         public string getFolderNameClass()
         {
@@ -3813,7 +3900,8 @@ namespace JNKVAA
              public string msgstatus { get; set; }
 
          }
-         [WebMethod(EnableSession = true)]
+
+        [WebMethod(EnableSession = true)]
          public string GetMessages(string seenstatus)
          {
              string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
@@ -4094,7 +4182,6 @@ namespace JNKVAA
              }
          }
 
-
          [WebMethod(EnableSession = true)]
          public string Donate(string name, string mobileNo, string email, string batchNo, string PaymentMode, string DonateAmount,string RefNo,string DonatePurpose,string PaymentSS)
          {
@@ -4189,7 +4276,6 @@ namespace JNKVAA
              }
          }
 
-
          public class AllDonationsPurpose
          {
              public string donationId { get; set; }
@@ -4275,8 +4361,6 @@ namespace JNKVAA
                  }
              }
          }
-
-
 
          public class AllDonations
          {
@@ -4471,7 +4555,8 @@ namespace JNKVAA
              public string DonatedValue { get; set; }
              public string ProcessValue { get; set; }
          }
-         [WebMethod(EnableSession = true)]
+
+        [WebMethod(EnableSession = true)]
          public string userDonated()
          {
              string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
@@ -4617,7 +4702,6 @@ namespace JNKVAA
                  }
              }
          }
-
 
          [WebMethod(EnableSession = true)]
          public string updateDonationPurposeStatus(string DonationPurposeId, string donateStatus)
@@ -5090,11 +5174,6 @@ namespace JNKVAA
             }
         }
 
-
     }
 
-
 }
- 
-     
-

@@ -284,6 +284,7 @@ function UpdateData() {
                 ExpertIn: $('#ExpertIn').val(),
                 linkdnurl: $('#lnkid').val(),
                 batchNo: $('#batchNo').val(),
+                native: $('#native').val(),
                 userupdated: $('#userupdated').val(),
                 country_code: $('#country_code').val()
             }),
