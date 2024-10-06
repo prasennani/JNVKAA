@@ -1,18 +1,40 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="index.html">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="WebService.asmx.cs" Line="58" Column="71" />
-      <File FileName="Web.config" />
-      <File FileName="dophonepe.html" />
-      <File FileName="js/donate.js" Line="331" Column="50" />
-      <File FileName="index.html" Line="167" Column="81" />
+      <File FileName="WebService.asmx.cs" Line="1" Column="1" />
+      <File FileName="404.html" Line="126" Column="46" />
+      <File FileName="about.html" Line="1" Column="1" />
+      <File FileName="boardmembers.html" Line="1" Column="1" />
+      <File FileName="contact.html" Line="24" Column="1" />
+      <File FileName="cookiepolicy.html" Line="27" Column="37" />
+      <File FileName="donate.html" Line="1" Column="1" />
+      <File FileName="dophonepe.html" Line="33" Column="28" />
+      <File FileName="events.html" Line="20" Column="20" />
+      <File FileName="gallery.html" Line="1" Column="1" />
+      <File FileName="index.html" Line="20" Column="30" />
+      <File FileName="login.html" Line="30" Column="31" />
+      <File FileName="passwordreset.html" Line="1" Column="1" />
+      <File FileName="privacyPolicy.html" Line="27" Column="36" />
+      <File FileName="readstory.html" Line="24" Column="15" />
+      <File FileName="refundpolicy.html" Line="30" Column="34" />
+      <File FileName="signup.html" Line="29" Column="42" />
+      <File FileName="stories.html" Line="30" Column="38" />
+      <File FileName="termsandconditions.html" Line="31" Column="17" />
+      <File FileName="thankyou.html" Line="23" Column="19" />
+      <File FileName="viewevent.html" Line="29" Column="34" />
+      <File FileName="Web.config" Line="21" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA" expanded="True">
-            <Node name="JNKVAA" expanded="True">
-              <Node name="index.html" selected="True" />
+            <Node name="JNKVAA" expanded="True" selected="True">
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -20,11 +42,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
