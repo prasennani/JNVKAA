@@ -1979,6 +1979,7 @@
     <Content Include="js\dophonepe.js" />
     <Content Include="users\settings.html" />
     <Content Include="users\oldsettings.html" />
+    <Content Include="Charts.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

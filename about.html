@@ -8,20 +8,20 @@
     <meta content="JNV Krishna Alumni Association, JNVKAA, JNV Krishna, JNVK" name="keywords">
     <meta content="" name="description">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
     <!-- Favicon -->
     <link href="img/favicon.png" rel="icon">
-	
-	<!-- canonical -->
-  <link rel="canonical" href="https://www.jnvkaa.org/about.html" >
+
+    <!-- canonical -->
+    <link rel="canonical" href="https://www.jnvkaa.org/about.html">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
-    rel="stylesheet">
+          rel="stylesheet">
 
 
 
@@ -39,6 +39,41 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <!-- for donations chart-->
+    <style>
+
+        #chart {
+            max-width: 650px;
+            margin: 35px auto;
+        }
+    </style>
+
+    <script>window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+            )</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+    <script>// Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+        // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+        var _seed = 42;
+        Math.random = function () {
+            _seed = _seed * 16807 % 2147483647;
+            return (_seed - 1) / 2147483646;
+        };</script>
+
 
 </head>
 
@@ -124,7 +159,6 @@
         </nav>
     </div>
     <!-- Navbar End -->
-
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -237,6 +271,134 @@
         </div>
         <!-- About End -->
     </main><!-- End #main -->
+
+    <div id="donationChart"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>$(document).ready(function () {
+            // Fetch donation summary from the server
+            $.ajax({
+                url: "../WebService.asmx/GetDonationSummary", // Update this URL based on your service path
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // Parse the response
+                    var donationData = JSON.parse(response.d);
+
+                    // Prepare data for the chart
+                    var categories = [];  // Store the batch numbers
+                    var seriesData = {};  // Store donation amounts grouped by purpose
+
+                    // Loop through the donation data and structure it
+                    donationData.forEach(function (item) {
+                        // Add batch to categories if not already present
+                        if (!categories.includes(item.BatchNo)) {
+                            categories.push(item.BatchNo);
+                        }
+
+                        // Group donations by purpose
+                        if (!seriesData[item.DonationPurpose]) {
+                            seriesData[item.DonationPurpose] = [];
+                        }
+
+                        // Initialize array if batch is not present in donation purpose
+                        //if (seriesData[item.DonationPurpose].length < categories.length) {
+                          //  seriesData[item.DonationPurpose] = Array(categories.length).fill(0);
+                        //}
+
+
+                        // Add total amount to corresponding purpose and batch
+                        var batchIndex = categories.indexOf(item.BatchNo);
+                        seriesData[item.DonationPurpose][batchIndex] = item.TotalAmount;
+                    });
+
+                    // Convert the seriesData into format required by ApexCharts
+                    var series = [];
+                    for (var purpose in seriesData) {
+                        series.push({
+                            name: purpose,
+                            data: seriesData[purpose]
+                        });
+                    }
+
+                    // Build the ApexCharts chart
+                    var options = {
+                        series: series,
+                        chart: {
+                            type: 'bar',
+                            height: 350,
+                            stacked: true,
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: true,
+                                dataLabels: {
+                                    total: {
+                                        enabled: true,
+                                        offsetX: 0,
+                                        style: {
+                                            fontSize: '15px',
+                                            fontWeight: 1000
+                                        }
+                                    }
+                                }
+                            },
+                        },
+                        stroke: {
+                            width: 1,
+                            colors: ['#fff']
+                        },
+                        title: {
+                            text: 'Batch-wise and Purpose-wise Donations'
+                        },
+                        xaxis: {
+                            categories: categories,
+                            labels: {
+                                formatter: function (val) {
+                                    return val;  // No need to append anything to batch number
+                                }
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Batch Numbers'
+                            },
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return "₹" + val;  // Format as currency
+                                }
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'left',
+                            offsetX: 40
+                        }
+                    };
+
+                    // Render the chart
+                    var chart = new ApexCharts(document.querySelector("#donationChart"), options);
+                    chart.render();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching donation data: ", error);
+                }
+            });
+        });</script>
+
+
+
+
+
+
     <!-- Service Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -388,7 +550,7 @@
                     <a class="btn btn-link" target="_blank" href="https://navodaya.gov.in/">NV Samiti Official Site</a>
                     <a class="btn btn-link" target="_blank" href="https://navodaya.gov.in/nvs/nvs-school/KRISHNA/en/home/">JNV Krishna Official Site</a>
                     <a class="btn btn-link" target="_blank" href="https://jnvkrishna.com/">School Activities</a>
-                    
+
                 </div>
 
 

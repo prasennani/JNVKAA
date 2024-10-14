@@ -5174,6 +5174,77 @@ namespace JNKVAA
             }
         }
 
+        [WebMethod(EnableSession = true)]
+        public string GetDonationSummary()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            List<DonationSummary> donationSummaryList = new List<DonationSummary>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    string query = @"
+                    SELECT 
+                        da.BatchNo, 
+                        d.Title AS DonationPurposeName, 
+                        da.DonationPurpose, 
+                        SUM(da.DonationAmount) AS TotalDonationAmount
+                    FROM 
+                        [__JNVKAA].[dbo].[TB_DonationAmount] da
+                    JOIN
+                        [__JNVKAA].[dbo].[TB_Donations] d
+                        ON da.DonationPurpose = d.DonationId
+                    WHERE 
+                        da.paymentStatus = 1
+                    GROUP BY 
+                        da.BatchNo, 
+                        da.DonationPurpose,
+                        d.Title
+                    ORDER BY
+                        da.BatchNo,
+                        d.Title";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        DonationSummary summary = new DonationSummary();
+                        summary.BatchNo = rdr["BatchNo"].ToString();
+                        summary.DonationPurpose = rdr["DonationPurposeName"].ToString();
+                        summary.TotalAmount = Convert.ToDecimal(rdr["TotalDonationAmount"]);
+
+                        donationSummaryList.Add(summary);
+                    }
+                    rdr.Close();
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception (logging, etc.)
+                    return "Error: " + ex.Message;
+                }
+            }
+
+            // Convert the donation summary list to JSON
+            return JsonConvert.SerializeObject(donationSummaryList);
+        }
+
+        // Define DonationSummary class to hold query results
+        public class DonationSummary
+        {
+            public string BatchNo { get; set; }
+            public string DonationPurpose { get; set; }
+            public decimal TotalAmount { get; set; }
+        }
+
+
+
+
+
+
+
     }
 
 }

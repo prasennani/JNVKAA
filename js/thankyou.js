@@ -7,11 +7,6 @@ $(document).ready(function () {
     google.charts.setOnLoadCallback(getAllDonations);
 });
 
-function getAllDonations() {
-    // Call both AJAX functions to fetch data
-    
-}
-
 
 function getAllDonations() {
     $('#donationPersonList').find("tr:gt(0)").remove();

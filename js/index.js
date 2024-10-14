@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     $('#preloader').css('display', 'flex');
     getDonationData();
-
 });
 
 
@@ -66,5 +65,63 @@ function getDonationData() {
 
 }
 
+
+$(document).ready(function () {
+    // Load Google Charts library
+    google.charts.load('current', { 'packages': ['bar'] });
+    // Call getAllDonations after Google Charts library is loaded
+    google.charts.setOnLoadCallback(getAllDonations);
+});
+
+
+function getAllDonations() {
+    $('#donationPersonListi').find("tr:gt(0)").remove();
+    $.ajax({
+        url: "../WebService.asmx/getDonationPersonList",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            getDonations = JSON.parse(JSON.parse(response.d));
+            if (getDonations[0].name.localeCompare("521") === 0) {
+                alert("No records found");
+                $('.loader').css('display', 'none');
+            } else if (getDonations[0].name.localeCompare("522") === 0) {
+                alert("Something went wrong. Please try again.");
+            } else {
+                // Sort donations by date in descending order
+                //getDonations.sort(function (a, b) {
+                //return new Date(b.datee) - new Date(a.datee);
+                //});
+
+                for (i = 0; i < getDonations.length; i++) {
+                    var truncatedName = getDonations[i].name.length > 5 ? getDonations[i].name.substring(0, 5) + '...' : getDonations[i].name;
+                    var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
+                    txt += '<td>' + getDonations[i].datee + '</td>';
+                    txt += '<td>' + getDonations[i].batchNo + '</td>';
+                    txt += '<td title="' + getDonations[i].name + '">' + truncatedName + '</td>';
+                    if (getDonations[i].payPurpose === "Donation95") {
+                        txt += '<td>Constructed Stage in JNVK</td>';
+                    } else if (getDonations[i].payPurpose === "Donation1112") {
+                        txt += '<td>Alumni Corpus Fund</td>';
+                    } else if (getDonations[i].payPurpose === "Donation1113") {
+                        txt += '<td>Dome Construction in Campus</td>';
+                    } else if (getDonations[i].payPurpose === "Donation96") {
+                        txt += '<td>Stage Construction</td>';
+                    } else if (getDonations[i].payPurpose === "5") {
+                        txt += '<td>PhonePay App</td>';
+                    }
+                    txt += '<td>' + getDonations[i].DonationAmount + '</td>';
+                    $('#donationPersonListi tr:last').after(txt);
+                    //$('#donationPersonList').prepend('<tr>' + txt + '</tr>');
+                }
+                $('.loader').css('display', 'none');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Status " + status + "Error" + error);
+        }
+    });
+}
 
     //Edit user data and getting data using button 
