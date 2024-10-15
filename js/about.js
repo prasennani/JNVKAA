@@ -130,7 +130,7 @@ $(document).ready(function () {
                         dataLabels: {
                             total: {
                                 enabled: true,
-                                offsetX: 5,
+                                offsetX: 10,
                                 style: {
                                     fontSize: '13px',
                                     fontWeight: 900
@@ -143,9 +143,9 @@ $(document).ready(function () {
                     width: 1,
                     colors: ['#fff']
                 },
-                title: {
-                    text: `Batch-wise and Purpose-wise Donations (Total: ${formattedTotalDonations})`
-                },
+                //title: {
+                //    text: `Batch-wise and Purpose-wise Donations (Total: ${formattedTotalDonations})`
+                //},
                 xaxis: {
                     categories: categories,
                     labels: {
@@ -178,12 +178,12 @@ $(document).ready(function () {
                 dataLabels: {
                     enabled: true,
                     formatter: function (val) {
-                        return "₹" + val.toLocaleString('en-IN');  // Format labels as currency
+                        return val.toLocaleString('en-IN');  // Format labels as currency
                     },
                     style: {
-                        fontSize: '12px',
+                        fontSize: '10px',
                         fontWeight: 'bold',
-                        colors: ['#000']
+                        colors: ['#fff']
                     }
                 }
             };
@@ -191,6 +191,12 @@ $(document).ready(function () {
             // Render the chart
             var chart = new ApexCharts(document.querySelector("#donationChart"), options);
             chart.render();
+
+            // Update the heading with the total count
+            var heading = document.querySelector(".card-title1");
+            heading.innerHTML = "<b>Batch-wise and Purpose-wise Donations (Total: " + formattedTotalDonations + ")</b>";
+
+            
         },
         error: function (xhr, status, error) {
             console.error("Error fetching donation data: ", error);
