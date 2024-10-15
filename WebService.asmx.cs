@@ -2302,7 +2302,7 @@ namespace JNKVAA
                     con.Open();
                     cmd = new SqlCommand("", con);
                     //cmd.CommandText = "SELECT * FROM (SELECT D.RowId, D.DonationId, D.Title, D.Category, D.TargetAmount, D.Description, D.Photo, D.DonationStatus, D.ExpenditureLink, COALESCE(SUM(DA.DonationAmount), 0) AS TotalDonationAmount, ROW_NUMBER() OVER (ORDER BY D.RowId) AS RowNum FROM TB_Donations D LEFT JOIN TB_DonationAmount DA ON D.DonationId = DA.DonationPurpose WHERE D.DonationStatus = '1' GROUP BY D.RowId, D.DonationId, D.Category, D.Title, D.Description, D.TargetAmount, D.Photo, D.DonationStatus, D.ExpenditureLink) AS RankedData;";
-                    cmd.CommandText = "SELECT * FROM (SELECT D.RowId, D.DonationId, D.Title, D.Category, D.TargetAmount, D.Description, D.Photo, D.DonationStatus, D.ExpenditureLink, COALESCE(SUM(CASE WHEN DA.PaymentStatus != 2 THEN DA.DonationAmount ELSE 0 END), 0) AS TotalDonationAmount, ROW_NUMBER() OVER (ORDER BY D.RowId) AS RowNum FROM TB_Donations D LEFT JOIN TB_DonationAmount DA ON D.DonationId = DA.DonationPurpose WHERE D.DonationStatus = '1' GROUP BY D.RowId, D.DonationId, D.Category, D.Title, D.Description, D.TargetAmount, D.Photo, D.DonationStatus, D.ExpenditureLink) AS RankedData;";
+                    cmd.CommandText = "SELECT * FROM (SELECT D.RowId, D.DonationId, D.Title, D.Category, D.TargetAmount, D.Description, D.Photo, D.DonationStatus, D.ExpenditureLink, COALESCE(SUM(CASE WHEN DA.PaymentStatus = 1 THEN DA.DonationAmount ELSE 0 END), 0) AS TotalDonationAmount, ROW_NUMBER() OVER (ORDER BY D.RowId) AS RowNum FROM TB_Donations D LEFT JOIN TB_DonationAmount DA ON D.DonationId = DA.DonationPurpose WHERE D.DonationStatus = '1' GROUP BY D.RowId, D.DonationId, D.Category, D.Title, D.Description, D.TargetAmount, D.Photo, D.DonationStatus, D.ExpenditureLink) AS RankedData;";
                     rdr = cmd.ExecuteReader();
 
                     while (rdr.Read())
@@ -4902,7 +4902,7 @@ namespace JNKVAA
                  {
                      con.Open();
                      cmd = new SqlCommand("", con);
-                     cmd.CommandText = "SELECT TOP 100 * FROM TB_DonationAmount WHERE paymentStatus = 1 ORDER BY [datee] DESC;";
+                     cmd.CommandText = "SELECT TOP 100 * FROM TB_DonationAmount WHERE DonationAmount > 0 and paymentStatus = 1 ORDER BY [datee] DESC;";
                      rdr = cmd.ExecuteReader();
 
                      while (rdr.Read())
