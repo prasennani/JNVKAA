@@ -33,9 +33,43 @@
 
     <!-- Template Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
-    <script src="../js/users/about.js"></script>
+    <script src="../js/users/userProperty.js"></script>
+    <script src="../js/about.js"></script>
     <script src="../js/users/signout.js"></script>
     <script src="../js/whatsapp.js"></script>
+
+    <!-- for donations chart-->
+    <style>
+
+        #chart {
+            max-width: 650px;
+            margin: 35px auto;
+        }
+    </style>
+
+    <script>window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+            )</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>// Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+        // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+        var _seed = 42;
+        Math.random = function () {
+            _seed = _seed * 16807 % 2147483647;
+            return (_seed - 1) / 2147483646;
+        };</script>
 </head>
 
 <body>
@@ -194,13 +228,6 @@
                         <!-- End Bar Chart -->
 
                     </div>
-
-                    <!--<div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
-                        <img class="position-absolute h-100 w-100  pt-5 pe-5" src="img/Campus Entrance1.jpg" alt=""
-                             style="object-fit: cover;">
-                        <img class="position-absolute top-0 end-0 bg-white ps-2 pb-2" src="img/logo.png" alt=""
-                             style="width: 200px; height: 200px;">
-                    </div>-->
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="h-100">
@@ -249,6 +276,20 @@
                             </div>
                         </a>
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.1s">
+
+
+                <div class="card-body">
+                    <h3 class="card-title1"><b>Batch-wise and Purpose-wise Donations</b></h3>
+
+                    <!-- Donation Bar Chart -->
+
+                    <div id="donationChart"></div>
+
+                    <!-- End Donation Bar Chart -->
+
                 </div>
             </div>
         </div>

@@ -1,30 +1,35 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="js/main.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="js/users/settings.js">
     <Files>
       <File FileName="WebService.asmx.cs" />
       <File FileName="signup.html" />
       <File FileName="users/settings.html" />
-      <File FileName="Web.config" Line="43" Column="22" />
-      <File FileName="admin/editusers.html" />
-      <File FileName="admin/donation.html" />
-      <File FileName="users/donate.html" Line="1" Column="1" />
-      <File FileName="thankyou.html" Line="203" Column="54" />
-      <File FileName="index.html" Line="439" Column="55" />
-      <File FileName="js/thankyou.js" Line="21" Column="41" />
-      <File FileName="js/main.js" Line="83" Column="1" />
+      <File FileName="Web.config" />
+      <File FileName="Charts.html" />
+      <File FileName="about.html" />
+      <File FileName="js/about.js" />
+      <File FileName="js/index.js" Line="18" Column="66" />
+      <File FileName="css/style.css" />
+      <File FileName="index.html" />
+      <File FileName="js/users/settings.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA" expanded="True">
             <Node name="JNKVAA" expanded="True">
-              <Node name="js">
-                <Node name="main.js" selected="True" />
+              <Node name="js" expanded="True">
+                <Node name="users" expanded="True">
+                  <Node name="settings.js" selected="True" />
+                </Node>
               </Node>
-              <Node name="users" expanded="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -32,8 +37,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>

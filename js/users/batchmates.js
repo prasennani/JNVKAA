@@ -65,6 +65,8 @@ function getuserAccessLevel() {
                     getProfilePic();
                     getuserDonations();
                     getAllBatchmates();
+                    getAllBatchmatesMissing();
+                    getAllBatchmatesWanted();
                     break;
                 default:
                     alert("User profile not identified. Please Login.");
@@ -154,6 +156,133 @@ function getAllBatchmates() {
 
                     $('#batchmates-profiles').append(txt);
 					}
+                }
+                $('#preloader').css('display', 'none');
+                //j = i;
+            }
+
+        }
+
+    }).done(function () {
+
+
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
+    });
+
+
+    //Edit user data and getting data using button 
+
+
+
+
+}
+
+function getAllBatchmatesMissing() {
+    $('#batchmates-missing').empty();
+    $.ajax({
+        url: "../WebService.asmx/batchmates",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].ustatus.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].ustatus.localeCompare("522") === 0)
+                alert("Something went wrong. Please try again.");
+            else {
+
+                for (i = 0; i < user.length; i++) {
+
+                    if (user[i].ustatus === "3") {
+
+                        var txt = '<div class="col-lg-3 col-md-4 wow fadeInUp" data-wow-delay="0.1s">';
+                        txt += ' <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">';
+                        txt += ' <div class="text-center p-3" style="height:250px !important;">';
+                        if (user[i].photo == "") {
+                            txt += '  <img class="img-fluid  mb-4 " style="max-height: 160px;" src="../assets/imgs/profile pic.png" alt="">';
+
+                        }
+                        else {
+                            txt += '  <img class="img-fluid  mb-4 " style="max-height: 160px;" src="' + user[i].photo + '" alt="">';
+                        }
+                        txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + user[i].sname + ' ' + user[i].fname + '</h5>';
+                        txt += '  </div>';
+                        txt += ' <div class="d-flex justify-content-center bg-primary p-3">';
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '" target="_blank"><i class="fab fa-facebook-f"></i></a>';
+
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].linkdnurl + '" target="_blank"><i class="fab fa-twitter"></i></a>';
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].instaurl + '" target="_blank"><i class="fab fa-instagram"></i></a>';
+                        txt += '  <a class="btn btn-square text-primary bg-white m-1" href="viewuser.html?user=' + user[i].uid + '"><i class="fas fa-eye"></i></a>';
+                        txt += '    </div> </div> </div>';
+
+
+                        $('#batchmates-missing').append(txt);
+                    }
+                }
+                $('#preloader').css('display', 'none');
+                //j = i;
+            }
+
+        }
+
+    }).done(function () {
+
+
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
+    });
+
+
+    //Edit user data and getting data using button 
+
+
+
+
+}
+function getAllBatchmatesWanted() {
+    $('#batchmates-wanted').empty();
+    $.ajax({
+        url: "../WebService.asmx/batchmates",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].ustatus.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].ustatus.localeCompare("522") === 0)
+                alert("Something went wrong. Please try again.");
+            else {
+
+                for (i = 0; i < user.length; i++) {
+
+                    if (user[i].ustatus === "2") {
+
+                        var txt = '<div class="col-lg-3 col-md-4 wow fadeInUp" data-wow-delay="0.1s">';
+                        txt += ' <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">';
+                        txt += ' <div class="text-center p-3" style="height:250px !important;">';
+                        if (user[i].photo == "") {
+                            txt += '  <img class="img-fluid  mb-4 " style="max-height: 160px;" src="../assets/imgs/profile pic.png" alt="">';
+
+                        }
+                        else {
+                            txt += '  <img class="img-fluid  mb-4 " style="max-height: 160px;" src="' + user[i].photo + '" alt="">';
+                        }
+                        txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + user[i].sname + ' ' + user[i].fname + '</h5>';
+                        txt += '  </div>';
+                        txt += ' <div class="d-flex justify-content-center bg-primary p-3">';
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].fbookurl + '" target="_blank"><i class="fab fa-facebook-f"></i></a>';
+
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].linkdnurl + '" target="_blank"><i class="fab fa-twitter"></i></a>';
+                        txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + user[i].instaurl + '" target="_blank"><i class="fab fa-instagram"></i></a>';
+                        txt += '  <a class="btn btn-square text-primary bg-white m-1" href="viewuser.html?user=' + user[i].uid + '"><i class="fas fa-eye"></i></a>';
+                        txt += '    </div> </div> </div>';
+
+
+                        $('#batchmates-wanted').append(txt);
+                    }
                 }
                 $('#preloader').css('display', 'none');
                 //j = i;
