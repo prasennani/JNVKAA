@@ -169,12 +169,7 @@ function getAllBatchmates() {
     }).fail(function (XMLHttpRequest, status, error) {
         console.log("Status " + status + "Error" + error);
     });
-
-
     //Edit user data and getting data using button 
-
-
-
 
 }
 

@@ -1,22 +1,19 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="WebService.asmx.cs" Line="2534" Column="41" />
-      <File FileName="Web.config" Line="28" Column="45" />
+      <File FileName="WebService.asmx.cs" />
+      <File FileName="Web.config" Line="45" Column="13" />
       <File FileName="users/batchmates.html" Line="234" Column="80" />
-      <File FileName="js/users/batchmates.js" Line="69" Column="43" />
+      <File FileName="js/users/batchmates.js" />
+      <File FileName="users/settings.html" Line="514" Column="79" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
             <Node name="JNKVAA">
-              <Node name="css" expanded="True" />
-              <Node name="js" expanded="True">
-                <Node name="users" expanded="True" />
-              </Node>
-              <Node name="users" expanded="True" />
-              <Node name="WebService.asmx" expanded="True" />
+              <Node name="Web.config" selected="True" />
             </Node>
           </Node>
         </State>
@@ -26,8 +23,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
