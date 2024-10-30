@@ -187,7 +187,7 @@ function getAllProfessions() {
     });
 
 
-    //Edit user data and getting data using button 
+    //Edit user data and getting data using ..button 
 
 
 }

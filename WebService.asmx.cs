@@ -2627,7 +2627,7 @@ namespace JNKVAA
                         con.Close();
                         batchClass = new BatchMatesClass();
                         batchClass.ustatus = "521";
-                        batchClass.fname = "No Records found in our data base";
+                        batchClass.fname = "No Records found";
                         batchClassList.Add(batchClass);
                         var json = JsonConvert.SerializeObject(batchClassList);
                         retval = json.ToString();
