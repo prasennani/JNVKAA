@@ -18,6 +18,7 @@ using System.Web.Script.Serialization;
 using static JNKVAA.WebService;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using System.IO;
 
 
 namespace JNKVAA
@@ -160,11 +161,10 @@ namespace JNKVAA
             HttpContext.Current.Response.AppendHeader("Expires", "0");
         }
 
-
         [WebMethod(EnableSession = true)]
-        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd,string CountryCode)
+        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd, string CountryCode)
         {
-            
+
             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
             var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
@@ -293,6 +293,7 @@ namespace JNKVAA
             }
 
         }
+
 
         public class UserClass
         {
@@ -1018,6 +1019,7 @@ namespace JNKVAA
             public string auserupdated { get; set; }
             public string uadminnoteddate { get; set; }
             public string calldispodate { get; set; }
+            public string house { get; set; }
 
         }
 
@@ -1059,8 +1061,9 @@ namespace JNKVAA
                         uData.calldispo = rdr["CallDispo"].ToString();
                         uData.uphno = rdr["Mobile"].ToString();
                         uData.uemail = rdr["Email"].ToString();
+                        uData.house = rdr["House"].ToString();
 
-                        if(rdr["Gender"]==DBNull.Value)
+                        if (rdr["Gender"]==DBNull.Value)
                         uData.gender = "0";
                         else
                             uData.gender = rdr["Gender"].ToString();
@@ -2413,7 +2416,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string updateUserDataByUserSettings(string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string instaurl, string fbookurl, string linkdnurl, string medinsuexp, string medinsupro, string expertin, string native, string hob2, string designation, string country_code)
+        public string updateUserDataByUserSettings(string fname, string sname, string gender, string dob, string maritalstatus, string bgroup, string phno, string email, string city, string profession, string workingin, string lclass, string workingas, string bio, string instaurl, string fbookurl, string linkdnurl, string medinsuexp, string medinsupro, string expertin, string native, string hob2, string designation, string country_code, string house)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
             System.Web.Script.Serialization.JavaScriptSerializer oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -2427,7 +2430,7 @@ namespace JNKVAA
                         con.Open();
                         using (SqlCommand cmd = new SqlCommand("", con))
                         {
-                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, UserUpdatedOn=@userupdatedon, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, NativePlace=@native, Hobbies2=@hob2, Designation=@desig, country_code=@country_code WHERE UserId=@uid;";
+                            cmd.CommandText = "UPDATE TB_Users SET Name=@fname, Surname=@sname, Gender=@gender, DOB=@dob, MaritalStatus=@maritalstatus, BloodGroup=@bgroup, Mobile=@phno, Email=@email, City=@city, Profession=@profession, WorkingIn=@workingin, JNVLastClass=@lclass, WorkingAs=@workingas, Biodata=@bio, UserUpdatedOn=@userupdatedon, InstaUrl=@instaurl, FbookUrl=@fbookurl, LinkdnUrl=@linkdnurl, MedicalInsuranceExpiry=@medinsuexp, MedicalInsuranceProvider=@medinsupro, ExpertIn=@expertin, NativePlace=@native, Hobbies2=@hob2, Designation=@desig, country_code=@country_code, House=@house WHERE UserId=@uid;";
 
                             cmd.Parameters.AddWithValue("uid", Session["userid"].ToString());
                             cmd.Parameters.AddWithValue("userupdatedon", DateTime.Now);
@@ -2455,6 +2458,7 @@ namespace JNKVAA
                             cmd.Parameters.AddWithValue("native", string.IsNullOrEmpty(native) ? (object)DBNull.Value : (object)native);
                             cmd.Parameters.AddWithValue("hob2", string.IsNullOrEmpty(hob2) ? (object)DBNull.Value : (object)hob2);
                             cmd.Parameters.AddWithValue("country_code", string.IsNullOrEmpty(country_code) ? (object)DBNull.Value : (object)country_code);
+                            cmd.Parameters.AddWithValue("house", string.IsNullOrEmpty(house) ? (object)DBNull.Value : (object)house);
 
                             int res = cmd.ExecuteNonQuery();
 

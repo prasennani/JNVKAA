@@ -96,6 +96,8 @@ function showUserData(){
                 $('#batchno').val(user[0].batchNo);
                 $('#batchno1').text("Batch No: " + user[0].batchNo);
                 $('#country_code').val(user[0].country_code);
+                $('#house').val(user[0].house);
+                $('#house1').text(user[0].house);
 
                 var instaUrl = user[0].instaurl;
                 var fbookUrl = user[0].fbookurl;
@@ -324,7 +326,8 @@ function UpdateData() {
             'native': $('#native').val(),
             'hob2': $('#hob2').val(),
             'designation': designationValue, // Use the designationValue variable
-            'country_code': $('#country_code').val()
+            'country_code': $('#country_code').val(),
+            'house': $('#house').val()
         }),
         dataType: "json",
         success: function (response) {
