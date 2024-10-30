@@ -174,7 +174,7 @@ function getAllProfessions() {
 
                     $('#profession').append(txt);
                 }
-                //j = i;
+                
             }
 
         }

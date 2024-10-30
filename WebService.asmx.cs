@@ -2374,7 +2374,7 @@ namespace JNKVAA
                     cmd.Parameters.AddWithValue("photo", photo);
                     cmd.Parameters.AddWithValue("expendLink", ExpendLink);
 
-                    // Execute the insert command and get the RowId
+                    // Execute the insert command and get the RowIds
                     res = (int)cmd.ExecuteScalar();
                     cmd.Parameters.Clear();
 
@@ -2627,7 +2627,7 @@ namespace JNKVAA
                         con.Close();
                         batchClass = new BatchMatesClass();
                         batchClass.ustatus = "521";
-                        batchClass.fname = "No Records found";
+                        batchClass.fname = "No Records found in our data base";
                         batchClassList.Add(batchClass);
                         var json = JsonConvert.SerializeObject(batchClassList);
                         retval = json.ToString();
