@@ -2347,17 +2347,7 @@ namespace JNKVAA
                         return oSerializer.Serialize(retval);
                     }
                 }
-             /*   catch (Exception ex)
-                {
-                    Console.WriteLine("VIRTUAL: Ex: " + ex.Message);
-                    donations = new DonationsClass();
-                    donations.title = "522";
-                    donations.description = "";
-                    donationList.Add(donations);
-                    var json = JsonConvert.SerializeObject(donationList);
-                    retval = json.ToString();
-                    return oSerializer.Serialize(retval);
-                }*/
+             
             }
         }
 

@@ -190,8 +190,6 @@ function getAllProfessions() {
     //Edit user data and getting data using button 
 
 
-
-
 }
 
 function getAllDesignations() {
