@@ -243,10 +243,10 @@ namespace JNKVAA
                         string mid = "";
                         if (res <= 9)
                         {
-                            mid = "JN590" + res.ToString();
+                            mid = "JNV0" + res.ToString();
                         }
                         else
-                            mid = "JN59" + res.ToString();
+                            mid = "JNV" + res.ToString();
                         cmd.CommandText = "update TB_Users set UserId=@mid where RowId=@rid";
                         cmd.Parameters.AddWithValue("mid", mid);
                         cmd.Parameters.AddWithValue("rid", res);
@@ -2627,7 +2627,7 @@ namespace JNKVAA
                         con.Close();
                         batchClass = new BatchMatesClass();
                         batchClass.ustatus = "521";
-                        batchClass.fname = "No Records found";
+                        batchClass.fname = "No Records found here";
                         batchClassList.Add(batchClass);
                         var json = JsonConvert.SerializeObject(batchClassList);
                         retval = json.ToString();

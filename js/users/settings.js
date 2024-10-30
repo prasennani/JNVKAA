@@ -115,7 +115,7 @@ function showUserData(){
                 });
                 $('.twitter').click(function (event) {
                     event.preventDefault(); // Prevent the default action of the anchor tag
-                    window.open(linkdnUrl, '_blank'); // Open the link in a new tab
+                    window.open(linkdnUrl, '_blank'); // Open the link in a new tabs
                 });
             }
             $('#preloader').css('display', 'none');
