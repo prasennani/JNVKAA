@@ -1980,6 +1980,16 @@
     <Content Include="users\settings.html" />
     <Content Include="users\oldsettings.html" />
     <Content Include="Charts.html" />
+    <Content Include="FR\changepassword.html" />
+    <Content Include="FR\contact.html" />
+    <Content Include="FR\cookiepolicy.html" />
+    <Content Include="FR\donate.html" />
+    <Content Include="FR\index.html" />
+    <Content Include="FR\oldsettings.html" />
+    <Content Include="FR\privacypolicy.html" />
+    <Content Include="FR\settings.html" />
+    <Content Include="FR\termsandconditions.html" />
+    <Content Include="FR\viewuser.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -3508,6 +3518,7 @@
     <Folder Include="payments\wp-content\uploads\2023\11\" />
     <Folder Include="js\batchadmin\" />
     <Folder Include="App_Start\" />
+    <Folder Include="FR\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

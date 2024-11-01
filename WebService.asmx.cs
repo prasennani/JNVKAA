@@ -308,6 +308,8 @@ namespace JNKVAA
             public string adminStatus { get; set; }
             public string country_code { get; set; }
             public string callDispo { get; set; }
+            public string DonatedValue { get; set; }
+            public string ProcessValue { get; set; }
 
         }
 
@@ -315,7 +317,6 @@ namespace JNKVAA
         public string authenticateUser(string ph, string pwd)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
-            //string val = "0";
             string retval = "";
             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
             var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -323,81 +324,65 @@ namespace JNKVAA
             UserClass uClass;
             List<UserClass> uClassList = new List<UserClass>();
 
-            using (con = new SqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 try
                 {
                     con.Open();
-                    cmd = new SqlCommand("", con);
+                    SqlCommand cmd = new SqlCommand(
+                        "SELECT u.*, " +
+                        "(SELECT ISNULL(SUM(CASE WHEN d.paymentStatus = '1' THEN d.DonationAmount ELSE 0 END), 0) " +
+                        " FROM TB_DonationAmount d WHERE d.Email = u.Email) AS Donated " +
+                        "FROM TB_Users u WHERE (u.Mobile = @mb OR u.Email = @email)", con);
 
-
-                    cmd.CommandText = "select * from TB_Users where (Mobile=@mb or Email=@email)";
                     cmd.Parameters.AddWithValue("mb", ph);
                     cmd.Parameters.AddWithValue("email", ph);
-                    rdr = cmd.ExecuteReader();
 
-                    while (rdr.Read())
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
                     {
-
-                        string dbPassword = rdr["Pwd"].ToString();
-
-                        // Perform case-sensitive comparison for the password
-                        if (string.Equals(dbPassword, pwd, StringComparison.Ordinal))
+                        while (rdr.Read())
                         {
+                            string dbPassword = rdr["Pwd"].ToString();
 
-                            if (rdr["UStatus"].ToString().Equals("1"))
+                            // Perform case-sensitive comparison for the password
+                            if (string.Equals(dbPassword, pwd, StringComparison.Ordinal))
                             {
                                 uClass = new UserClass();
                                 uClass.uid = rdr["UserId"].ToString();
                                 uClass.fname = rdr["Name"].ToString();
                                 uClass.sname = rdr["SurName"].ToString();
                                 uClass.ustatus = rdr["UStatus"].ToString();
+                                uClass.DonatedValue = rdr["Donated"].ToString();
+
                                 Session["userid"] = rdr["UserId"].ToString();
                                 Session["email"] = rdr["Email"].ToString();
                                 Session["uname"] = rdr["Name"].ToString()[0] + ". " + rdr["SurName"].ToString();
                                 Session["batchno"] = rdr["BatchNo"].ToString();
-                                Session["desig"] = "0";
+                                Session["desig"] = rdr["AdminStatus"] != DBNull.Value ? rdr["AdminStatus"].ToString() : "0";
                                 Session["isAdmin"] = "0";
-                                if (rdr["AdminStatus"] != DBNull.Value)
-                                    Session["desig"] = uClass.jnvkdesign = rdr["AdminStatus"].ToString();
-                                else
-                                    uClass.jnvkdesign = "1";
+
                                 uClassList.Add(uClass);
                             }
                             else
                             {
                                 uClass = new UserClass();
-                                uClass.ustatus = rdr["UStatus"].ToString();
+                                uClass.ustatus = "523"; // Unauthorized status
+                                uClass.fname = "Password is Case-Sensitive";
                                 uClassList.Add(uClass);
                             }
                         }
-                        else
-                        {
-                            // Handle incorrect password
-                            uClass = new UserClass();
-                            uClass.ustatus = "523"; // Unauthorized status
-                            uClass.fname = "Password is Case-Sensitive";
-                            uClassList.Add(uClass);
-                        }
-
                     }
-                    rdr.Close();
-                    cmd.Parameters.Clear();
+
                     if (uClassList.Count > 0)
                     {
-                        int result = 0;
-
-                        con.Close();
                         var json = JsonConvert.SerializeObject(uClassList);
                         retval = json.ToString();
                         return oSerializer.Serialize(retval);
                     }
                     else
                     {
-                        con.Close();
                         uClass = new UserClass();
                         uClass.ustatus = "521";
-                        uClass.fname = "";
                         uClassList.Add(uClass);
                         var json = JsonConvert.SerializeObject(uClassList);
                         retval = json.ToString();
@@ -406,7 +391,6 @@ namespace JNKVAA
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("VIRTUAL: Ex: " + ex.Message);
                     uClass = new UserClass();
                     uClass.ustatus = "522";
                     uClass.fname = ex.Message;
@@ -417,6 +401,7 @@ namespace JNKVAA
                 }
             }
         }
+
 
         [WebMethod(EnableSession = true)]
         public string authenticateAdmin(string ph, string pwd)
@@ -4222,7 +4207,7 @@ namespace JNKVAA
                     message.From = new MailAddress("jnvvkaa@gmail.com");
                     message.To.Add("cakprasen@gmail.com");
                     message.Subject = $"New Donation Received from Batch: {batchNo} - {name}";
-                    message.Body = $"New Donation Received with the following details:\nName: {name}\nBatch Number: {batchNo}\nDonated Amount: {DonateAmount}\nPurpose Od Donation: {DonatePurpose}\nPayment Mode: {PaymentMode}\nMobile Number: {mobileNo}\nEmail: {email}";
+                    message.Body = $"New Donation Received with the following details:\nName: {name}\nBatch Number: {batchNo}\nDonated Amount: {DonateAmount}\nPurpose of Donation: {DonatePurpose}\nPayment Mode: {PaymentMode}\nMobile Number: {mobileNo}\nEmail: {email}";
 
                     // Send email
                     client.Send(message);

@@ -22,11 +22,10 @@
 
 });
 function login() {
-    //alert("Clicked");
     if ($("#txtmobile").val().length > 0) {
         if ($("#txtpwd").val().length > 0) {
-			
-			showLoadingSpinner(); // Show loading spinner
+
+            showLoadingSpinner(); // Show loading spinner
 
             $.ajax({
                 url: 'WebService.asmx/authenticateUser',
@@ -34,70 +33,64 @@ function login() {
                 contentType: "application/json",
                 data: "{ 'ph': '" + $("#txtmobile").val() + "', 'pwd': '" + $("#txtpwd").val() + "'}",
                 datatype: "json",
-                success: function (response) { // when successfully sent data and returned
-                 //   alert("Res: " + JSON.stringify(response.d));
+                success: function (response) {
                     var res = JSON.parse(JSON.parse(response.d));
                     if (res[0].ustatus.localeCompare("1") === 0) {
-                        //   window.location = "users/index.html";
-                        switch (parseInt(res[0].jnvkdesign)) {
-                            case 1:
-                                window.location = "users/index.html";
-                                break;
-                            case 2:
-                            case 3:
-                                window.location = "users/index.html";
-                                break;
-                            default:
-                                window.location = "users/index.html";
-                                break;
+                        var totalDonationAmount = parseFloat(res[0].DonatedValue);
+
+                        if (totalDonationAmount >= 1000) {
+                            window.location = "users/settings.html";
+                        } else {
+                            window.location = "FR/settings.html";
                         }
                     }
                     else {
                         switch (parseInt(res[0].ustatus)) {
                             case 0:
                                 alert("Your account is blocked. Please contact admin");
-								location.reload();
+                                location.reload();
                                 break;
                             case -1:
-                                alert("Your account is wating for approval");
-								location.reload();
+                                alert("Your account is waiting for approval");
+                                location.reload();
                                 break;
                             case -2:
-                                alert("Your account is wating for approval by Batch admin");
-								location.reload();
+                                alert("Your account is waiting for approval by Batch admin");
+                                location.reload();
                                 break;
                             case 521:
                                 alert("Invalid Mobile No/Password");
-								location.reload();
+                                location.reload();
                                 break;
                             case 522:
                                 alert("Something went wrong. Please try after sometime.");
-								location.reload();
+                                location.reload();
                                 break;
                             case 523:
                                 alert("Invalid Username/Password and Password is Case-Sensitive");
-								location.reload();
+                                location.reload();
                                 break;
                         }
                     }
-                } // success close
+                }
             }).done(function () {
             }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus + ", Error: " + errorThrown);
             }).always(function () {
-            }); // ajax call ends
-
-        } else
+                hideLoadingSpinner(); // Hide loading spinner after response
+            });
+        } else {
             alert("Enter Password");
-    } else
+        }
+    } else {
         alert("Enter Mobile Number");
+    }
 }
 
+function showLoadingSpinner() {
+    $("#loadingSpinner").show();
+}
 
-	function showLoadingSpinner() {
-		$("#loadingSpinner").show();
-	}
-
-	function hideLoadingSpinner() {
-		$("#loadingSpinner").hide();
-	}
+function hideLoadingSpinner() {
+    $("#loadingSpinner").hide();
+}
