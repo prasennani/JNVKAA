@@ -19,20 +19,16 @@ $(document).ready(function () {
             $("#donateId").focus();
             return false;
         }
-
         if (name === "") {
             alert("Name is mandatory!");
             $("#name").focus();
             return false;
         }
-
         if (batchNo === "") {
             alert("Batch No is mandatory!");
             $("#batchNo").focus();
             return false;
         }
-        console.log(paymentMode);
-
         if (paymentMode === "0") {
             alert("Payment Mode is mandatory!");
             $("#paymentMode").focus();
@@ -40,61 +36,70 @@ $(document).ready(function () {
         }
         if ($("#donatePurpose").val() === "0") {
             alert("Donation Purpose is mandatory!");
-            $("#paymentMode").focus();
+            $("#donatePurpose").focus();
             return false;
         }
-
         if (donationAmount === "") {
             alert("Donation Amount is mandatory!");
             $("#donationAmount").focus();
             return false;
         }
-
         if (email === "") {
             alert("Email is mandatory!");
             $("#email").focus();
             return false;
         }
+
+        // All checks passed, proceed to donation function
         Donation();
-
-        return true;
-
-
     });
+
     function Donation() {
+        showLoadingSpinner();
 
         $.ajax({
             url: '../WebService.asmx/Donate',
-            type: "POST", // type of the data we send (POST/GET)
+            type: "POST",
             contentType: "application/json",
-            data: "{ 'name': '" + $('#name').val() + "', 'mobileNo': '" + $('#mobileno').val() + "', 'email': '" + $('#email').val() + "', 'batchNo': '" + $('#batchNo').val() + "', 'PaymentMode': '" + $('#paymentMode').val() + "', 'DonateAmount': '" + $('#donationAmount').val() + "', 'RefNo': '" + $('#refNo').val() + "', 'DonatePurpose': '" + $('#donatePurpose').val() + "', 'PaymentSS': '" + base64String + "'}",
+            data: JSON.stringify({
+                name: $('#name').val(),
+                mobileNo: $('#mobileno').val(),
+                email: $('#email').val(),
+                batchNo: $('#batchNo').val(),
+                PaymentMode: $('#paymentMode').val(),
+                DonateAmount: $('#donationAmount').val(),
+                RefNo: $('#refNo').val(),
+                DonatePurpose: $('#donatePurpose').val(),
+                PaymentSS: base64String
+            }),
             datatype: "json",
-            success: function (response) { // when successfully sent data and returned
-                // alert("Res: " + response.d);
-                switch (parseInt(JSON.parse(response.d))) {
-                    case 1:
-                        alert("Thank You For Donation");
-                        location.reload();
-                        break;
-                    case 0:
-
-                        alert("Unable to Donate Now. Try after sometime.");
-                        break;
-
+            success: function (response) {
+                var result = parseInt(JSON.parse(response.d));
+                if (result === 1) {
+                    alert("Thank You For Your Donation!");
+                    location.reload();
+                } else {
+                    alert("Unable to process donation at this time. Please try again later.");
                 }
-
-            } // success close
-        }).done(function () {
-        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus + ", Error: " + errorThrown);
-            //alert("Something went wrong. Please contact Admin.");
-        }).always(function () {
-        }); // ajax call ends
-
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus + ", Error: " + errorThrown);
+            },
+            complete: function () {
+                hideLoadingSpinner(); // Hide the loading spinner after request completion
+            }
+        });
     }
-
-
 });
+
+function showLoadingSpinner() {
+    $("#loadingSpinner").show();
+}
+
+function hideLoadingSpinner() {
+    $("#loadingSpinner").hide();
+}
+
 
 
 function showUserProfile() {
