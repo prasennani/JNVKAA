@@ -9,40 +9,54 @@
             var batchUserData = JSON.parse(JSON.parse(response.d));
             var batchLabels = [];
             var totalUsersData = [];
+            var totalDonorsData = [];
             var totalUsersCount = 0; // Variable to store the total count of all batch members
+            var totalDonorsCount = 0; // Variable to store the total count of all batch Donors
 
             batchUserData.forEach(function (data) {
                 batchLabels.push(data.BatchId);
                 totalUsersData.push(data.TotalUsers);
+                totalDonorsData.push(data.DonorsAboveOneRupee);
                 totalUsersCount += data.TotalUsers; // Increment the total count
+                totalDonorsCount += data.DonorsAboveOneRupee; // Increment the total count
             });
 
             // Update the chart with dynamic data
             var chart = new ApexCharts(document.querySelector("#barChartBatchUsers"), {
-                series: [{
-                    data: totalUsersData // Replace static data with dynamic total users data
-                }],
+                series: [
+                    {
+                        name: 'Total Users',
+                        data: totalUsersData, // Data for total users
+                        color: '#2E8B57' // Color for total users
+                    },
+                    {
+                        name: 'Members Donated (Total:' + totalDonorsCount + ' Members)',
+                        data: totalDonorsData, // Data for unique donors
+                        color: '#d4526e' // Color for unique donors
+                    }
+                ],
                 chart: {
                     type: 'bar',
                     height: 800
-
                 },
                 plotOptions: {
                     bar: {
                         borderRadius: 4,
                         horizontal: true,
+                        
                     }
                 },
-                colors: ['#2E8B57', '#546E7A', '#d4526e', '#13d8aa', '#2b908f', '#f9a3a4', '#90ee7e',
-                    '#f48024', '#69d2e7'
-                ],
+                colors: ['#2E8B57', '#d4526e'], // Colors for each series
                 dataLabels: {
                     enabled: true
                 },
                 xaxis: {
-                    categories: batchLabels // Replace static data with dynamic batch labels
+                    categories: batchLabels // Dynamic batch labels
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'left'
                 }
-
             });
             chart.render();
 
@@ -55,6 +69,7 @@
         }
     });
 });
+
 
 $(document).ready(function () {
     // Fetch donation summary from the server

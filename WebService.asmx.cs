@@ -5092,6 +5092,7 @@ namespace JNKVAA
         {
             public string BatchId { get; set; }
             public int TotalUsers { get; set; }
+            public int DonorsAboveOneRupee { get; set; }
         }
 
         [WebMethod(EnableSession = true)]
@@ -5107,10 +5108,15 @@ namespace JNKVAA
                 {
                     con.Open();
                     cmd = new SqlCommand("", con);
-                    cmd.CommandText = "SELECT CASE WHEN BatchNo IS NULL THEN 'Others' ELSE BatchNo END AS Batch, " +
-                                      "SUM(CASE WHEN UStatus = 1 THEN 1 ELSE 0 END) AS TotalUsers " +
-                                      "FROM [__JNVKAA].[dbo].[TB_Users] " +
-                                      "GROUP BY CASE WHEN BatchNo IS NULL THEN 'Others' ELSE BatchNo END;";
+                    cmd.CommandText = "SELECT Batch, TotalUsers, COALESCE(DonorsAboveOneRupee, 0) AS DonorsAboveOneRupee " +
+                        "FROM (SELECT CASE WHEN BatchNo IS NULL THEN 'Others' ELSE BatchNo END AS Batch, " +
+                        "SUM(CASE WHEN UStatus = 1 THEN 1 ELSE 0 END) AS TotalUsers " +
+                        "FROM [__JNVKAA].[dbo].[TB_Users] " +
+                        "GROUP BY CASE WHEN BatchNo IS NULL THEN 'Others' ELSE BatchNo END) AS UserCounts " +
+                        "LEFT JOIN (SELECT BatchNo, COUNT(DISTINCT MobileNo) AS DonorsAboveOneRupee " +
+                        "FROM [__JNVKAA].[dbo].[TB_DonationAmount] " +
+                        "WHERE DonationAmount > 1 GROUP BY BatchNo) AS DonationCounts " +
+                        "ON UserCounts.Batch = COALESCE(DonationCounts.BatchNo, 'Others') ORDER BY Batch ASC;";
 
                     rdr = cmd.ExecuteReader();
 
@@ -5119,6 +5125,7 @@ namespace JNKVAA
                         var batchUserData = new BatchUserData();
                         batchUserData.BatchId = rdr["Batch"].ToString();
                         batchUserData.TotalUsers = Convert.ToInt32(rdr["TotalUsers"]);
+                        batchUserData.DonorsAboveOneRupee = Convert.ToInt32(rdr["DonorsAboveOneRupee"]);
                         batchUserDataList.Add(batchUserData);
                     }
 
