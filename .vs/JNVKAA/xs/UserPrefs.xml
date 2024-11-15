@@ -1,42 +1,19 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
       <File FileName="WebService.asmx.cs" />
       <File FileName="Web.config" Line="45" Column="13" />
-      <File FileName="donate.html" Line="433" Column="21" />
-      <File FileName="termsandconditions.html" Line="239" Column="27" />
-      <File FileName="FR/donate.html" Line="238" Column="29" />
-      <File FileName="users/donate.html" Line="472" Column="1" />
-      <File FileName="users/settings.html" Line="166" Column="90" />
-      <File FileName="users/about.html" Line="167" Column="21" />
-      <File FileName="users/alumnimembers.html" Line="144" Column="87" />
-      <File FileName="users/batchmates.html" Line="136" Column="123" />
-      <File FileName="users/boardmembers.html" Line="131" Column="127" />
-      <File FileName="users/changepassword.html" Line="160" Column="70" />
-      <File FileName="users/contact.html" Line="145" Column="69" />
-      <File FileName="users/cookiepolicy.html" Line="1" Column="1" />
-      <File FileName="users/events.html" Line="142" Column="69" />
-      <File FileName="users/gallery.html" Line="145" Column="69" />
-      <File FileName="users/index.html" Line="169" Column="69" />
+      <File FileName="users/about.html" />
+      <File FileName="js/about.js" />
+      <File FileName="css/style.css" />
+      <File FileName="js/users/about.js" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="JNVKAA">
-            <Node name="JNKVAA" expanded="True">
-              <Node name="FR" expanded="True" />
-              <Node name="users" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
