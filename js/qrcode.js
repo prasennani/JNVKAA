@@ -1,17 +1,28 @@
-<script>
-    // Function to generate QR code with provided details
-    function generateQRCode(details) {
-        // Create a new QRCode instance with the container element
-        var qrCode = new QRCode(document.getElementById("qrcode"), {
-            width: 200, // Adjust the width and height as needed
-            height: 200
-        });
+document.getElementById("generateButton").addEventListener("click", function () {
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
+    const userInput = document.getElementById("userInput").value;
 
-        // Generate the QR code with the provided details
-        qrCode.makeCode(details);
+    // Clear previous QR Code if any
+    qrCodeContainer.innerHTML = "";
+
+    if (userInput.trim() === "") {
+        alert("Please enter some text or URL!");
+        return;
     }
 
-    // Example usage: Generate QR code with provided details
-    var userDetails = "Pay 500 in phonepe"; // Replace this with the actual details
-    generateQRCode(userDetails);
-</script>
+    try {
+        // Generate QR Code
+        QRCode.toCanvas(qrCodeContainer, userInput, {
+            errorCorrectionLevel: "H", // High error correction
+            width: 200,               // Size in pixels
+        }, function (error) {
+            if (error) {
+                console.error("Error generating QR Code:", error);
+                alert("Failed to generate QR Code. Please try again.");
+            }
+        });
+    } catch (error) {
+        console.error("Exception during QR Code generation:", error);
+        alert("An unexpected error occurred. Check the console for details.");
+    }
+});

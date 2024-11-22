@@ -31,121 +31,11 @@ namespace JNKVAA
     public class WebService : System.Web.Services.WebService
     {
 
-        private readonly string merchantId = "PGTESTPAYUAT";
-        private readonly string apiKey = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
-        private readonly string apiKeyIndex = "1";
-        private readonly string hostUrl = "https://api-preprod.phonepe.com/apis/pg-sandbox";
+        
 
         SqlConnection con;
         SqlCommand cmd;
         SqlDataReader rdr;
-
-        [WebMethod(EnableSession = true)]
-        public string InitiatePayment(string name, string mobileNo, string email, string batchNo, string donatePurpose, string donationAmount)
-        {
-            string transactionId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);
-            string donateId = Guid.NewGuid().ToString();
-
-            try
-            {
-                string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
-                using (con = new SqlConnection(constr))
-                {
-                    con.Open();
-                    cmd = new SqlCommand("INSERT INTO TB_DonationAmount (DonateId, Name, MobileNo, Email, BatchNo, PaymentMode, DonationAmount, ReferenceNumber, PaymentScreenshot, paymentStatus, datee, DonationPurpose, timee, TransactionId) OUTPUT inserted.RowId VALUES (@DonateId, @Name, @MobileNo, @Email, @BatchNo, @PaymentMode, @DonationAmount, @ReferenceNumber, @PaymentScreenshot, @paymentStatus, @datee, @DonationPurpose, @timee, @TransactionId)", con);
-
-                    cmd.Parameters.AddWithValue("DonateId", donateId);
-                    cmd.Parameters.AddWithValue("Name", name);
-                    cmd.Parameters.AddWithValue("MobileNo", mobileNo);
-                    cmd.Parameters.AddWithValue("Email", email);
-                    cmd.Parameters.AddWithValue("BatchNo", batchNo);
-                    cmd.Parameters.AddWithValue("PaymentMode", "PhonePe");
-                    cmd.Parameters.AddWithValue("DonationAmount", int.Parse(donationAmount));
-                    cmd.Parameters.AddWithValue("ReferenceNumber", DBNull.Value);
-                    cmd.Parameters.AddWithValue("PaymentScreenshot", DBNull.Value);
-                    cmd.Parameters.AddWithValue("paymentStatus", 0); // Pending
-                    cmd.Parameters.AddWithValue("datee", DateTime.Now);
-                    cmd.Parameters.AddWithValue("DonationPurpose", donatePurpose);
-                    cmd.Parameters.AddWithValue("timee", DateTime.Now.TimeOfDay);
-                    cmd.Parameters.AddWithValue("TransactionId", transactionId);
-
-                    int rowId = (int)cmd.ExecuteScalar();
-
-                    if (rowId > 0)
-                    {
-                        var payload = new
-                        {
-                            merchantId = merchantId,
-                            transactionId = transactionId,
-                            merchantUserId = email,
-                            amount = int.Parse(donationAmount) * 100, // in paise
-                            merchantOrderId = donateId,
-                            mobileNumber = mobileNo,
-                            message = $"Donation by {name}",
-                            email = email,
-                            shortName = name,
-                            paymentScope = "PHONEPE",
-                            deviceContext = new
-                            {
-                                phonePeVersionCode = 303391
-                            }
-                        };
-
-                        string payloadJson = JsonConvert.SerializeObject(payload);
-                        string base64Payload = Convert.ToBase64String(Encoding.UTF8.GetBytes(payloadJson));
-                        string xVerify = GenerateXVerify(base64Payload, "/pg/v1/pay", apiKey) + "###" + apiKeyIndex;
-
-                        var response = new
-                        {
-                            success = true,
-                            redirectUrl = $"{hostUrl}/pg/v1/pay?payload={base64Payload}&X-VERIFY={xVerify}"
-                        };
-
-                        return JsonConvert.SerializeObject(response);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return JsonConvert.SerializeObject(new { success = false, message = ex.Message });
-            }
-
-            return JsonConvert.SerializeObject(new { success = false });
-        }
-
-        private string GenerateXVerify(string payload, string url, string apiKey)
-        {
-            string data = payload + url + apiKey;
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(data));
-                return BitConverter.ToString(hash).Replace("-", "").ToLower();
-            }
-        }
-
-        [WebMethod(EnableSession = true)]
-        public void HandleCallback()
-        {
-            var request = HttpContext.Current.Request;
-            var responseBody = new System.IO.StreamReader(request.InputStream).ReadToEnd();
-
-            dynamic response = JsonConvert.DeserializeObject(responseBody);
-            string transactionId = response.transactionId;
-            string status = response.status;
-
-            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
-            using (con = new SqlConnection(constr))
-            {
-                con.Open();
-                cmd = new SqlCommand("UPDATE TB_DonationAmount SET paymentStatus = @status, ReferenceNumber = @ReferenceNumber WHERE TransactionId = @TransactionId", con);
-
-                cmd.Parameters.AddWithValue("status", status);
-                cmd.Parameters.AddWithValue("ReferenceNumber", response.referenceNumber);
-                cmd.Parameters.AddWithValue("TransactionId", transactionId);
-
-                cmd.ExecuteNonQuery();
-            }
-        }
 
         [WebMethod]
         public string HelloWorld()
@@ -4161,101 +4051,108 @@ namespace JNKVAA
              }
          }
 
-         [WebMethod(EnableSession = true)]
-         public string Donate(string name, string mobileNo, string email, string batchNo, string PaymentMode, string DonateAmount,string RefNo,string DonatePurpose,string PaymentSS)
-         {
-             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
-             var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
-             //string val = "0";
-             using (con = new SqlConnection(constr))
-             {
+        [WebMethod(EnableSession = true)]
+        public string Donate(string name, string mobileNo, string email, string batchNo, string PaymentMode, string DonateAmount, string recurring, string frequency, string tenure)
+        {
+            var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
 
-                 try
-                 {
-                     con.Open();
-                     int res = 0;
-                     cmd = new SqlCommand("", con);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
 
+                    // Insert donation details into the database
+                    string insertQuery = @"
+                INSERT INTO TB_DonationAmount 
+                (Name, MobileNo, Email, BatchNo, PaymentMode, DonationAmount, Recurring, Tenure, Frequency, paymentStatus, datee, DonationPurpose, ReferenceNumber, PaymentScreenshot, timee)
+                OUTPUT INSERTED.RowId
+                VALUES 
+                (@name, @mobileNo, @email, @batchNo, @PayMode, @DAmount, @recurring, @tenure, @frequency, 0, @datee, @DonationPurpose, 0, 0, @timee)";
 
-                     cmd.CommandText = "insert into TB_DonationAmount(Name,MobileNo,Email,BatchNo,PaymentMode,DonationAmount,ReferenceNumber,PaymentScreenshot,paymentStatus,datee,DonationPurpose,timee) OUTPUT inserted.RowId values(@name,@mobileNo,@email,@batchNo,@PayMode,@DAmount,@RefNo,@PaySs,0,@datee,@donatePurpose,@timee)";
-                     cmd.Parameters.AddWithValue("name", name);
-                     cmd.Parameters.AddWithValue("datee", DateTime.Now);
+                    using (SqlCommand cmd = new SqlCommand(insertQuery, con))
+                    {
+                        // Add parameters
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@mobileNo", mobileNo);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@batchNo", batchNo);
+                        cmd.Parameters.AddWithValue("@PayMode", PaymentMode);
+                        cmd.Parameters.AddWithValue("@DAmount", DonateAmount);
+                        cmd.Parameters.AddWithValue("@recurring", recurring);
+                        cmd.Parameters.AddWithValue("@tenure", tenure);
+                        cmd.Parameters.AddWithValue("@frequency", frequency);
+                        cmd.Parameters.AddWithValue("@datee", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@DonationPurpose", "Donation1112");
+                        cmd.Parameters.AddWithValue("@timee", new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0));
 
-                     DateTime currentTime = DateTime.Now;
-                     TimeSpan timeValue = new TimeSpan(currentTime.Hour, currentTime.Minute, 0);
+                        // Execute the query and get the generated RowId
+                        int rowId = (int)cmd.ExecuteScalar();
 
-                     cmd.Parameters.AddWithValue("timee", timeValue);
-                     cmd.Parameters.AddWithValue("email", email);
-                     cmd.Parameters.AddWithValue("mobileNo", mobileNo);
-                     cmd.Parameters.AddWithValue("batchNo", batchNo);
-                     cmd.Parameters.AddWithValue("PayMode", PaymentMode);
-                     cmd.Parameters.AddWithValue("DAmount", DonateAmount);
-                     cmd.Parameters.AddWithValue("RefNo", RefNo);
-                     cmd.Parameters.AddWithValue("PaySs", PaymentSS);
-                     cmd.Parameters.AddWithValue("donatePurpose", DonatePurpose);
+                        // Generate the DonateId
+                        string donateId = rowId <= 9 ? $"D0{rowId}" : $"D{rowId}";
 
+                        // Update DonateId in the database
+                        string updateQuery = "UPDATE TB_DonationAmount SET DonateId = @mid WHERE RowId = @rid";
+                        using (SqlCommand updateCmd = new SqlCommand(updateQuery, con))
+                        {
+                            updateCmd.Parameters.AddWithValue("@mid", donateId);
+                            updateCmd.Parameters.AddWithValue("@rid", rowId);
+                            updateCmd.ExecuteNonQuery();
+                        }
 
-                    // Configure SMTP client
-                    SmtpClient client = new SmtpClient("smtp.gmail.com");
-                    client.Port = 587;
+                        // Send email notification
+                        SendEmailNotification(name, mobileNo, email, batchNo, PaymentMode, DonateAmount, recurring, frequency, tenure);
+
+                        return oSerializer.Serialize("1"); // Success
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return oSerializer.Serialize($"-1: {ex.Message}"); // Error
+            }
+        }
+
+        private void SendEmailNotification(string name, string mobileNo, string email, string batchNo, string PaymentMode, string DonateAmount, string recurring, string frequency, string tenure)
+        {
+            try
+            {
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                {
                     client.EnableSsl = true;
-                    client.Credentials = new NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
+                    client.Credentials = new System.Net.NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
 
-                    // Create email message
-                    MailMessage message = new MailMessage();
-                    message.From = new MailAddress("jnvvkaa@gmail.com");
-                    message.To.Add("cakprasen@gmail.com");
-                    message.Subject = $"New Donation Received from Batch: {batchNo} - {name}";
-                    message.Body = $"New Donation Received with the following details:\nName: {name}\nBatch Number: {batchNo}\nDonated Amount: {DonateAmount}\nPurpose of Donation: {DonatePurpose}\nPayment Mode: {PaymentMode}\nMobile Number: {mobileNo}\nEmail: {email}";
+                    using (MailMessage message = new MailMessage())
+                    {
+                        message.From = new MailAddress("jnvvkaa@gmail.com");
+                        message.To.Add("cakprasen@gmail.com");
+                        message.Subject = $"New Donation Received from Batch: {batchNo} - {name} - Donation Mode {recurring}";
+                        message.Body = $@"
+                    New Donation Received with the following details:
+                    Name: {name}
+                    Batch Number: {batchNo}
+                    Donated Amount: {DonateAmount}
+                    Frequency: {frequency}
+                    Tenure: {tenure}
+                    Payment Mode: {PaymentMode}
+                    Mobile Number: {mobileNo}
+                    Email: {email}";
 
-                    // Send email
-                    client.Send(message);
+                        client.Send(message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log email failure if required
+                Console.WriteLine($"Email sending failed: {ex.Message}");
+            }
+        }
 
-                    //, Qualification, DeptId, CurDesig, CurOrganization, Experience, TeachLevel
-                    res = (int)cmd.ExecuteScalar();
-                     cmd.Parameters.Clear();
-                     string mid = "";
-                     if (res <= 9)
-                     {
-                         mid = "D0" + res.ToString();
-                     }
-                     else
-                         mid = "D" + res.ToString();
-                     cmd.CommandText = "update TB_DonationAmount set DonateId=@mid where RowId=@rid";
-                     cmd.Parameters.AddWithValue("mid", mid);
-                     cmd.Parameters.AddWithValue("rid", res);
-                     cmd.ExecuteNonQuery();
-                     cmd.Parameters.Clear();
-                     try
-                     {
-                         if (res > 0)
-                         {
-                             con.Close();
-                             /*Session["uid"] = mid;
-                             Session["cname"] = name + "." + sname;*/
-                             return oSerializer.Serialize("1");
-                         }
-                         else
-                         {
-                             con.Close();
-                             return oSerializer.Serialize("520");
-                         }
-                     }
-                     catch (Exception ex)
-                     {
-                         return oSerializer.Serialize("-3" + ex.Message);
-                     }
 
-                 }
-                 catch (Exception ex)
-                 {
-                     return oSerializer.Serialize("-1" + ex.Message);
-                 }
-             }
-         }
-
-         public class AllDonationsPurpose
+        public class AllDonationsPurpose
          {
              public string donationId { get; set; }
              public string title { get; set; }

@@ -1990,6 +1990,8 @@
     <Content Include="FR\settings.html" />
     <Content Include="FR\termsandconditions.html" />
     <Content Include="FR\viewuser.html" />
+    <Content Include="js\donationCharts %28copy%29.js" />
+    <Content Include="donation.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

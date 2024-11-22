@@ -1,78 +1,56 @@
 ﻿var base64String = "";
+
 $(document).ready(function () {
-    getDonationPurpose();
-    initProfilePic();
+    $("#conditionalSubmit").click(function (event) {
+        const name = $("#name").val();
+        const mobileno = $("#mobileno").val();
+        const email = $("#email").val();
+        const batchNo = $("#batchNo").val();
+        const donationAmount = $("#donationAmount").val();
+        const recurring = $("#recurring").val();
+        const paymentMode = $("#paymentMode").val();
 
-    $("#donate").click(function (event) {
-        var donateId = $("#donateId").val();
-        var name = $("#name").val();
-        var batchNo = $("#batchNo").val();
-        var paymentMode = $("#paymentMode").val();
-        var donationAmount = $("#donationAmount").val();
-        var email = $("#email").val();
-
-        if (donateId === "") {
-            alert("Donate ID is mandatory!");
-            $("#donateId").focus();
-            return false;
+        // Basic validations
+        if (!name || !mobileno || !email || !batchNo || !donationAmount) {
+            alert("All fields are mandatory!");
+            return;
         }
 
-        if (name === "") {
-            alert("Name is mandatory!");
-            $("#name").focus();
-            return false;
+        // Condition 1: One-time + UPI
+        if (recurring === "1" && paymentMode === "1") {
+            submitFormToDatabase();
+            generateQRCode();
+            $("#qrCodeModal").modal("show");
         }
-
-        if (batchNo === "") {
-            alert("Batch No is mandatory!");
-            $("#batchNo").focus();
-            return false;
+        // Condition 2: One-time + Others
+        else if (recurring === "1" && paymentMode === "2") {
+            submitFormToDatabase();
+            window.location.href = "https://pages.razorpay.com/pl_PGBArUtHEHaICK/view";
         }
-        console.log(paymentMode);
-
-        if (paymentMode === "0") {
-            alert("Payment Mode is mandatory!");
-            $("#paymentMode").focus();
-            return false;
+        // Condition 3: Recurring payment
+        else if (recurring === "2") {
+            submitFormToDatabase();
+            $("#thankYouMessage").text(`Thank you ${name}, Please check your email within the next 2-3 hours for the subscription link. We appreciate your support!`);
+            $("#thankYouModal").modal("show");
+        } else {
+            alert("Please select valid options!");
         }
-        if ($("#donatePurpose").val() === "0") {
-            alert("Donation Purpose is mandatory!");
-            $("#paymentMode").focus();
-            return false;
-        }
-
-        if (donationAmount === "") {
-            alert("Donation Amount is mandatory!");
-            $("#donationAmount").focus();
-            return false;
-        }
-
-        if (email === "") {
-            alert("Email is mandatory!");
-            $("#email").focus();
-            return false;
-        }
-		showLoadingSpinner();
-        Donate();
-
-        return true;
-
-
     });
-    function Donate() {
 
+    function submitFormToDatabase() {
+        // Send data to the server
         $.ajax({
             url: '../WebService.asmx/Donate',
             type: "POST", // type of the data we send (POST/GET)
             contentType: "application/json",
-            data: "{ 'name': '" + $('#name').val() + "', 'mobileNo': '" + $('#mobileno').val() + "', 'email': '" + $('#email').val() + "', 'batchNo': '" + $('#batchNo').val() + "', 'PaymentMode': '" + $('#paymentMode').val() + "', 'DonateAmount': '" + $('#donationAmount').val() + "', 'RefNo': '" + $('#refNo').val() + "', 'DonatePurpose': '" + $('#donatePurpose').val() + "', 'PaymentSS': '" + base64String + "'}",
+            data: "{ 'name': '" + $('#name').val() + "', 'mobileNo': '" + $('#mobileno').val() + "', 'email': '" + $('#email').val() + "', 'batchNo': '" + $('#batchNo').val() + "', 'recurring': '" + $('#recurring').val() + "', 'frequency': '" + $('#frequency').val() + "', 'tenure': '" + $('#tenure').val() + "', 'PaymentMode': '" + $('#paymentMode').val() + "', 'DonateAmount': '" + $('#donationAmount').val() + "'}",
             datatype: "json",
             success: function (response) { // when successfully sent data and returned
                 // alert("Res: " + response.d);
                 switch (parseInt(JSON.parse(response.d))) {
                     case 1:
-                        alert("Thank You For Donation");
-                        location.reload();
+                        
+                        
                         break;
                     case 0:
 
@@ -84,147 +62,28 @@ $(document).ready(function () {
             } // success close
         }).done(function () {
         }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus + ", Error: " + errorThrown);
+            //alert("Status: " + textStatus + ", Error: " + errorThrown);
             //alert("Something went wrong. Please contact Admin.");
         }).always(function () {
         }); // ajax call ends
 
     }
 
+    function generateQRCode() {
+        const name = $("#name").val();
+        const mobileno = $("#mobileno").val();
+        const batchNo = $("#batchNo").val();
+        const donationAmount = $("#donationAmount").val();
 
+        const data = `upi://pay?pa=7075341606@ybl&pn=JNVKAA&am=${donationAmount}&tn=${mobileno} ${name} ${batchNo}&cu=INR`;
+        const apiURL = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data)}`;
+
+        document.getElementById('qrCode').src = apiURL;
+    }
 });
 
 
-function getDonationPurpose() {
-    $.ajax({
-        url: "../WebService.asmx/getDonations",
-        type: "POST",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (response) {
-            story = JSON.parse(JSON.parse(response.d));
-            if (story[0].title.localeCompare("521") === 0) {
-            }
-            else if (story[0].title.localeCompare("522") === 0)
-                alert("Something went wrong. Please try again.");
-            else {
 
-                for (i = 0; i < story.length; i++) {
-
-
-                    var txt = '<option value=' + story[i].donationid + '>' + story[i].title + '</option>';
-
-
-                    $('#donatePurpose').append(txt);
-                }
-
-                //j = i;
-            }
-
-        }
-
-    }).done(function () {
-
-
-    }).fail(function (XMLHttpRequest, status, error) {
-        console.log("Status " + status + "Error" + error);
-    });
-
-
-    //Edit user data and getting data using button 
-
-
-
-
-}
-
-
-
-function initProfilePic() {
-
-    $('#fileprofile').on('change', function () {
-        compressImage();
-
-    });
-
-
-
-
-}
-
-function compressImage() {
-
-    var inputImage = document.getElementById('fileprofile');
-    var file = inputImage.files[0];
-
-    if (file) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            var img = new Image();
-            img.src = e.target.result;
-
-            img.onload = function () {
-                var canvas = document.createElement('canvas');
-                var ctx = canvas.getContext('2d');
-
-                // Calculate the new width and height to maintain the aspect ratio
-                var maxDimension = 800;
-                var newWidth, newHeight;
-
-                if (img.width > img.height) {
-                    newWidth = maxDimension;
-                    newHeight = (img.height / img.width) * maxDimension;
-                } else {
-                    newHeight = maxDimension;
-                    newWidth = (img.width / img.height) * maxDimension;
-                }
-
-                canvas.width = newWidth;
-                canvas.height = newHeight;
-
-                // Draw the image on the canvas
-                ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-                // Convert the canvas content to a base64 encoded JPEG image
-                var compressedImageData = canvas.toDataURL('image/jpeg', 0.8);
-
-                // Create a blob from the base64 data
-                var blob = dataURItoBlob(compressedImageData);
-
-                // Check if the compressed image size is below 900kb
-                if (blob.size < 900 * 1024) {
-                    // Do something with the compressed image, for example, upload or display it
-                    var reader = new FileReader();
-                    reader.onloadend = function () {
-                        //$("#base64Img").attr("href",reader.result); 
-                        base64String = reader.result;
-
-
-
-                    }
-                    reader.readAsDataURL(blob);
-                } else {
-                    alert('Please,provide image size below 5mb');
-                }
-            };
-        };
-
-        reader.readAsDataURL(file);
-    }
-}
-
-function dataURItoBlob(dataURI) {
-    var byteString = atob(dataURI.split(',')[1]);
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ab], { type: 'image/jpeg' });
-}
 
 
 $(document).ready(function () {
@@ -307,43 +166,3 @@ function getDonationData() {
 		$("#loadingSpinner").hide();
     }
 
-
-$(document).ready(function () {
-    $('#dophonepe').click(function (e) {
-        e.preventDefault();
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var mobileNo = $('#mobileno').val();
-        var batchNo = $('#batchNo').val();
-        var donatePurpose = $('#donatePurpose').val();
-        var donationAmount = $('#donationAmount').val();
-
-        var data = {
-            name: name,
-            email: email,
-            mobileNo: mobileNo,
-            batchNo: batchNo,
-            donatePurpose: donatePurpose,
-            donationAmount: donationAmount
-        };
-
-        $.ajax({
-            url: 'WebService.asmx/InitiatePayment',
-            method: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function (response) {
-                if (response.d.success) {
-                    window.location.href = response.d.redirectUrl;
-                } else {
-                    alert('Payment initiation failed. Please try again.');
-                }
-            },
-            error: function (err) {
-                console.error(err);
-                alert('An error occurred. Please try again.');
-            }
-        });
-    });
-});

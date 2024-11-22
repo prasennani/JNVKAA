@@ -5,8 +5,45 @@
     getProfilePic();
     getuserAccessLevel();
     getuserDonations();
-
+    showUserProfile();
 });
+
+
+function showUserProfile() {
+
+    $.ajax({
+        url: "../WebService.asmx/getuserdata",
+        type: "POST",
+        contentType: "application/json",
+        data: "{ 'uid': '0'}",
+        dataType: "json",
+        success: function (response) {
+
+            user = JSON.parse(JSON.parse(response.d));
+            if (user[0].ustatus.localeCompare("521") === 0)
+                alert("No records found");
+            else if (user[0].ustatus.localeCompare("520") === 0)
+                window.location = "../login.html";
+            else {
+
+                $("#name").val(user[0].fname + " " + user[0].sname);
+                $("#batchNo").val(user[0].batch);
+                $('#mobileno').val(user[0].uphno);
+                $('#email').val(user[0].uemail);
+                $('#city').val(user[0].ucity);
+                $('#batchNo').val(user[0].batchNo);
+
+
+
+            }
+
+        }
+
+    }).done(function () {
+    }).fail(function (XMLHttpRequest, status, error) {
+        console.log("Status " + status + "Error" + error);
+    });
+}
 
 function getuser() {
     $.ajax({
