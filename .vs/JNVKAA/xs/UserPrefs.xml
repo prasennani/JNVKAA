@@ -1,22 +1,24 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="WebService.asmx.cs" Line="4106" Column="92" />
+      <File FileName="WebService.asmx.cs" />
       <File FileName="Web.config" Line="45" Column="13" />
-      <File FileName="users/donate.html" Line="427" Column="19" />
-      <File FileName="js/users/donate.js" Line="299" Column="80" />
-      <File FileName="donate.html" Line="503" Column="35" />
-      <File FileName="js/donate.js" Line="158" Column="32" />
-      <File FileName="js/donationCharts.js" Line="1" Column="1" />
-      <File FileName="users/about.html" Line="484" Column="42" />
-      <File FileName="FR/donate.html" Line="408" Column="1" />
+      <File FileName="about.html" Line="464" Column="40" />
+      <File FileName="users/about.html" Line="471" Column="42" />
+      <File FileName="js/about.js" Line="71" Column="4" />
+      <File FileName="js/users/about.js" Line="158" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
             <Node name="JNKVAA">
-              <Node name="Web.config" selected="True" />
+              <Node name="FR" expanded="True" />
+              <Node name="js" expanded="True" />
+              <Node name="users" expanded="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -24,11 +26,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>
