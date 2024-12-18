@@ -76,9 +76,17 @@ $(document).ready(function () {
         const donationAmount = $("#donationAmount").val();
 
         const data = `upi://pay?pa=7075341606@ybl&pn=JNVKAA&am=${donationAmount}&tn=${mobileno} ${name} ${batchNo}&cu=INR`;
+        const phonepeurl = `phonepe://pay?pa=7075341606@ybl&pn=JNVKAA&am=${donationAmount}&tn=${mobileno} ${name} ${batchNo}&cu=INR`;
+        const gpayurl = `gpay://upi/pay?pa=7075341606@ybl&pn=JNVKAA&am=${donationAmount}&tn=${mobileno} ${name} ${batchNo}&cu=INR`;
+        const credurl = `credpay://upi/pay?pa=7075341606@ybl&pn=JNVKAA&am=${donationAmount}&tn=${mobileno} ${name} ${batchNo}&cu=INR`;
         const apiURL = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(data)}`;
 
         document.getElementById('qrCode').src = apiURL;
+
+        // Update href attributes of the buttons
+        document.querySelector('a[href="Phonepeurl"]').href = phonepeurl;
+        document.querySelector('a[href="Gpayurl"]').href = gpayurl;
+        document.querySelector('a[href="Credurl"]').href = credurl;
     }
 });
 
