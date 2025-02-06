@@ -3,67 +3,85 @@
         CountryCodeList();
 
         $("#btnsubmit").click(function () {
-            //alert($("#txtdob").val());
             if ($("#txtfname").val().length > 0) {
                 if ($("#txtsname").val().length > 0) {
                     if ($("#genderselect").val().localeCompare("0") !== 0) {
                         if ($("#txtbatchno").val().length > 0) {
-                            //if ($("#txtdob").val().length > 0) {
-                                if ($("#txtphone").val().length > 6) {
-                                    if ($("#txtemail").val().length > 0) {
-                                        if ($("#txtpwd").val().length >= 4) {
-                                            if ($("#txtcpwd").val().length >= 4) {
-                                                if ($("#txtcpwd").val().localeCompare($("#txtpwd").val()) === 0) {
-													if (validatePassword($("#txtpwd").val())) {
-														// Display alert message
-														//alert("Please wait. Do not refresh or close the tab until next response. Please click ok.");
-														// Your existing form validation logic here
+                            if ($("#txtcity").val().length > 0) {
+                                if ($("#txtprofession").val().length > 0) {
+                                    if ($("#txtphone").val().length > 6) {
+                                        if ($("#txtemail").val().length > 0) {
+                                            if ($("#txtpwd").val().length >= 4) {
+                                                if ($("#txtcpwd").val().length >= 4) {
+                                                    if ($("#txtcpwd").val().localeCompare($("#txtpwd").val()) === 0) {
+                                                        if (validatePassword($("#txtpwd").val())) {
 
-														showLoadingSpinner(); // Show loading spinner
+                                                            showLoadingSpinner(); // Show loading spinner
 
-														$.ajax({
-															url: 'WebService.asmx/newUserRegistrationWeb',
-															type: "POST", // type of the data we send (POST/GET)
-															contentType: "application/json",
-															data: "{ 'name': '" + $("#txtfname").val() + "', 'sname': '" + $("#txtsname").val() + "', 'gender': '" + $("#genderselect").val() + "', 'batchno': '" + $("#txtbatchno").val() + "', 'dob': '" + $("#txtdob").val() + "', 'mobile': '" + $("#txtphone").val() + "', 'email': '" + $("#txtemail").val() + "', 'pwd': '" + $("#txtpwd").val() + "', 'CountryCode': '" + $("#countryList").val() + "'}",
-															datatype: "json",
-                                                            success: function (response) { // when successfully sent data and returned
-                                                                
-                                                                alert(response.d);
-                                                                window.location.href = '/login.html';
-                                                                var res = parseInt(JSON.parse(response.d));
-                                                                $scope.$apply();
-                                                                
-															} // success close
-														}).done(function () {
-														}).fail(function (XMLHttpRequest, textStatus, errorThrown) {
-															alert("Status: " + textStatus + ", Error: " + errorThrown);
-														}).always(function () {
-														}); // ajax call ends
+                                                            $.ajax({
+                                                                url: 'WebService.asmx/newUserRegistrationWeb',
+                                                                type: "POST",
+                                                                contentType: "application/json",
+                                                                data: JSON.stringify({
+                                                                    name: $("#txtfname").val(),
+                                                                    sname: $("#txtsname").val(),
+                                                                    gender: $("#genderselect").val(),
+                                                                    batchno: $("#txtbatchno").val(),
+                                                                    dob: $("#txtdob").val(),
+                                                                    city: $("#txtcity").val(),
+                                                                    profession: $("#txtprofession").val(),
+                                                                    mobile: $("#txtphone").val(),
+                                                                    email: $("#txtemail").val(),
+                                                                    pwd: $("#txtpwd").val(),
+                                                                    CountryCode: $("#countryList").val()
+                                                                }),
+                                                                dataType: "json",
+                                                                success: function (response) {
+                                                                    alert(response.d);
+                                                                    window.location.href = '/login.html';
+                                                                }
+                                                            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                                                                alert("Status: " + textStatus + ", Error: " + errorThrown);
+                                                            }).always(function () {
+                                                                hideLoadingSpinner(); // Hide loading spinner after request completion
+                                                            });
 
-													}                                           
-													
-												} else
-                                                    alert("Password and Confirm Password should match");
-                                            } else
-                                                alert("Enter Confirm Password");
-                                        } else
-                                            alert("Password length should be minimum 4 characters length.");
-                                    } else
-                                        alert("Enter Email");
-                                } else
-                                    alert("Please Check the Mobile No.");
-                            //} else
-                                //alert("Enter DOB");
-                        } else
+                                                        }
+                                                    } else {
+                                                        alert("Password and Confirm Password should match");
+                                                    }
+                                                } else {
+                                                    alert("Enter Confirm Password");
+                                                }
+                                            } else {
+                                                alert("Password length should be a minimum of 4 characters.");
+                                            }
+                                        } else {
+                                            alert("Enter Email");
+                                        }
+                                    } else {
+                                        alert("Please Check the Mobile No.");
+                                    }
+                                } else {
+                                    alert("Enter Current Profession");
+                                }
+                            } else {
+                                alert("Enter Current City");
+                            }
+                        } else {
                             alert("Please select Batch No");
-                    } else
+                        }
+                    } else {
                         alert("Select Gender");
-                } else
+                    }
+                } else {
                     alert("Enter Surname");
-            } else
+                }
+            } else {
                 alert("Enter First Name");
+            }
         });
+
 
         $("#chkshowpwd").click(function () {
             if ($("#chkshowpwd").prop('checked') == true)

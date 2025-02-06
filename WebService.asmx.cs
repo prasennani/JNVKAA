@@ -52,7 +52,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd, string CountryCode)
+        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd, string city, string profession, string CountryCode)
         {
 
             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -116,7 +116,7 @@ namespace JNKVAA
 
                         //  bgroup, string aadhar, string pan, string marital, string ifsc, string bankname, string micr, string bbranch, string bcontact, string bcity, string bdistrict, string bstate, string baddress                                                                                             
 
-                        cmd.CommandText = "insert into TB_Users(Datee,Name,Surname,Gender,BatchNo,DOB,Mobile,Email,Pwd,UStatus,WorkingAs,country_code ) OUTPUT inserted.RowId values(@Datee,@Name,@Surname,@Gender,@BatchNo,@DOB,@Mobile,@Email,@Pwd,-1,1,@CountryCode)";
+                        cmd.CommandText = "insert into TB_Users(Datee,Name,Surname,Gender,BatchNo,DOB,Mobile,Email,Pwd,Profession,City,UStatus,WorkingAs,country_code ) OUTPUT inserted.RowId values(@Datee,@Name,@Surname,@Gender,@BatchNo,@DOB,@Mobile,@Email,@Pwd,@Profession,@City,-1,1,@CountryCode)";
                         cmd.Parameters.AddWithValue("Datee", DateTime.Now);
                         cmd.Parameters.AddWithValue("Name", name);
                         cmd.Parameters.AddWithValue("Surname", sname);
@@ -126,6 +126,8 @@ namespace JNKVAA
                         cmd.Parameters.AddWithValue("Mobile", mobile);
                         cmd.Parameters.AddWithValue("Email", email);
                         cmd.Parameters.AddWithValue("Pwd", pwd);
+                        cmd.Parameters.AddWithValue("City", city);
+                        cmd.Parameters.AddWithValue("Profession", profession);
                         cmd.Parameters.AddWithValue("CountryCode", CountryCode);
                         //, Qualification, DeptId, CurDesig, CurOrganization, Experience, TeachLevel
                         res = (int)cmd.ExecuteScalar();
@@ -1867,6 +1869,7 @@ namespace JNKVAA
             public string description2 { get; set; }
             public string description3 { get; set; }
             public string showonsite { get; set; }
+            public string batchno { get; set; }
         }
 
         [WebMethod(EnableSession = true)]
@@ -1905,6 +1908,7 @@ namespace JNKVAA
                     story.description2 = rdr["Description2"].ToString();
                     story.description3 = rdr["Description3"].ToString();
                     story.showonsite = rdr["ShowOnSite"].ToString();
+                    story.batchno = rdr["BatchNo"].ToString();
 
 
                     storieslist.Add(story);
@@ -1955,6 +1959,7 @@ namespace JNKVAA
             public string photo { get; set; }
             public string description1 { get; set; }
             public string description3 { get; set; }
+            public string batchno { get; set; }
         }
 
         [WebMethod(EnableSession = true)]
@@ -1990,10 +1995,8 @@ namespace JNKVAA
                         allStories.postedon = Convert.ToDateTime(rdr["PostedOn"].ToString()).ToString("yyyy-MM-dd").Replace(" 12:00:00 AM", "");
                         allStories.description1 = rdr["Description1"].ToString();
                         allStories.description3 = rdr["Description3"].ToString();
+                        allStories.batchno = rdr["BatchNo"].ToString();
 
-                        /* Session["userid"] = rdr["UserId"].ToString();
-                         Session["uname"] = rdr["Name"].ToString()[0] + ". " + rdr["SurName"].ToString();
-                         Session["batchno"] = rdr["BatchNo"].ToString();*/
                         allStoriesList.Add(allStories);
                     }
                     rdr.Close();

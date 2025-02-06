@@ -52,11 +52,15 @@ function getAllStories() {
                     storiesCard += ' <div class=" row col-md-12">';
 
                     storiesCard += '  <div class="row col-md-6">';
-                    storiesCard += '  <h3 class="postedby">Posted On:&nbsp; ' + story[i].postedon + '</h3>';
+                    storiesCard += '  <h3 class="postedby">Posted By:&nbsp; ' + story[i].postedby + '</h3>';
                     storiesCard += ' </div>';
 
                     storiesCard += '  <div class="row col-md-6">';
-                    storiesCard += '  <h3 class="postedby">Posted By:&nbsp; ' + story[i].postedby + '</h3>';
+                    storiesCard += '  <h3 class="postedby">Batch No:&nbsp; ' + story[i].batchno + '</h3>';
+                    storiesCard += ' </div>';
+
+                    storiesCard += '  <div class="row col-md-6">';
+                    storiesCard += '  <h3 class="postedby">Posted On:&nbsp; ' + story[i].postedon + '</h3>';
                     storiesCard += ' </div></div>';
                     storiesCard += ' <div class="row col-md-12 mt-3 ">';
                     storiesCard += ' <p id="P1" class="description" style="white-space: pre-line;">' + story[i].description1 + '</p>';

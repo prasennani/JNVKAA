@@ -43,6 +43,7 @@ function showUserStory() {
                 $('#description1').text(story[0].description1);
                 $('#description2').text(story[0].description2);
                 $('#description3').text(story[0].description3);
+                $('#batchno').text(story[0].batchno);
 
 
             }
