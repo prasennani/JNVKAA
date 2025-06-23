@@ -52,7 +52,7 @@ namespace JNKVAA
         }
 
         [WebMethod(EnableSession = true)]
-        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string mobile, string email, string pwd, string city, string profession, string CountryCode)
+        public string newUserRegistrationWeb(string name, string sname, string gender, string batchno, string dob, string bgroup, string mobile, string email, string pwd, string city, string profession, string CountryCode, string house)
         {
 
             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -116,19 +116,21 @@ namespace JNKVAA
 
                         //  bgroup, string aadhar, string pan, string marital, string ifsc, string bankname, string micr, string bbranch, string bcontact, string bcity, string bdistrict, string bstate, string baddress                                                                                             
 
-                        cmd.CommandText = "insert into TB_Users(Datee,Name,Surname,Gender,BatchNo,DOB,Mobile,Email,Pwd,Profession,City,UStatus,WorkingAs,country_code ) OUTPUT inserted.RowId values(@Datee,@Name,@Surname,@Gender,@BatchNo,@DOB,@Mobile,@Email,@Pwd,@Profession,@City,-1,1,@CountryCode)";
+                        cmd.CommandText = "insert into TB_Users(Datee,Name,Surname,Gender,BatchNo,DOB,BloodGroup,Mobile,Email,Pwd,Profession,City,UStatus,WorkingAs,country_code,House) OUTPUT inserted.RowId values(@Datee,@Name,@Surname,@Gender,@BatchNo,@DOB,@BloodGroup,@Mobile,@Email,@Pwd,@Profession,@City,-1,1,@CountryCode,@House)";
                         cmd.Parameters.AddWithValue("Datee", DateTime.Now);
                         cmd.Parameters.AddWithValue("Name", name);
                         cmd.Parameters.AddWithValue("Surname", sname);
                         cmd.Parameters.AddWithValue("Gender", gender);
                         cmd.Parameters.AddWithValue("BatchNo", batchno);
                         cmd.Parameters.AddWithValue("DOB", dob);
+                        cmd.Parameters.AddWithValue("BloodGroup", bgroup);
                         cmd.Parameters.AddWithValue("Mobile", mobile);
                         cmd.Parameters.AddWithValue("Email", email);
                         cmd.Parameters.AddWithValue("Pwd", pwd);
                         cmd.Parameters.AddWithValue("City", city);
                         cmd.Parameters.AddWithValue("Profession", profession);
                         cmd.Parameters.AddWithValue("CountryCode", CountryCode);
+                        cmd.Parameters.AddWithValue("House", house);
                         //, Qualification, DeptId, CurDesig, CurOrganization, Experience, TeachLevel
                         res = (int)cmd.ExecuteScalar();
                         cmd.Parameters.Clear();

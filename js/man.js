@@ -28,12 +28,14 @@
                                                                     gender: $("#genderselect").val(),
                                                                     batchno: $("#txtbatchno").val(),
                                                                     dob: $("#txtdob").val(),
+                                                                    bgroup: $("#selectbloodgroup").val(),
                                                                     city: $("#txtcity").val(),
                                                                     profession: $("#txtprofession").val(),
                                                                     mobile: $("#txtphone").val(),
                                                                     email: $("#txtemail").val(),
                                                                     pwd: $("#txtpwd").val(),
-                                                                    CountryCode: $("#countryList").val()
+                                                                    CountryCode: $("#countryList").val(),
+                                                                    house: $("#selecthouse").val()
                                                                 }),
                                                                 dataType: "json",
                                                                 success: function (response) {

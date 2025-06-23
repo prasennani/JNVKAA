@@ -178,6 +178,37 @@
                                                 <!-- Populate options dynamically using JavaScript -->
                                             </select>
 
+
+                                            <div class="mb-3">
+                                                <select class="form-select" required aria-label="Blood Group"
+                                                        id="selectbloodgroup">
+                                                    <option selected value="0">Select Blood Group</option>
+                                                    <option value="1">O+</option>
+                                                    <option value="2">O-</option>
+                                                    <option value="3">A+</option>
+                                                    <option value="4">A-</option>
+                                                    <option value="5">B+</option>
+                                                    <option value="6">B-</option>
+                                                    <option value="7">AB+</option>
+                                                    <option value="8">AB-</option>
+                                                </select>
+                                                <div class="invalid-feedback">Invalid select feedback</div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <select class="form-select" required aria-label="Select House"
+                                                        id="selecthouse">
+                                                    <option selected value="0">Select House</option>
+                                                    <option>Nilgiri</option>
+                                                    <option>Udayagiri</option>
+                                                    <option>Shivalik</option>
+                                                    <option>Aravali</option>
+                                                </select>
+                                                <div class="invalid-feedback">Invalid select feedback</div>
+                                            </div>
+                                            <input type="text" class="form-control mb-3 mt-3" placeholder="Current City"
+                                                   id="txtcity">
+                                            <input type="text" class="form-control mb-3 mt-3" placeholder="Current Profession"
+                                                   id="txtprofession">
                                             <div class="col-md-12">
                                                 <div class="form-floating">
                                                     <input type="date" class="form-control bg-light border-2" id="txtdob"
@@ -185,10 +216,6 @@
                                                     <label style="color:black; " for="Date of birth">Date of Birth (Optional)</label>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control mb-3 mt-3" placeholder="Current City"
-                                                   id="txtcity">
-                                            <input type="text" class="form-control mb-3 mt-3" placeholder="Current Profession"
-                                                   id="txtprofession">
                                             <div class="input-group">
                                                 <select class="form-select" id="countryList">
                                                     <option value="+91">+91</option>
@@ -197,7 +224,7 @@
                                                 <input type="text" class="form-control mb-3 mt-3" aria-label="Text input with dropdown button" placeholder="Mobile Number" id="txtphone">
                                             </div>
 
-                                            <input type="email" class="form-control mb-3 mt-3"
+                                            <input type="email" class="form-control mb-3"
                                                    placeholder="Email Address" id="txtemail">
                                             <input type="password" class="form-control mb-3" placeholder="Password"
                                                    required id="txtpwd">
