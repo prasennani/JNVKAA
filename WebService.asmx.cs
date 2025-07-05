@@ -19,6 +19,7 @@ using static JNKVAA.WebService;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.IO;
+using System.Web.Services.Description;
 
 
 namespace JNKVAA
@@ -2523,6 +2524,508 @@ namespace JNKVAA
                     var json = JsonConvert.SerializeObject(batchClassList);
                     retval = json.ToString();
                     return oSerializer.Serialize(retval);
+                }
+            }
+        }
+
+
+        // Corrected C# Class & WebMethod to match your DB structure
+        // Corrected C# WebMethod to match updated JS and front-end requirements
+
+        // Enhanced C# WebMethod for multi-word, case-insensitive search with frontend highlighting support
+
+        // Corrected C# WebMethod to match updated JS and front-end requirements
+
+        // Enhanced C# WebMethod for multi-word, case-insensitive search with frontend highlighting support
+
+        public class BusinessesClass
+        {
+            public string bid { get; set; }
+            public string bname { get; set; }
+            public string fname { get; set; }
+            public string sname { get; set; }
+            public string bnature { get; set; }
+            public string registrationmode { get; set; }
+            public string baddress { get; set; }
+            public string bpincode { get; set; }
+            public string bcity { get; set; }
+            public string batchno { get; set; }
+            public string bstatus { get; set; }
+            public string bphno { get; set; }
+            public string bemail { get; set; }
+            public string bpphno { get; set; }
+            public string bservices { get; set; }
+            public string bcardphoto { get; set; }
+            public string bimage { get; set; }
+            public string bdescription { get; set; }
+            public string bwebsite { get; set; }
+            public string binstaurl { get; set; }
+            public string bfbookurl { get; set; }
+            public string bmapurl { get; set; }
+            public string bourl1 { get; set; }
+            public string bourl2 { get; set; }
+            public string bupdatedon { get; set; }
+            public string ustatus { get; set; }
+            public string highlight { get; set; } // field to show matched words
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string getBusinesses(string ServicesOrProducts)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            string retval = "";
+            var serializer = new JavaScriptSerializer();
+            var businessesList = new List<BusinessesClass>();
+
+            string[] searchWords = ServicesOrProducts.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string whereClause = "WHERE Approval = 1";
+            var conditions = new List<string>();
+
+            foreach (string word in searchWords)
+            {
+                conditions.Add("LOWER(ServicesOrProducts) LIKE @word_" + word);
+            }
+
+            if (conditions.Count > 0)
+            {
+                whereClause += " AND (" + string.Join(" AND ", conditions) + ")";
+            }
+
+            string sql = "SELECT * FROM TB_Businesses " + whereClause + " ORDER BY LastName ASC";
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(sql, con);
+
+                    foreach (string word in searchWords)
+                    {
+                        cmd.Parameters.AddWithValue("@word_" + word, "%" + word.ToLower() + "%");
+                    }
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        string rawServices = rdr["ServicesOrProducts"].ToString();
+                        string highlighted = rawServices;
+
+                        foreach (string word in searchWords)
+                        {
+                            var regex = new System.Text.RegularExpressions.Regex($"({System.Text.RegularExpressions.Regex.Escape(word)})", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                            highlighted = regex.Replace(highlighted, "<mark>$1</mark>");
+                        }
+
+                        var b = new BusinessesClass
+                        {
+                            bid = rdr["UserId"].ToString(),
+                            bname = rdr["BusinessName"].ToString(),
+                            fname = rdr["FirstName"].ToString(),
+                            sname = rdr["LastName"].ToString(),
+                            bnature = rdr["NatureOfBusiness"].ToString(),
+                            baddress = rdr["BusinessPlaceFullAddress"].ToString(),
+                            bpincode = rdr["PinCode"].ToString(),
+                            bcity = rdr["NearestCity"].ToString(),
+                            batchno = rdr["BatchNo"].ToString(),
+                            bstatus = rdr["Approval"].ToString(),
+                            bphno = rdr["BusinessPhoneNumber"].ToString(),
+                            bemail = rdr["BusinessEmailId"].ToString(),
+                            bpphno = rdr["PersonalPhoneNumber"].ToString(),
+                            bservices = rawServices,
+                            bcardphoto = rdr["UploadVisitingCard"].ToString(),
+                            bimage = rdr["UploadBusinessImagesOrBrochure"].ToString(),
+                            bdescription = rdr["NoteForAdmin"].ToString(),
+                            bwebsite = rdr["WebsiteUrl"].ToString(),
+                            binstaurl = rdr["InstagramUrl"].ToString(),
+                            bfbookurl = rdr["FacebookUrl"].ToString(),
+                            bmapurl = rdr["GoogleMapsLocationUrl"].ToString(),
+                            bourl1 = rdr["OtherUrl1"].ToString(),
+                            bourl2 = rdr["OtherUrl2"].ToString(),
+                            bupdatedon = rdr["UpdatedOn"].ToString(),
+                            ustatus = "1",
+                            highlight = highlighted
+                        };
+                        businessesList.Add(b);
+                    }
+                    rdr.Close();
+
+                    if (businessesList.Count == 0)
+                    {
+                        businessesList.Add(new BusinessesClass
+                        {
+                            ustatus = "521",
+                            fname = "No Records found"
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    businessesList.Add(new BusinessesClass
+                    {
+                        ustatus = "522",
+                        fname = "Error: " + ex.Message
+                    });
+                }
+            }
+
+            return serializer.Serialize(JsonConvert.SerializeObject(businessesList));
+        }
+
+
+        // New WebMethod to get full data for a specific business by UserId
+
+        [WebMethod(EnableSession = true)]
+        public string getBusinessdata(string uid)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            string retval = "";
+            var serializer = new JavaScriptSerializer();
+            var businessList = new List<BusinessesClass>();
+
+            if (Session["userid"] != null)
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    try
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand("SELECT * FROM TB_Businesses WHERE UserId = @uid", con);
+                        cmd.Parameters.AddWithValue("@uid", uid == "0" ? Session["userid"].ToString() : uid);
+
+                        SqlDataReader rdr = cmd.ExecuteReader();
+
+                        while (rdr.Read())
+                        {
+                            var b = new BusinessesClass
+                            {
+                                bid = rdr["UserId"].ToString(),
+                                bname = rdr["BusinessName"].ToString(),
+                                fname = rdr["FirstName"].ToString(),
+                                sname = rdr["LastName"].ToString(),
+                                bnature = rdr["NatureOfBusiness"].ToString(),
+                                registrationmode = rdr["RegistrationMode"].ToString(),
+                                baddress = rdr["BusinessPlaceFullAddress"].ToString(),
+                                bpincode = rdr["PinCode"].ToString(),
+                                bcity = rdr["NearestCity"].ToString(),
+                                batchno = rdr["BatchNo"].ToString(),
+                                bstatus = rdr["Approval"].ToString(),
+                                bphno = rdr["BusinessPhoneNumber"].ToString(),
+                                bemail = rdr["BusinessEmailId"].ToString(),
+                                bpphno = rdr["PersonalPhoneNumber"].ToString(),
+                                bservices = rdr["ServicesOrProducts"].ToString(),
+                                bcardphoto = rdr["UploadVisitingCard"].ToString(),
+                                bimage = rdr["UploadBusinessImagesOrBrochure"].ToString(),
+                                bdescription = rdr["NoteForAdmin"].ToString(),
+                                bwebsite = rdr["WebsiteUrl"].ToString(),
+                                binstaurl = rdr["InstagramUrl"].ToString(),
+                                bfbookurl = rdr["FacebookUrl"].ToString(),
+                                bmapurl = rdr["GoogleMapsLocationUrl"].ToString(),
+                                bourl1 = rdr["OtherUrl1"].ToString(),
+                                bourl2 = rdr["OtherUrl2"].ToString(),
+                                bupdatedon = rdr["UpdatedOn"].ToString(),
+                                ustatus = "1",
+                                highlight = ""
+                            };
+                            businessList.Add(b);
+                        }
+                        rdr.Close();
+
+                        if (businessList.Count == 0)
+                        {
+                            businessList.Add(new BusinessesClass
+                            {
+                                ustatus = "521",
+                                fname = "No record found"
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        businessList.Add(new BusinessesClass
+                        {
+                            ustatus = "522",
+                            fname = "Error: " + ex.Message
+                        });
+                    }
+                }
+            }
+            else
+            {
+                businessList.Add(new BusinessesClass
+                {
+                    ustatus = "520",
+                    fname = "Session expired"
+                });
+            }
+
+            return serializer.Serialize(JsonConvert.SerializeObject(businessList));
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string updateVisitingCard(string uid, string baseval)
+        {
+            return updateImageColumn(uid, baseval, "UploadVisitingCard");
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string updateBusinessImage(string uid, string baseval)
+        {
+            return updateImageColumn(uid, baseval, "UploadBusinessImagesOrBrochure");
+        }
+
+        private string updateImageColumn(string uid, string baseval, string columnName)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            var oSerializer = new JavaScriptSerializer();
+
+            if (Session["userid"] != null)
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    string sql = $"UPDATE TB_Businesses SET {columnName} = @baseval WHERE UserId = @uid";
+                    SqlCommand cmd = new SqlCommand(sql, con);
+                    cmd.Parameters.AddWithValue("baseval", baseval);
+                    cmd.Parameters.AddWithValue("uid", uid == "0" ? Session["userid"].ToString() : uid);
+
+                    int res = cmd.ExecuteNonQuery();
+                    return oSerializer.Serialize(res > 0 ? "1" : "0");
+                }
+            }
+            return oSerializer.Serialize("520");
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        public string getVisitingCard(string uid)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            var oSerializer = new JavaScriptSerializer();
+            string baseval = "";
+
+            if (Session["userid"] != null)
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT UploadVisitingCard FROM TB_Businesses WHERE UserId = @uid", con);
+                    cmd.Parameters.AddWithValue("uid", uid == "0" ? Session["userid"].ToString() : uid);
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                        baseval = rdr["UploadVisitingCard"].ToString();
+
+                    return oSerializer.Serialize(baseval);
+                }
+            }
+            return oSerializer.Serialize("520");
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string getBusinessImage(string uid)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            var oSerializer = new JavaScriptSerializer();
+            string baseval = "";
+
+            if (Session["userid"] != null)
+            {
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT UploadBusinessImagesOrBrochure FROM TB_Businesses WHERE UserId = @uid", con);
+                    cmd.Parameters.AddWithValue("uid", uid == "0" ? Session["userid"].ToString() : uid);
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    if (rdr.Read())
+                        baseval = rdr["UploadBusinessImagesOrBrochure"].ToString();
+
+                    return oSerializer.Serialize(baseval);
+                }
+            }
+            return oSerializer.Serialize("520");
+        }
+
+
+
+        [WebMethod(EnableSession = true)]
+        public string getAllServices()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+            List<string> serviceList = new List<string>();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT DISTINCT ServicesOrProducts FROM TB_Businesses WHERE ServicesOrProducts IS NOT NULL AND ServicesOrProducts <> ''", con);
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    serviceList.Add(rdr["ServicesOrProducts"].ToString());
+                }
+
+                rdr.Close();
+            }
+
+            return new JavaScriptSerializer().Serialize(JsonConvert.SerializeObject(serviceList));
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string insertBusinessDataByUser(string bname, string fname, string sname, string bpemail, string bemail, string pphno, string bnature,
+            string registrationmode, string baddress, string bpincode, string bcity, string bphno, string bservices, string note,
+            string bwebsite, string binstaurl, string bfbookurl, string botherurl1, string botherurl2, string bmapurl)
+        {
+            var serializer = new JavaScriptSerializer();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            if (HttpContext.Current.Session["userid"] == null || HttpContext.Current.Session["batchno"] == null)
+            {
+                return serializer.Serialize("520"); // Session expired
+            }
+
+            string uid = Session["userid"].ToString();
+            string batchno = Session["batchno"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+
+                    // Check if record exists
+                    SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM TB_Businesses WHERE UserId = @uid", con);
+                    checkCmd.Parameters.AddWithValue("@uid", uid);
+                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        return serializer.Serialize("exists"); // Already exists
+                    }
+
+                    string query = @"
+                INSERT INTO TB_Businesses (
+                    Timestamp, EmailAddress, FirstName, LastName, BusinessName, NatureOfBusiness, 
+                    RegistrationMode, BusinessPlaceFullAddress, PinCode, NearestCity, BusinessPhoneNumber, 
+                    BusinessEmailId, PersonalPhoneNumber, ServicesOrProducts, NoteForAdmin, WebsiteUrl, InstagramUrl, 
+                    FacebookUrl, OtherUrl1, OtherUrl2, GoogleMapsLocationUrl, UserId, BatchNo, Approval
+                ) VALUES (
+                    GETDATE(), @EmailAddress, @FirstName, @LastName, @BusinessName, @NatureOfBusiness, 
+                    @RegistrationMode, @Address, @PinCode, @City, @BusinessPhone, @BusinessEmail, 
+                    @PersonalPhone, @Services, @Note, @WebsiteUrl, @InstagramUrl, @FacebookUrl, 
+                    @OtherUrl1, @OtherUrl2, @MapUrl, @UserId, @BatchNo, 0
+                )";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@EmailAddress", bpemail);
+                    cmd.Parameters.AddWithValue("@FirstName", fname);
+                    cmd.Parameters.AddWithValue("@LastName", sname);
+                    cmd.Parameters.AddWithValue("@BusinessName", bname);
+                    cmd.Parameters.AddWithValue("@NatureOfBusiness", bnature);
+                    cmd.Parameters.AddWithValue("@RegistrationMode", registrationmode);
+                    cmd.Parameters.AddWithValue("@Address", baddress);
+                    cmd.Parameters.AddWithValue("@PinCode", bpincode);
+                    cmd.Parameters.AddWithValue("@City", bcity);
+                    cmd.Parameters.AddWithValue("@BusinessPhone", bphno);
+                    cmd.Parameters.AddWithValue("@BusinessEmail", bemail);
+                    cmd.Parameters.AddWithValue("@PersonalPhone", pphno);
+                    cmd.Parameters.AddWithValue("@Services", bservices);
+                    cmd.Parameters.AddWithValue("@Note", note);
+                    cmd.Parameters.AddWithValue("@WebsiteUrl", bwebsite);
+                    cmd.Parameters.AddWithValue("@InstagramUrl", binstaurl);
+                    cmd.Parameters.AddWithValue("@FacebookUrl", bfbookurl);
+                    cmd.Parameters.AddWithValue("@OtherUrl1", botherurl1);
+                    cmd.Parameters.AddWithValue("@OtherUrl2", botherurl2);
+                    cmd.Parameters.AddWithValue("@MapUrl", bmapurl);
+                    cmd.Parameters.AddWithValue("@UserId", uid);
+                    cmd.Parameters.AddWithValue("@BatchNo", batchno);
+
+                    int result = cmd.ExecuteNonQuery();
+                    return serializer.Serialize(result > 0 ? "success" : "failed");
+                }
+                catch (Exception ex)
+                {
+                    return serializer.Serialize("error: " + ex.Message);
+                }
+            }
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        public string updateBusinessDataByUser(string bname, string fname, string sname, string bpemail, string bemail, string pphno, string bnature,
+            string registrationmode, string baddress, string bpincode, string bcity, string bphno, string bservices, string note,
+            string bwebsite, string binstaurl, string bfbookurl, string botherurl1, string botherurl2, string bmapurl)
+        {
+            var serializer = new JavaScriptSerializer();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            if (HttpContext.Current.Session["userid"] == null)
+            {
+                return serializer.Serialize("520");
+            }
+
+            string uid = Session["userid"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+
+                    string query = @"
+                UPDATE TB_Businesses SET
+                    EmailAddress = @EmailAddress,
+                    FirstName = @FirstName,
+                    LastName = @LastName,
+                    BusinessName = @BusinessName,
+                    NatureOfBusiness = @NatureOfBusiness,
+                    RegistrationMode = @RegistrationMode,
+                    BusinessPlaceFullAddress = @Address,
+                    PinCode = @PinCode,
+                    NearestCity = @City,
+                    BusinessPhoneNumber = @BusinessPhone,
+                    BusinessEmailId = @BusinessEmail,
+                    PersonalPhoneNumber = @PersonalPhone,
+                    ServicesOrProducts = @Services,
+                    NoteForAdmin = @Note,
+                    WebsiteUrl = @WebsiteUrl,
+                    InstagramUrl = @InstagramUrl,
+                    FacebookUrl = @FacebookUrl,
+                    OtherUrl1 = @OtherUrl1,
+                    OtherUrl2 = @OtherUrl2,
+                    GoogleMapsLocationUrl = @MapUrl,
+                    UpdatedOn = GETDATE()
+                WHERE UserId = @UserId";
+
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@EmailAddress", bpemail);
+                    cmd.Parameters.AddWithValue("@FirstName", fname);
+                    cmd.Parameters.AddWithValue("@LastName", sname);
+                    cmd.Parameters.AddWithValue("@BusinessName", bname);
+                    cmd.Parameters.AddWithValue("@NatureOfBusiness", bnature);
+                    cmd.Parameters.AddWithValue("@RegistrationMode", registrationmode);
+                    cmd.Parameters.AddWithValue("@Address", baddress);
+                    cmd.Parameters.AddWithValue("@PinCode", bpincode);
+                    cmd.Parameters.AddWithValue("@City", bcity);
+                    cmd.Parameters.AddWithValue("@BusinessPhone", bphno);
+                    cmd.Parameters.AddWithValue("@BusinessEmail", bemail);
+                    cmd.Parameters.AddWithValue("@PersonalPhone", pphno);
+                    cmd.Parameters.AddWithValue("@Services", bservices);
+                    cmd.Parameters.AddWithValue("@Note", note);
+                    cmd.Parameters.AddWithValue("@WebsiteUrl", bwebsite);
+                    cmd.Parameters.AddWithValue("@InstagramUrl", binstaurl);
+                    cmd.Parameters.AddWithValue("@FacebookUrl", bfbookurl);
+                    cmd.Parameters.AddWithValue("@OtherUrl1", botherurl1);
+                    cmd.Parameters.AddWithValue("@OtherUrl2", botherurl2);
+                    cmd.Parameters.AddWithValue("@MapUrl", bmapurl);
+                    cmd.Parameters.AddWithValue("@UserId", uid);
+
+                    int result = cmd.ExecuteNonQuery();
+                    return serializer.Serialize(result > 0 ? "success" : "failed");
+                }
+                catch (Exception ex)
+                {
+                    return serializer.Serialize("error: " + ex.Message);
                 }
             }
         }

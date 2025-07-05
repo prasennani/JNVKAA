@@ -1,17 +1,45 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="signup.html">
-    <Files>
-      <File FileName="Web.config" Line="41" Column="27" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="119" Column="280" IsPinned="True" />
-      <File FileName="signup.html" Line="1" Column="1" />
-      <File FileName="js/man.js" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebService.asmx.cs">
+    <Files>
+      <File FileName="Web.config" Line="4" Column="53" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="2671" Column="1" IsPinned="True" />
+      <File FileName="signup.html" Line="188" Column="82" />
+      <File FileName="js/man.js" Line="31" Column="106" />
+      <File FileName="users/settings.html" Line="451" Column="38" />
+      <File FileName="js/main.js" Line="1" Column="1" />
+      <File FileName="js/auth.js" Line="1" Column="1" />
+      <File FileName="js/users/settings.js" Line="300" Column="62" />
+      <File FileName="users/index.html" Line="1" Column="1" />
+      <File FileName="js/users/businesses.js" Line="154" Column="34" />
+      <File FileName="users/businesses.html" Line="172" Column="63" />
+      <File FileName="js/users/alumnimembers.js" Line="16" Column="4" />
+      <File FileName="css/style.css" Line="938" Column="1" />
+      <File FileName="index.html" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="JNVKAA" expanded="True">
+            <Node name="JNKVAA">
+              <Node name="css" expanded="True" />
+              <Node name="js">
+                <Node name="users" expanded="True" />
+              </Node>
+              <Node name="users" expanded="True" />
+              <Node name="WebService.asmx" expanded="True">
+                <Node name="WebService.asmx.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
 </Properties>

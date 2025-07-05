@@ -652,15 +652,17 @@ section {
 
 /* view user  */
 
-.viewuser{
+.viewuser {
     color: #129298;
     font-size: 20px;
-    font-weight:700;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
-.viewuserval{
+.viewuserval {
     color: #129298;
     font-size: 18px;
-    font-weight:400;
+    font-weight: 600;
+    color: #343a40;
 }
 
 /* usesr/stories */
@@ -925,3 +927,18 @@ section {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
+#ServicesOrProducts {
+    border-radius: 4px;
+    height: 42px;
+    font-size: 16px;
+}
+mark {
+    background-color: yellow;
+    font-weight: bold;
+    padding: 0 2px;
+}
+
+img#photo {
+    object-fit: cover;
+    border-radius: 8px;
+}

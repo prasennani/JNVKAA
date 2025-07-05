@@ -110,7 +110,7 @@
                     <a href="gallery.html" class="nav-item nav-link">Gallery</a>
                     <a href="donate.html" class="nav-item nav-link">Donate</a>
                     <a href="events.html" class="nav-item nav-link">Events</a>
-                    <a href="stories.html" class="nav-item nav-link">Stories</a>
+                    <a href="businesses.html" class="nav-item nav-link">Business</a>
 
                 </div>
                 <div class="d-none d-lg-flex ms-2 mt-3">
@@ -129,6 +129,7 @@
                                     <a href="batchmates.html" class="dropdown-item">Batchmates</a>
                                     <a href="alumnimembers.html" class="dropdown-item">Alumini members</a>
                                     <a href="boardmembers.html" class="dropdown-item">Board Members</a>
+                                    <a href="stories.html" class="dropdown-item">Stories</a>
                                     <a href="settings.html" class="dropdown-item active">User Settings</a>
                                     <a href="thankyou.html" class="dropdown-item">Thank You</a>
                                     <a href="#" class="dropdown-item" id="signout">SIGN OUT</a>
@@ -259,7 +260,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" disabled>Settings</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-business">My Business</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -593,46 +594,174 @@
 
                                 </div>
 
-                                <div class="tab-pane fade pt-3" id="profile-settings">
+                                <div class="tab-pane fade pt-3" id="profile-business">
+                                    <form id="businessForm">
 
-                                    <!-- Settings Form -->
-                                    <form>
+                                        <div id="businessImagesContainer" style="display: none;">
+                                            <div class="row mb-3">
+                                                <label for="visitingCard" class="col-md-4 col-lg-3 col-form-label">Visiting card</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="../img/Profile_Pic.png" id="visitingCard" alt="Visiting Card Preview" style="max-height: 180px;">
+                                                    <div class="form-group mt-2">
+                                                        <input type="file" class="form-control-file" accept="image/*" onchange="validateBusinessImage(event, 'visitingCard', 'visitingcard')" id="filevisitingcard">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                        <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                                                    <label class="form-check-label" for="changesMade">
-                                                        Changes made to your account
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                                                    <label class="form-check-label" for="newProducts">
-                                                        Information on new products and services
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="proOffers">
-                                                    <label class="form-check-label" for="proOffers">
-                                                        Marketing and promo offers
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                                                    <label class="form-check-label" for="securityNotify">
-                                                        Security alerts
-                                                    </label>
+                                            <div class="row mb-3">
+                                                <label for="businessImage" class="col-md-4 col-lg-3 col-form-label">Upload Brochure / Business Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="../img/Profile_Pic.png" id="businessImage" alt="Business Image Preview" style="max-height: 180px;">
+                                                    <div class="form-group mt-2">
+                                                        <input type="file" class="form-control-file" accept="image/*" onchange="validateBusinessImage(event, 'businessImage', 'businessimage')" id="filebusinessimage">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Business Name</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="bname">
+                                            </div>
                                         </div>
-                                    </form><!-- End settings Form -->
 
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Nature of Business</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="bnature">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Registration Mode</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select" id="registrationmode">
+                                                    <option selected value="0">Select</option>
+                                                    <option value="Sole Proprietor">Sole Proprietor</option>
+                                                    <option value="Partnership">Partnership</option>
+                                                    <option value="Pvt Ltd">Pvt Ltd Company</option>
+                                                    <option value="LLP">LLP</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Full Address</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <textarea class="form-control" id="baddress" rows="2"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Pin Code</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="bpincode">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Nearest City</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="bcity">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Business Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="bphno">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Personal Phone</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="text" class="form-control" id="pphno">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Personal Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="email" class="form-control" id="bpemail">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Business Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="email" class="form-control" id="bemail">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Services / Products</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <textarea class="form-control" id="bservices" rows="2"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Note for Admin</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <textarea class="form-control" id="note" rows="2"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Website, FB, Other URLs -->
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Website URL</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="bwebsite">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Instagram URL</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="binstaurl">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Facebook URL</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="bfbookurl">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Other URL 1</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="botherurl1">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Other URL 2</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="botherurl2">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-4 col-lg-3 col-form-label">Google Maps URL</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input type="url" class="form-control" id="bmapurl">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-success" id="saveBusinessBtn" style="display:none;">Save Business Details</button>
+                                            <button type="button" class="btn btn-warning" id="updateBusinessBtn" style="display:none;">Update Business Details</button>
+                                        </div>
+
+
+
+
+                                    </form>
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password">

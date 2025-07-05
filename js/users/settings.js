@@ -761,4 +761,266 @@ function printCard() {
 }
 
 
+$(document).ready(function () {
+    loadBusinessFormData();
+});
 
+let currentUploadType = "";
+function validateBusinessImage(event, previewId, type) {
+    const fileInput = event.target;
+    const fileName = fileInput.value;
+    const idxDot = fileName.lastIndexOf(".") + 1;
+    const extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+    if (["jpg", "jpeg", "png"].includes(extFile)) {
+        currentUploadType = type;
+        compressBusinessImage(fileInput, previewId);
+    } else {
+        fileInput.value = null;
+        alert("Only jpg/jpeg and png files are allowed!");
+    }
+}
+
+function compressBusinessImage(input, previewId) {
+    const file = input.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const maxDimension = 800;
+                let newWidth, newHeight;
+
+                if (img.width > img.height) {
+                    newWidth = maxDimension;
+                    newHeight = img.height / img.width * maxDimension;
+                } else {
+                    newHeight = maxDimension;
+                    newWidth = img.width / img.height * maxDimension;
+                }
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                const compressedData = canvas.toDataURL('image/jpeg', 0.8);
+                const blob = dataURItoBlob(compressedData);
+
+                if (blob.size < 900 * 1024) {
+                    document.getElementById(previewId).src = compressedData;
+                    const reader2 = new FileReader();
+                    reader2.onloadend = function () {
+                        uploadBusinessImage(reader2.result);
+                    };
+                    reader2.readAsDataURL(blob);
+                } else {
+                    alert('Please provide image size below 900KB.');
+                }
+            };
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function uploadBusinessImage(base64String) {
+    const endpoint = currentUploadType === 'visitingcard' ? 'updateVisitingCard' : 'updateBusinessImage';
+    $.ajax({
+        url: '../WebService.asmx/' + endpoint,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ uid: '0', baseval: base64String }),
+        success: function (res) {
+            const val = JSON.parse(res.d);
+            if (val === "1") alert(currentUploadType + " updated successfully.");
+            else alert("Failed to update " + currentUploadType + ".");
+        },
+        error: function () {
+            alert("Error uploading " + currentUploadType + ".");
+        }
+    });
+}
+
+function loadBusinessImages() {
+    $.ajax({
+        url: '../WebService.asmx/getVisitingCard',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ uid: '0' }),
+        success: function (res) {
+            const url = JSON.parse(res.d);
+            if (url.length > 20) $('#visitingCard').attr('src', url);
+        }
+    });
+    $.ajax({
+        url: '../WebService.asmx/getBusinessImage',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ uid: '0' }),
+        success: function (res) {
+            const url = JSON.parse(res.d);
+            if (url.length > 20) $('#businessImage').attr('src', url);
+        }
+    });
+}
+
+$(document).ready(function () {
+    loadBusinessImages();
+});
+
+
+// This is the enhanced JS file that handles:
+// - auto-filling business form from user data if new
+// - loading existing business data
+// - saving new business or updating existing one
+
+let businessExists = false;
+
+function initBusinessForm() {
+    // Step 1: Get user profile data
+    $.ajax({
+        url: "../WebService.asmx/getuserdata",
+        type: "POST",
+        contentType: "application/json",
+        data: "{ 'uid': '0' }",
+        dataType: "json",
+        success: function (response) {
+            let user = JSON.parse(JSON.parse(response.d))[0];
+            if (user.ustatus === "1") {
+                $('#bpemail').val(user.uemail);
+                $('#pphno').val(user.uphno);
+                $('#userid').val(user.uid);
+                $('#batchno').val(user.batchNo);
+            }
+        }
+    });
+
+    // Step 2: Get business data and show/hide sections
+    $.ajax({
+        url: '../WebService.asmx/getBusinessdata',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ uid: '0' }),
+        success: function (res) {
+            const data = JSON.parse(JSON.parse(res.d))[0];
+
+            if (data.ustatus === "1") {
+                businessExists = true;
+
+                // Show update, hide save
+                $('#saveBusinessBtn').hide();
+                $('#updateBusinessBtn').show();
+
+                // Fill values from existing business data
+                $('#bemail').val(data.bemail);
+                $('#bphno').val(data.bphno);
+                $('#pphno').val(data.bpphno);
+                $('#bname').val(data.bname);
+                $('#bnature').val(data.bnature);
+                $('#registrationmode').val(data.registrationmode);
+                $('#baddress').val(data.baddress);
+                $('#bpincode').val(data.bpincode);
+                $('#bcity').val(data.bcity);
+                $('#bservices').val(data.bservices);
+                $('#note').val(data.bdescription);
+                $('#bwebsite').val(data.bwebsite);
+                $('#binstaurl').val(data.binstaurl);
+                $('#bfbookurl').val(data.bfbookurl);
+                $('#botherurl1').val(data.bourl1);
+                $('#botherurl2').val(data.bourl2);
+                $('#bmapurl').val(data.bmapurl);
+                $('#userid').val(data.bid);
+                $('#batchno').val(data.batchno);
+
+                // Show visiting card and brochure image section
+                $('#businessImagesContainer').show();
+
+                if (data.bcardphoto) {
+                    $('#visitingCard').attr('src', data.bcardphoto);
+                }
+
+                if (data.bimage) {
+                    $('#businessImage').attr('src', data.bimage);
+                }
+
+            } else {
+                // No business data exists yet
+
+                businessExists = false;
+
+                $('#saveBusinessBtn').show();
+                $('#updateBusinessBtn').hide();
+
+                // Hide the visiting card and brochure section
+                $('#businessImagesContainer').hide();
+
+                // Optional: Clear values if needed
+                $('#businessForm')[0].reset();
+                $('#visitingCard').attr('src', '../img/no-card.jpg');
+                $('#businessImage').attr('src', '../img/no-brochure.jpg');
+            }
+        }
+    });
+}
+
+
+function submitOrUpdateBusiness(isUpdate) {
+    let payload = {
+        bname: $('#bname').val(),
+        bnature: $('#bnature').val(),
+        registrationmode: $('#registrationmode').val(),
+        baddress: $('#baddress').val(),
+        bpincode: $('#bpincode').val(),
+        bcity: $('#bcity').val(),
+        bphno: $('#bphno').val(),
+        bpemail: $('#bpemail').val(),
+        bemail: $('#bemail').val(),
+        pphno: $('#pphno').val(),
+        bservices: $('#bservices').val(),
+        note: $('#note').val(),
+        bwebsite: $('#bwebsite').val(),
+        binstaurl: $('#binstaurl').val(),
+        bfbookurl: $('#bfbookurl').val(),
+        botherurl1: $('#botherurl1').val(),
+        botherurl2: $('#botherurl2').val(),
+        bmapurl: $('#bmapurl').val(),
+        fname: $('#fname').val(),           // FIXED: added fname and sname for C#
+        sname: $('#sname').val()
+    };
+
+    $.ajax({
+        url: '../WebService.asmx/' + (isUpdate ? 'updateBusinessDataByUser' : 'insertBusinessDataByUser'),
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function (res) {
+            let result = JSON.parse(res.d);
+            if (result === "success") {
+                alert(isUpdate ? "Business details updated successfully!" : "Business details saved successfully!");
+            } else if (result === "exists") {
+                alert("Business data already exists for this user. Kindly refresh the page to Update.");
+            } else if (result === "520") {
+                alert("Session expired. Please login again.");
+            } else {
+                alert("Failed: " + result);
+            }
+        },
+        error: function () {
+            alert("Server error. Please try again later.");
+        }
+    });
+}
+
+
+$(document).ready(function () {
+    initBusinessForm();
+
+    $('#saveBusinessBtn').on('click', function () {
+        submitOrUpdateBusiness(false);
+    });
+
+    $('#updateBusinessBtn').on('click', function () {
+        submitOrUpdateBusiness(true);
+    });
+});

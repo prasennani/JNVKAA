@@ -1992,6 +1992,12 @@
     <Content Include="FR\viewuser.html" />
     <Content Include="js\donationCharts %28copy%29.js" />
     <Content Include="donation.html" />
+    <Content Include="businesses.html" />
+    <Content Include="js\businesses.js" />
+    <Content Include="js\users\businesses.js" />
+    <Content Include="users\businesses.html" />
+    <Content Include="js\users\viewbusinedd.js" />
+    <Content Include="users\viewbusinedd.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
