@@ -150,15 +150,20 @@ function getAllBusinesses() {
                     if (b.ustatus === "1") {
                         var txt = '<div class="col-lg-3 col-md-4 wow fadeInUp" data-wow-delay="0.1s">';
                         txt += ' <div class="team-item border-top border-5 border-primary rounded shadow overflow-hidden">';
-                        txt += ' <div class="text-center p-4" style="height:250px !important;">';
+                        txt += ' <div class="text-center p-4" >';
+                        txt += ' <h2 class="fw-bold mb-1 text-primary bio2">' + b.bname + '</h2>';
+                        
+                        txt += ' <h5 class="fw-bold mb-1 text-primary bio2">' + 'Location: ' + b.bcity + '</h5>';
                         txt += ' <p class="mt-2">' + b.highlight + '</p>';
                         if (!b.bimage || b.bimage === '') {
                             txt += '  <img class="img-fluid mb-4" style="max-height: 160px;" src="../assets/imgs/profile pic.png" alt="">';
                         } else {
                             txt += '  <img class="img-fluid mb-4" style="max-height: 160px;" src="' + b.bimage + '" alt="">';
                         }
-                        txt += '  <h1 class="fw-bold mb-1 text-primary bio2">' + b.bname + '</h1>';
+                        
                         txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + b.sname + ' ' + b.fname + '</h5>';
+                        txt += '  <h5 class="fw-bold mb-1 text-primary bio2">' + 'Batch No.: ' + b.batchno + '</h5>';
+                        
                         txt += '  </div>';
                         txt += ' <div class="d-flex justify-content-center bg-primary p-3">';
                         txt += ' <a class="btn btn-square text-primary bg-white m-1" href="' + b.bfbookurl + '" target="_blank"><i class="fab fa-facebook-f"></i></a>';
