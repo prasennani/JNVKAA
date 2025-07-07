@@ -39,6 +39,9 @@ function showBusinessData() {
             $('#photob').attr("src", business.bimage && business.bimage !== "" ? business.bimage : "../assets/imgs/profile pic.png");
             $('#fullname').text(business.fname + " " + business.sname);
             $('#bname').text(business.bname);
+            $('#bname1').text(business.bname);
+            $('#bbatchno').text(business.batchno);
+            $('#offers').text(business.bdescription);
             $('#bnature').text(business.bnature);
             $('#baddress').text(business.baddress);
             $('#bpincode').text(business.bpincode);
@@ -46,7 +49,6 @@ function showBusinessData() {
             $('#bphno').text(business.bphno);
             $('#bemail').text(business.bemail);
             $('#bservices').text(business.bservices);
-            $('#bdescription').text(business.bdescription);
 
             $('#bwebsite').attr("href", business.bwebsite);
             $('#bmapurl').attr("href", business.bmapurl);
@@ -104,3 +106,58 @@ function getuserDonations() {
     });
 
 }
+
+
+function requestBusinessLead(targetUserId) {
+    // Immediately update button to show status
+    $('#showContactBtn button')
+        .prop('disabled', true)
+        .text("Requesting... Please wait");
+
+    $.ajax({
+        url: '../WebService.asmx/saveBusinessLead',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ targetUserId: targetUserId }),
+        success: function (res) {
+            const result = JSON.parse(res.d);
+
+            if (result === "success") {
+                // Show contact info after server response (dummy data for now)
+                $('#showContactBtn').hide();
+                $('#businessContact').show();
+                $('#phoneSpan').text("Visible after approval");
+                $('#emailSpan').text("Visible after approval");
+
+
+                // ✅ Redirect to WhatsApp
+                const msg = `Hello,\nI have Requested for business contact.\nFrom our website user.\nPlease check your email and reply me.`;
+                const waURL = "https://wa.me/919059635007?text=" + encodeURIComponent(msg);
+                window.open(waURL, "_blank");
+
+                
+            } else {
+                $('#showContactBtn button')
+                    .prop('disabled', false)
+                    .text("Get Contact Info");
+
+                alert("Error: " + result);
+            }
+        },
+        error: function () {
+            $('#showContactBtn button')
+                .prop('disabled', false)
+                .text("Get Contact Info");
+
+            alert("Unable to contact server.");
+        }
+    });
+}
+
+
+$('#leadBtn').html(`<i class='fa fa-spinner fa-spin'></i> Requesting... Please wait`).prop('disabled', true);
+
+
+
+
+

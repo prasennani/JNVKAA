@@ -209,19 +209,33 @@
             </div>
 
             <div class="col-md-8 col-md-4 wow fadeInUp ps-2 mt-3" data-wow-delay="0.1s">
-                <div class="row viewuser"><p>Name: <span class="viewuserval" id="fullname"></span></p></div>
-                <!-- <div class="row viewuser"><p>Business Name: <span class="viewuserval" id="bname"></span></p></div> -->
+                <div class="row viewuser"><p>Business Name: <span class="viewuserval" id="bname1"></span></p></div>
+                <div class="row viewuser"><p>Offers or Note for JNVKAA: <span class="viewuserval" id="offers"></span></p></div>
+                <div class="row viewuser"><p>Services/Products: <span class="viewuserval" id="bservices"></span></p></div>
+
                 <div class="row viewuser"><p>Nature of Business: <span class="viewuserval" id="bnature"></span></p></div>
                 <div class="row viewuser"><p>Address: <span class="viewuserval" id="baddress"></span></p></div>
                 <div class="row viewuser"><p>Pincode: <span class="viewuserval" id="bpincode"></span></p></div>
                 <div class="row viewuser"><p>Nearest City: <span class="viewuserval" id="bcity"></span></p></div>
-                <div class="row viewuser"><p>Phone: <span class="viewuserval" id="bphno"></span></p></div>
-                <div class="row viewuser"><p>Email: <span class="viewuserval" id="bemail"></span></p></div>
-                <div class="row viewuser"><p>Services/Products: <span class="viewuserval" id="bservices"></span></p></div>
-                <div class="row viewuser"><p>Description: <span class="viewuserval" id="bdescription"></span></p></div>
+                <!-- <div class="row viewuser"><p>Phone: <span class="viewuserval" id="bphno"></span></p></div>
+    <div class="row viewuser"><p>Email: <span class="viewuserval" id="bemail"></span></p></div>-->
+
                 <div class="row viewuser"><p>Website: <a href="#" target="_blank" id="bwebsite" class="viewuserval">Click to Visit the website</a></p></div>
                 <div class="row viewuser"><p>Map Location: <a href="#" target="_blank" id="bmapurl" class="viewuserval">tap hear to View on Map</a></p></div>
+                <div class="row viewuser"><p>Name: <span class="viewuserval" id="fullname"></span></p></div>
+                <div class="row viewuser"><p>Batch No: <span class="viewuserval" id="bbatchno"></span></p></div>
+                <span id="showContactBtn">
+                    <button class="btn btn-outline-primary" onclick="requestBusinessLead(userid)" id="leadBtn">Get Contact Info</button>
+                </span>
+                <span id="businessContact" style="display: none;">
+                    Phone: <span id="phoneSpan"></span><br>
+                    Email: <span id="emailSpan"></span>
+                </span>
+
+
+
             </div>
+
         </div>
     </div>
 

@@ -20,6 +20,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.IO;
 using System.Web.Services.Description;
+using System.Collections;
 
 
 namespace JNKVAA
@@ -188,6 +189,136 @@ namespace JNKVAA
             }
 
         }
+
+
+        [WebMethod(EnableSession = true)]
+        public string saveBusinessLead(string targetUserId)
+        {
+            var serializer = new JavaScriptSerializer();
+            try
+            {
+                if (Session["userid"] == null)
+                    return serializer.Serialize("520");
+
+                string sourceUserId = Session["userid"].ToString();
+                string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    con.Open();
+
+                    // Get requesting user
+                    SqlCommand getRequesting = new SqlCommand("SELECT Name, SurName, BatchNo, Mobile, Email FROM TB_Users WHERE UserId = @uid", con);
+                    getRequesting.Parameters.AddWithValue("@uid", sourceUserId);
+                    SqlDataReader sr = getRequesting.ExecuteReader();
+                    if (!sr.Read()) return serializer.Serialize("SourceNotFound");
+
+                    string rFName = sr["Name"].ToString();
+                    string rLName = sr["SurName"].ToString();
+                    string rBatch = sr["BatchNo"].ToString();
+                    string rPhone = sr["Mobile"].ToString();
+                    string rEmail = sr["Email"].ToString();
+                    sr.Close();
+
+                    // Get requested business
+                    SqlCommand getRequested = new SqlCommand("SELECT FirstName, LastName, BatchNo, BusinessPhoneNumber, BusinessEmailId, BusinessName, ServicesOrProducts FROM TB_Businesses WHERE UserId = @uid", con);
+                    getRequested.Parameters.AddWithValue("@uid", targetUserId);
+                    SqlDataReader tr = getRequested.ExecuteReader();
+                    if (!tr.Read()) return serializer.Serialize("TargetNotFound");
+
+                    string tFName = tr["FirstName"].ToString();
+                    string tLName = tr["LastName"].ToString();
+                    string tBatch = tr["BatchNo"].ToString();
+                    string tPhone = tr["BusinessPhoneNumber"].ToString();
+                    string tEmail = tr["BusinessEmailId"].ToString();
+                    string tBName = tr["BusinessName"].ToString();
+                    string tProducts = tr["ServicesOrProducts"].ToString();
+                    tr.Close();
+
+                    // Correct column names below
+                    SqlCommand insert = new SqlCommand(@"
+                INSERT INTO TB_Business_Leads 
+                (Timestamp, RequestingUserId, RequestingFirstName, RequestingLastName, RequestingBatchNo, RequestingPhoneNo, RequestingEmailId,
+                 BusinessUserId, BusinessFirstName, BusinessLastName, BusinessBatchNo, BusinessPhoneNo, BusinessEmailId,
+                 Status, UpdatedOn)
+                VALUES 
+                (GETDATE(), @suid, @sf, @sl, @sb, @sp, @se,
+                 @tuid, @tf, @tl, @tb, @tp, @te,
+                 'requested', GETDATE())", con);
+
+                    insert.Parameters.AddWithValue("@suid", sourceUserId);
+                    insert.Parameters.AddWithValue("@sf", rFName);
+                    insert.Parameters.AddWithValue("@sl", rLName);
+                    insert.Parameters.AddWithValue("@sb", rBatch);
+                    insert.Parameters.AddWithValue("@sp", rPhone);
+                    insert.Parameters.AddWithValue("@se", rEmail);
+
+                    insert.Parameters.AddWithValue("@tuid", targetUserId);
+                    insert.Parameters.AddWithValue("@tf", tFName);
+                    insert.Parameters.AddWithValue("@tl", tLName);
+                    insert.Parameters.AddWithValue("@tb", tBatch);
+                    insert.Parameters.AddWithValue("@tp", tPhone);
+                    insert.Parameters.AddWithValue("@te", tEmail);
+
+                    insert.ExecuteNonQuery();
+
+                    // 🔔 Email notification
+                    SendLeadEmail(rFName, rLName, rBatch, rPhone, rEmail, tBName, tFName, tLName, tBatch, tPhone, tEmail, tProducts);
+
+                    return serializer.Serialize("success");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return serializer.Serialize("error: " + ex.Message);
+            }
+        }
+
+
+        private void SendLeadEmail(string rFName, string rLName, string rBatch, string rPhone, string rEmail,
+                           string tBName, string tFName, string tLName, string tBatch, string tPhone, string tEmail, string tProducts)
+        {
+            try
+            {
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
+
+                    using (MailMessage msg = new MailMessage())
+                    {
+                        msg.From = new MailAddress("jnvvkaa@gmail.com");
+                        msg.To.Add("cakprasen@gmail.com");
+                        msg.Subject = "🔔 New Business Contact Request";
+                        msg.Body = $@"
+New contact lead submitted.
+
+👉 Requesting Person:
+- Name: {rFName} {rLName}
+- Batch: {rBatch}
+- Phone: {rPhone}
+- Email: {rEmail}
+
+👤 Requested Business:
+- Business Name: {tBName}
+- ServicesOrProducts: {tProducts}
+- Name: {tFName} {tLName}
+- Batch: {tBatch}
+- Phone: {tPhone}
+- Email: {tEmail}
+";
+
+                        client.Send(msg);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Email failed: " + ex.Message);
+            }
+        }
+
 
 
         public class UserClass
