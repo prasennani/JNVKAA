@@ -1,29 +1,27 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="js/users/viewbusinedd.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="Web.config" Line="8" Column="67" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="281" Column="1" IsPinned="True" />
-      <File FileName="users/businesses.html" Line="1" Column="1" />
-      <File FileName="users/settings.html" Line="707" Column="117" />
-      <File FileName="users/viewbusinedd.html" Line="227" Column="111" />
-      <File FileName="js/users/viewbusinedd.js" Line="133" Column="348" />
+      <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="268" Column="60" IsPinned="True" />
+      <File FileName="users/businesses.html" />
+      <File FileName="users/settings.html" />
+      <File FileName="users/viewbusinedd.html" Line="226" Column="113" />
+      <File FileName="js/users/viewbusinedd.js" Line="134" Column="139" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="JNVKAA" expanded="True">
+          <Node name="JNVKAA">
             <Node name="JNKVAA" expanded="True">
-              <Node name="js">
-                <Node name="users">
-                  <Node name="viewbusinedd.js" selected="True" />
-                </Node>
+              <Node name="js" expanded="True">
+                <Node name="users" expanded="True" />
               </Node>
+              <Node name="users" expanded="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -31,5 +29,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

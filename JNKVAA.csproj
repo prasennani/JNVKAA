@@ -1995,9 +1995,11 @@
     <Content Include="businesses.html" />
     <Content Include="js\businesses.js" />
     <Content Include="js\users\businesses.js" />
-    <Content Include="users\businesses.html" />
+    <Content Include="users\searchbusinesses.html" />
     <Content Include="js\users\viewbusinedd.js" />
     <Content Include="users\viewbusinedd.html" />
+    <Content Include="users\businesses.html" />
+    <Content Include="js\showallbusinesses.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

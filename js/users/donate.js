@@ -134,10 +134,11 @@ function getDonationData() {
                     txt += '            <p class="text-dark" id="targetamount1">₹' + story[i].targetamount + ' <small class="text-body">Goal</small></p>';
                     txt += '        <p class="text-dark">' + story[i].donateamount + ' <small class="text-body">Raised</small></p>';
                     txt += '      </div>';
-                    txt += '           <div class="progress">';
-                    txt += '                <div class="progress-bar" role="progressbar" aria-valuenow="' + Math.floor(percentage) + '" aria-valuemin="0" aria-valuemax="100">';
-                    txt += '            <span>' + Math.floor(percentage) + '%</span>';
-                    txt += '                </div> </div> </div> </div>';
+                    txt += ' <div class="progress">';
+                    txt += '   <div class="progress-bar" role="progressbar" style="width: ' + Math.floor(percentage) + '%;" aria-valuenow="' + Math.floor(percentage) + '" aria-valuemin="0" aria-valuemax="100">';
+                    txt += '     <span>' + Math.floor(percentage) + '%</span>';
+                    txt += '   </div>';
+                    txt += '    </div> </div> </div>';
                     txt += '    <div class="position-relative mt-auto">';
                     txt += '      <img class="img-fluid" id="photo1" src="' + story[i].photo + '" alt="">';
                     txt += '      <div class="causes-overlay">';
