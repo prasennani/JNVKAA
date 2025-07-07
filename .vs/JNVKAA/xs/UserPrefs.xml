@@ -1,27 +1,26 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
       <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="268" Column="60" IsPinned="True" />
-      <File FileName="users/businesses.html" />
+      <File FileName="WebService.asmx.cs" Line="2880" Column="1" IsPinned="True" />
       <File FileName="users/settings.html" />
-      <File FileName="users/viewbusinedd.html" Line="226" Column="113" />
-      <File FileName="js/users/viewbusinedd.js" Line="134" Column="139" />
+      <File FileName="users/viewbusinedd.html" />
+      <File FileName="js/users/viewbusinedd.js" />
+      <File FileName="users/stories.html" Line="1" Column="1" />
+      <File FileName="users/businesses.html" Line="168" Column="120" />
+      <File FileName="js/users/businesses.js" Line="172" Column="115" />
+      <File FileName="js/stories.js" Line="104" Column="2" />
+      <File FileName="js/showallbusinesses.js" Line="80" Column="1" />
+      <File FileName="users/donate.html" Line="1" Column="1" />
+      <File FileName="js/users/donate.js" Line="138" Column="73" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
-            <Node name="JNKVAA" expanded="True">
-              <Node name="js" expanded="True">
-                <Node name="users" expanded="True" />
-              </Node>
-              <Node name="users" expanded="True" />
+            <Node name="JNKVAA">
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -29,6 +28,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
 </Properties>

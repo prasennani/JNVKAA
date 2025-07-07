@@ -2878,6 +2878,104 @@ New contact lead submitted.
             return serializer.Serialize(JsonConvert.SerializeObject(businessList));
         }
 
+        [WebMethod(EnableSession = true)]
+        public string filterBusinesses(string city, string keywords)
+        {
+            var serializer = new JavaScriptSerializer();
+            var businessList = new List<BusinessesClass>();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                var conditions = new List<string> { "Approval = 1" };
+                var cmd = new SqlCommand();
+
+                if (!string.IsNullOrEmpty(city))
+                {
+                    conditions.Add("NearestCity = @city");
+                    cmd.Parameters.AddWithValue("@city", city);
+                }
+
+                if (!string.IsNullOrEmpty(keywords))
+                {
+                    var words = keywords.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    int i = 0;
+                    foreach (var word in words)
+                    {
+                        string paramName = "@kw" + i;
+                        conditions.Add($"LOWER(ServicesOrProducts) LIKE {paramName}");
+                        cmd.Parameters.AddWithValue(paramName, "%" + word.ToLower() + "%");
+                        i++;
+                    }
+                }
+
+                string whereClause = string.Join(" AND ", conditions);
+                cmd.CommandText = $"SELECT TOP 100 * FROM TB_Businesses WHERE {whereClause} ORDER BY ApprovedOn DESC";
+                cmd.Connection = con;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    var b = new BusinessesClass
+                    {
+                        bid = rdr["UserId"].ToString(),
+                        bname = rdr["BusinessName"].ToString(),
+                        fname = rdr["FirstName"].ToString(),
+                        sname = rdr["LastName"].ToString(),
+                        bnature = rdr["NatureOfBusiness"].ToString(),
+                        baddress = rdr["BusinessPlaceFullAddress"].ToString(),
+                        bpincode = rdr["PinCode"].ToString(),
+                        bcity = rdr["NearestCity"].ToString(),
+                        batchno = rdr["BatchNo"].ToString(),
+                        bstatus = rdr["Approval"].ToString(),
+                        bphno = rdr["BusinessPhoneNumber"].ToString(),
+                        bemail = rdr["BusinessEmailId"].ToString(),
+                        bpphno = rdr["PersonalPhoneNumber"].ToString(),
+                        bservices = rdr["ServicesOrProducts"].ToString(),
+                        bcardphoto = rdr["UploadVisitingCard"].ToString(),
+                        bimage = rdr["UploadBusinessImagesOrBrochure"].ToString(),
+                        bdescription = rdr["NoteForAdmin"].ToString(),
+                        bwebsite = rdr["WebsiteUrl"].ToString(),
+                        binstaurl = rdr["InstagramUrl"].ToString(),
+                        bfbookurl = rdr["FacebookUrl"].ToString(),
+                        bmapurl = rdr["GoogleMapsLocationUrl"].ToString(),
+                        bourl1 = rdr["OtherUrl1"].ToString(),
+                        bourl2 = rdr["OtherUrl2"].ToString(),
+                        bupdatedon = rdr["UpdatedOn"].ToString(),
+                        ustatus = "1"
+                    };
+                    businessList.Add(b);
+                }
+                rdr.Close();
+            }
+
+            return serializer.Serialize(JsonConvert.SerializeObject(businessList));
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        public string getAllBusinessCities()
+        {
+            var serializer = new JavaScriptSerializer();
+            List<string> cities = new List<string>();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT DISTINCT NearestCity FROM TB_Businesses WHERE Approval = 1 AND NearestCity IS NOT NULL ORDER BY NearestCity", con);
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    cities.Add(rdr["NearestCity"].ToString());
+                }
+                rdr.Close();
+            }
+
+            return serializer.Serialize(JsonConvert.SerializeObject(cities));
+        }
+
         // New WebMethod to get full data for a specific business by UserId
 
         [WebMethod(EnableSession = true)]
