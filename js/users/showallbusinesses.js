@@ -91,12 +91,11 @@ function renderBusinessCards(busyness) {
                                         <h5 class="postedby">Location: ${b.bcity}</h5>
                                     </div>
                                 </div>
-                                <p class="descriptions mt-2 text-start" style="white-space: pre-line;"><strong>Services/Products:</strong> ${b.bservices}</p>
-                                <p class="descriptions mt-2 text-start" style="white-space: pre-line;"><strong>Offers to JNVKAA:</strong> ${b.bdescription}</p>
+                                <p class="description mt-2" style="white-space: pre-line;">${b.bservices}</p>
                                 <div class="row mt-3">
                                     <div class="col-md-9"></div>
                                     <div class="col-md-3">
-                                        <a class="btn btn-outline-primary" href="login.html">View Business</a>
+                                        <a class="btn btn-outline-primary" href="viewbusinedd.html?user=${b.bid}">View Business</a>
                                     </div>
                                 </div>
                             </div>

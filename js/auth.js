@@ -41,7 +41,8 @@ function login() {
                         if (totalDonationAmount >= 1000) {
                             window.location = "users/settings.html";
                         } else {
-                            window.location = "FR/settings.html";
+                            //window.location = "FR/settings.html";
+                            window.location = "users/settings.html";
                         }
                     }
                     else {

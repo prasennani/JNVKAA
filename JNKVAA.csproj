@@ -2000,6 +2000,7 @@
     <Content Include="users\viewbusinedd.html" />
     <Content Include="users\businesses.html" />
     <Content Include="js\showallbusinesses.js" />
+    <Content Include="js\users\showallbusinesses.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

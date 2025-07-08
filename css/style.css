@@ -674,6 +674,10 @@ section {
     text-indent: 80px;
     color: var(--dark);
 }
+.descriptions {
+    text-indent: 1px;
+    color: var(--dark);
+}
 
 .wdiv {
     position: fixed;
