@@ -1990,7 +1990,7 @@
     <Content Include="FR\settings.html" />
     <Content Include="FR\termsandconditions.html" />
     <Content Include="FR\viewuser.html" />
-    <Content Include="js\donationCharts %28copy%29.js" />
+    <Content Include="js\forgotpassword.js" />
     <Content Include="donation.html" />
     <Content Include="businesses.html" />
     <Content Include="js\businesses.js" />

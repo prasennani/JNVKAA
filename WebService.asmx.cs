@@ -190,6 +190,96 @@ namespace JNKVAA
 
         }
 
+        [WebMethod(EnableSession = true)]
+        public string sendForgotOtp(string email)
+        {
+            var serializer = new JavaScriptSerializer();
+            string otp = new Random().Next(100000, 999999).ToString();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM TB_Users WHERE Email = @Email", con);
+                cmd.Parameters.AddWithValue("@Email", email);
+                con.Open();
+                int exists = (int)cmd.ExecuteScalar();
+
+                if (exists == 0)
+                    return serializer.Serialize("Email not registered.");
+
+                cmd = new SqlCommand("UPDATE TB_Users SET OTP = @OTP, OTPGeneratedAt = GETDATE(), OTPVerified = 0 WHERE Email = @Email", con);
+                cmd.Parameters.AddWithValue("@OTP", otp);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.ExecuteNonQuery();
+
+                // Send email
+                //              using (SmtpClient client = new SmtpClient("smtp.mail.me.com", 587))
+                //            {
+                //              client.EnableSsl = true;
+                //          client.Credentials = new NetworkCredential("info@jnvkaa.org", "ghwe-dylz-ekuz-wfid");
+                //
+                //        using (MailMessage msg = new MailMessage("info@jnvkaa.org", email))
+                //            {
+                //            msg.Subject = "JNVKAA - OTP for Password Reset";
+                //        msg.Body = $"Your OTP is {otp}. It is valid for 10 minutes.";
+                //    client.Send(msg);
+                //    }
+                //     }
+
+                // Send email
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
+
+                    using (MailMessage msg = new MailMessage("jnvvkaa@gmail.com", email))
+                    {
+                        msg.Subject = "JNVKAA - OTP for Password Reset";
+                        msg.Body = $"Your OTP is {otp}. It is valid for 10 minutes.";
+                        client.Send(msg);
+                    }
+                }
+
+                return serializer.Serialize("sent");
+            }
+        }
+
+        [WebMethod]
+        public string verifyOtpAndResetPwd(string email, string otp, string newPassword)
+        {
+            var serializer = new JavaScriptSerializer();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand(@"
+            SELECT OTP, OTPGeneratedAt 
+            FROM TB_Users 
+            WHERE Email = @Email AND OTP = @OTP", con);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@OTP", otp);
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (!rdr.Read())
+                    return serializer.Serialize("Invalid OTP or email.");
+
+                DateTime generatedAt = Convert.ToDateTime(rdr["OTPGeneratedAt"]);
+                rdr.Close();
+
+                if ((DateTime.Now - generatedAt).TotalMinutes > 10)
+                    return serializer.Serialize("OTP expired.");
+
+                cmd = new SqlCommand("UPDATE TB_Users SET Pwd = @Pwd, OTPVerified = 1 WHERE Email = @Email", con);
+                cmd.Parameters.AddWithValue("@Pwd", newPassword);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.ExecuteNonQuery();
+
+                return serializer.Serialize("Password reset successfully.");
+            }
+        }
+
 
         [WebMethod(EnableSession = true)]
         public string saveBusinessLead(string targetUserId)
