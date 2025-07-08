@@ -95,19 +95,19 @@ function getAllDonations() {
                 //});
 
                 for (i = 0; i < getDonations.length; i++) {
-                    var truncatedName = getDonations[i].name.length > 5 ? getDonations[i].name.substring(0, 5) + '...' : getDonations[i].name;
+                    var truncatedName = getDonations[i].name.length > 20 ? getDonations[i].name.substring(0, 20) + '...' : getDonations[i].name;
                     var txt = '<tr><th scope="row">' + (parseInt(i) + 1) + '</th>';
                     txt += '<td>' + getDonations[i].datee + '</td>';
                     txt += '<td>' + getDonations[i].batchNo + '</td>';
                     txt += '<td title="' + getDonations[i].name + '">' + truncatedName + '</td>';
                     if (getDonations[i].payPurpose === "Donation95") {
-                        txt += '<td>Constructed Stage in JNVK</td>';
+                        txt += '<td>Stage</td>';
                     } else if (getDonations[i].payPurpose === "Donation1112") {
-                        txt += '<td>Alumni Corpus Fund</td>';
+                        txt += '<td>Corpus Fund</td>';
                     } else if (getDonations[i].payPurpose === "Donation1113") {
-                        txt += '<td>Dome Construction in Campus</td>';
+                        txt += '<td>Dome</td>';
                     } else if (getDonations[i].payPurpose === "Donation96") {
-                        txt += '<td>Stage Construction</td>';
+                        txt += '<td>Stage</td>';
                     } else if (getDonations[i].payPurpose === "5") {
                         txt += '<td>PhonePay App</td>';
                     }

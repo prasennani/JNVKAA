@@ -242,7 +242,7 @@
 }
 
 .causes-item .progress .progress-bar span {
-    position: absolute;
+    
     top: -7px;
     right: 0;
     width: 40px;

@@ -104,11 +104,11 @@ namespace JNKVAA
                         SmtpClient client = new SmtpClient("smtp.gmail.com");
                         client.Port = 587;
                         client.EnableSsl = true;
-                        client.Credentials = new NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
+                        client.Credentials = new NetworkCredential("jnvkaa2016@gmail.com", "jtud qpyi gxcl fvqh");
 
                         // Create email message
                         MailMessage message = new MailMessage();
-                        message.From = new MailAddress("jnvvkaa@gmail.com");
+                        message.From = new MailAddress("jnvkaa2016@gmail.com");
                         message.To.Add("cakprasen@gmail.com");
                         message.Subject = $"New User Registered from Batch: {batchno} - {sname} {name}";
                         message.Body = $"New user registered with the following details:\nName: {sname} {name}\nBatch Number: {batchno}\nDate of Birth: {dob}\nMobile Number: {CountryCode}{mobile}\nEmail: {email}";
@@ -4592,74 +4592,109 @@ New contact lead submitted.
             }
         }
 
-   //contact page data will be here 
-         [WebMethod(EnableSession = true)]
-         public string addMessage(string uname, string uphno, string sub, string message)
-         {
-             System.Web.Script.Serialization.JavaScriptSerializer serial = new System.Web.Script.Serialization.JavaScriptSerializer();
-             var oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
-             //string val = "0";
-             using (con = new SqlConnection(constr))
-             {
+        //contact page data will be here 
+        [WebMethod(EnableSession = true)]
+        public string addMessage(string uname, string uphno, string sub, string message)
+        {
+            var serializer = new JavaScriptSerializer();
+            string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
 
-              try
-                 {
-                     con.Open();
-                     int res = 0;
-                     cmd = new SqlCommand("", con);
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                try
+                {
+                    con.Open();
+                    int res = 0;
+                    SqlCommand cmd = new SqlCommand("", con);
+
+                    cmd.CommandText = @"
+                INSERT INTO TB_ContactMessages(Datee, FullName, PhoneNo, Subject, Msg, SeenStatus)
+                OUTPUT inserted.RowId 
+                VALUES (@datee, @fullname, @phno, @sub, @msg, -1)";
+                    cmd.Parameters.AddWithValue("@datee", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@fullname", uname);
+                    cmd.Parameters.AddWithValue("@phno", uphno);
+                    cmd.Parameters.AddWithValue("@sub", sub);
+                    cmd.Parameters.AddWithValue("@msg", message);
+                    res = (int)cmd.ExecuteScalar();
+                    cmd.Parameters.Clear();
+
+                    // Generate MsgId
+                    string msgId = res <= 9 ? $"Msg0{res}" : $"Msg{res}";
+                    cmd.CommandText = "UPDATE TB_ContactMessages SET MsgId = @mid WHERE RowId = @rid";
+                    cmd.Parameters.AddWithValue("@mid", msgId);
+                    cmd.Parameters.AddWithValue("@rid", res);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+
+                    if (res > 0)
+                    {
+                        // ✉️ Send Email
+                        try
+                        {
+                            List<string> recipients = new List<string> { "cakprasen@gmail.com" };
+
+                            // 🔄 Fetch additional recipients (UStatus = 4)
+                            SqlCommand getUsers = new SqlCommand("SELECT Email FROM TB_Users WHERE UStatus = 4 AND Email IS NOT NULL AND Email <> ''", con);
+                            SqlDataReader rdr = getUsers.ExecuteReader();
+                            while (rdr.Read())
+                            {
+                                recipients.Add(rdr["Email"].ToString());
+                            }
+                            rdr.Close();
+
+                            using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587)) // ✅ Using Gmail SMTP
+                            {
+                                client.EnableSsl = true;
+                                client.Credentials = new NetworkCredential("jnvkaa2016@gmail.com", "jtud qpyi gxcl fvqh");
+
+                                using (MailMessage msg = new MailMessage())
+                                {
+                                    msg.From = new MailAddress("jnvkaa2016@gmail.com", "JNVKAA Contact Form");
+                                    msg.Subject = $"📬 New Contact Message from {uname}";
+                                    msg.Body = $@"
+New contact form message received:
+
+👤 Name: {uname}
+📞 Phone: {uphno}
+🎓 Batch No: {sub}
+📝 Message: {message}
+
+🕒 Submitted on: {DateTime.Now:dd MMM yyyy hh:mm tt}
+                            ";
+
+                                    foreach (string recipient in recipients.Distinct())
+                                    {
+                                        msg.To.Add(recipient);
+                                    }
+
+                                    client.Send(msg);
+                                }
+                            }
+                        }
+                        catch (Exception emailEx)
+                        {
+                            Console.WriteLine("Email error: " + emailEx.Message);
+                        }
+
+                        con.Close();
+                        return serializer.Serialize("1");
+                    }
+                    else
+                    {
+                        con.Close();
+                        return serializer.Serialize("520");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return serializer.Serialize("-1" + ex.Message);
+                }
+            }
+        }
 
 
-                     cmd.CommandText = "insert into TB_ContactMessages(Datee,FullName,PhoneNo,Subject,Msg,SeenStatus) OUTPUT inserted.RowId values(@datee,@fullname,@phno,@sub,@msg,-1)";
-                     cmd.Parameters.AddWithValue("datee", DateTime.Now);
-                     cmd.Parameters.AddWithValue("fullname", uname);
-                     cmd.Parameters.AddWithValue("@phno", uphno);
-                     cmd.Parameters.AddWithValue("@sub", sub);
-                     cmd.Parameters.AddWithValue("@msg", message);
-                     //, Qualification, DeptId, CurDesig, CurOrganization, Experience, TeachLevel
-                     res = (int)cmd.ExecuteScalar();
-                     cmd.Parameters.Clear();
-                     string mid = "";
-                     if (res <= 9)
-                     {
-                         mid = "Msg0" + res.ToString();
-                     }
-                     else
-                         mid = "Msg" + res.ToString();
-                     cmd.CommandText = "update TB_ContactMessages set MsgId=@mid where RowId=@rid";
-                     cmd.Parameters.AddWithValue("mid", mid);
-                     cmd.Parameters.AddWithValue("rid", res);
-                     cmd.ExecuteNonQuery();
-                     cmd.Parameters.Clear();
-                     try
-                     {
-                         if (res > 0)
-                         {
-                             con.Close();
-                             /*Session["uid"] = mid;
-                             Session["cname"] = name + "." + sname;*/
-                             return oSerializer.Serialize("1");
-                         }
-                         else
-                         {
-                             con.Close();
-                             return oSerializer.Serialize("520");
-                         }
-                     }
-                     catch (Exception ex)
-                     {
-                         return oSerializer.Serialize("-3" + ex.Message);
-                     }
-
-                 }
-                 catch (Exception ex)
-                 {
-                     return oSerializer.Serialize("-1" + ex.Message);
-                 }
-             }
-         }
-
-         public class UserMessageClass
+        public class UserMessageClass
          {
              public string msgid { get; set; }
              public string uname { get; set; }
