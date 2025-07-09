@@ -19,6 +19,31 @@
 
         gtag('config', 'G-V2DFXXQ04V');</script>
 
+    <!-- Other Scripts -->
+    <script>window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+            )
+        window.Promise ||
+            document.write(
+                '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+            )</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>// Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+        // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+        var _seed = 42;
+        Math.random = function () {
+            _seed = _seed * 16807 % 2147483647;
+            return (_seed - 1) / 2147483646;
+        };</script>
+
     <!-- Favicon -->
     <link href="img/favicon.png" rel="icon">
 
@@ -44,7 +69,7 @@
 
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style.css?v=10001" rel="stylesheet">
 
     <!-- for donations chart-->
     <style>
@@ -55,29 +80,7 @@
         }
     </style>
 
-    <script>window.Promise ||
-            document.write(
-                '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
-            )
-        window.Promise ||
-            document.write(
-                '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
-            )
-        window.Promise ||
-            document.write(
-                '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
-            )</script>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script>// Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
-        // Based on https://gist.github.com/blixt/f17b47c62508be59987b
-        var _seed = 42;
-        Math.random = function () {
-            _seed = _seed * 16807 % 2147483647;
-            return (_seed - 1) / 2147483646;
-        };</script>
 
 
 </head>
