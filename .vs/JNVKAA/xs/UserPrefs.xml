@@ -1,24 +1,26 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="js/index.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
-      <File FileName="Web.config" Line="4" Column="53" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="279" Column="46" IsPinned="True" />
+      <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="111" Column="77" IsPinned="True" />
       <File FileName="css/style.css" Line="245" Column="5" />
       <File FileName="js/donationCharts.js" Line="1" Column="1" />
-      <File FileName="index.html" Line="1" Column="1" />
-      <File FileName="js/index.js" Line="1" Column="1" />
+      <File FileName="index.html" />
+      <File FileName="js/index.js" Line="108" Column="46" />
+      <File FileName="businesses.html" Line="115" Column="79" />
+      <File FileName="js/contact.js" Line="30" Column="44" />
+      <File FileName="contact.html" Line="1" Column="1" />
+      <File FileName="js/userContact.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
-            <Node name="JNKVAA">
-              <Node name="js" expanded="True">
-                <Node name="users" expanded="True" />
-                <Node name="index.js" selected="True" />
-              </Node>
-              <Node name="users" expanded="True" />
+            <Node name="JNKVAA" expanded="True">
+              <Node name="css" expanded="True" />
+              <Node name="js" expanded="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
           </Node>
@@ -27,9 +29,8 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>
