@@ -430,7 +430,7 @@ New contact lead submitted.
         }
 
         [WebMethod(EnableSession = true)]
-        public string authenticateUser(string ph, string pwd)
+        public string authenticateUser(string ph, string pwd, string device, string browser, string network)
         {
             string constr = ConfigurationManager.ConnectionStrings["constr"].ToString();
             string retval = "";
@@ -463,6 +463,10 @@ New contact lead submitted.
                             // Perform case-sensitive comparison for the password
                             if (string.Equals(dbPassword, pwd, StringComparison.Ordinal))
                             {
+
+                                
+
+                                // Build user class object
                                 uClass = new UserClass();
                                 uClass.uid = rdr["UserId"].ToString();
                                 uClass.fname = rdr["Name"].ToString();
@@ -478,6 +482,32 @@ New contact lead submitted.
                                 Session["isAdmin"] = "0";
 
                                 uClassList.Add(uClass);
+
+                                var userId = rdr["UserId"].ToString();
+                                var currentLogin = DateTime.Now;
+
+                                rdr.Close();
+
+                                // Update login timestamps and metadata
+                                SqlCommand updateCmd = new SqlCommand(@"
+                    UPDATE TB_Users
+                    SET 
+                        LastLoginDateTime = ISNULL(CurrentLoginDateTime, GETDATE()),
+                        CurrentLoginDateTime = @now,
+                        LoginIP = @ip,
+                        LoginDevice = @device,
+                        LoginBrowser = @browser,
+                        LoginNetwork = @network
+                    WHERE UserId = @uid", con);
+
+                                updateCmd.Parameters.AddWithValue("@uid", userId);
+                                updateCmd.Parameters.AddWithValue("@now", currentLogin);
+                                updateCmd.Parameters.AddWithValue("@ip", HttpContext.Current.Request.UserHostAddress ?? "unknown");
+                                updateCmd.Parameters.AddWithValue("@device", device);
+                                updateCmd.Parameters.AddWithValue("@browser", browser);
+                                updateCmd.Parameters.AddWithValue("@network", network);
+                                updateCmd.ExecuteNonQuery();
+
                             }
                             else
                             {

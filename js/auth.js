@@ -17,9 +17,6 @@
         login();
     });//end of btn login
 
-
-    
-
 });
 function login() {
     if ($("#txtmobile").val().length > 0) {
@@ -27,12 +24,21 @@ function login() {
 
             showLoadingSpinner(); // Show loading spinner
 
+            const client = getClientDetails();
+
             $.ajax({
                 url: 'WebService.asmx/authenticateUser',
                 type: "POST", // type of the data we send (POST/GET)
                 contentType: "application/json",
-                data: "{ 'ph': '" + $("#txtmobile").val() + "', 'pwd': '" + $("#txtpwd").val() + "'}",
-                datatype: "json",
+                //data: "{ 'ph': '" + $("#txtmobile").val() + "', 'pwd': '" + $("#txtpwd").val() + "'}",
+                data: JSON.stringify({
+                    ph: $("#txtmobile").val(),
+                    pwd: $("#txtpwd").val(),
+                    device: client.device,
+                    browser: client.browser,
+                    network: client.network
+                }),
+                //datatype: "json",
                 success: function (response) {
                     var res = JSON.parse(JSON.parse(response.d));
                     if (res[0].ustatus.localeCompare("1") === 0) {
@@ -95,3 +101,25 @@ function showLoadingSpinner() {
 function hideLoadingSpinner() {
     $("#loadingSpinner").hide();
 }
+
+function getClientDetails() {
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+    const browser = (() => {
+        if (userAgent.includes("Chrome")) return "Chrome";
+        if (userAgent.includes("Firefox")) return "Firefox";
+        if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) return "Safari";
+        if (userAgent.includes("Edge")) return "Edge";
+        if (userAgent.includes("OPR")) return "Opera";
+        return "Unknown";
+    })();
+
+    const network = navigator.connection?.effectiveType || "unknown";
+
+    return {
+        device: platform,
+        browser: browser,
+        network: network
+    };
+}
+
