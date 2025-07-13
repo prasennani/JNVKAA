@@ -1,26 +1,23 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
     <Files>
       <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="111" Column="77" IsPinned="True" />
-      <File FileName="about.html" Line="72" Column="30" />
-      <File FileName="boardmembers.html" Line="263" Column="36" />
-      <File FileName="businesses.html" Line="47" Column="38" />
-      <File FileName="contact.html" Line="47" Column="38" />
-      <File FileName="donate.html" Line="515" Column="1" />
-      <File FileName="donation.html" Line="491" Column="54" />
-      <File FileName="passwordreset.html" Line="48" Column="46" />
-      <File FileName="signup.html" Line="64" Column="38" />
+      <File FileName="WebService.asmx.cs" Line="509" Column="61" IsPinned="True" />
+      <File FileName="login.html" Line="42" Column="56" />
+      <File FileName="index.html" Line="42" Column="37" />
+      <File FileName="js/auth.js" Line="39" Column="44" />
+      <File FileName="css/style.css" Line="948" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA">
-            <Node name="JNKVAA">
+            <Node name="JNKVAA" expanded="True">
+              <Node name="css" expanded="True" />
               <Node name="js" expanded="True" />
               <Node name="WebService.asmx" expanded="True" />
             </Node>
@@ -29,7 +26,7 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

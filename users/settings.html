@@ -53,9 +53,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
     <!-- Template Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
-    <script src="../js/users/settings.js"></script>
-    <script src="../js/users/signout.js"></script>
+    <link href="../css/style.css?v=10001" rel="stylesheet">
+    <script src="../js/users/settings.js?v=10001"></script>
+    <script src="../js/users/signout.js?v=10001"></script>
 
 </head>
 
@@ -255,6 +255,9 @@
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                                 </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-polls">Polls</button>
+                                </li>
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
@@ -270,6 +273,7 @@
 
                             </ul>
                             <div class="tab-content pt-2">
+
 
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                     <h5 class="card-title">About</h5>
@@ -326,6 +330,117 @@
                                         <div class="col-lg-3 col-md-4 label">House</div>
                                         <div class="col-lg-9 col-md-8" id="house1">Please Edit Your Profile</div>
                                     </div>
+
+                                </div>
+
+                                <div class="tab-pane fade profile-edit pt-3" id="profile-polls">
+
+                                    <!-- Polls -->
+                                    <div class="col-lg-9 col-md-8">
+
+                                        <span class="viewuserval" id="fullname1">Please Choose from below as per your views</span>
+
+
+                                    </div>
+
+                                    <form>
+
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-4 label "></div>
+                                            <div class="col-lg-9 col-md-8">
+
+                                                <span class="viewuserval" id="fullname11"> . </span>
+
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">First Priority</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-control bg-light border-2" id="vote1"
+                                                        aria-label="Floating label select example">
+                                                    <option selected value="0">Select</option>
+                                                    <option>Social Media Handling Team</option>
+                                                    <option>Career Guidance and Counsiling team</option>
+                                                    <option>Finance Team</option>
+                                                    <option>Legal Team</option>
+                                                    <option>Event Management Team</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Second Priority</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-control bg-light border-2" id="vote2"
+                                                        aria-label="Floating label select example">
+                                                    <option selected value="0">Select</option>
+                                                    <option>Social Media Handling Team</option>
+                                                    <option>Career Guidance and Counsiling team</option>
+                                                    <option>Finance Team</option>
+                                                    <option>Legal Team</option>
+                                                    <option>Event Management Team</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Third Priority</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-control bg-light border-2" id="vote3"
+                                                        aria-label="Floating label select example">
+                                                    <option selected value="0">Select</option>
+                                                    <option>Social Media Handling Team</option>
+                                                    <option>Career Guidance and Counsiling team</option>
+                                                    <option>Finance Team</option>
+                                                    <option>Legal Team</option>
+                                                    <option>Event Management Team</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Fourth Priority</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-control bg-light border-2" id="vote4"
+                                                        aria-label="Floating label select example">
+                                                    <option selected value="0">Select</option>
+                                                    <option>Social Media Handling Team</option>
+                                                    <option>Career Guidance and Counsiling team</option>
+                                                    <option>Finance Team</option>
+                                                    <option>Legal Team</option>
+                                                    <option>Event Management Team</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Meeting on 16th Aug 2025</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-control bg-light border-2" id="vote5"
+                                                        aria-label="Floating label select example">
+                                                    <option selected value="0">Select</option>
+                                                    <option>JNV Krishna</option>
+                                                    <option>Vijayawada</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Your Note to JNVKAA</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="text" type="text" class="form-control" id="pollnote" placeholder="Please give your opinion.">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-outline-primary" id="Savepollbtn">Submit my Priorities.</button>
+                                        </div>
+                                    </form><!-- End Profile Edit Form -->
 
                                 </div>
 

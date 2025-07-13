@@ -3454,6 +3454,71 @@ New contact lead submitted.
         }
 
 
+        [WebMethod(EnableSession = true)]
+        public string savePollVotes(string vote1, string vote2, string vote3, string vote4, string vote5, string note)
+        {
+            var serializer = new JavaScriptSerializer();
+            string connStr = ConfigurationManager.ConnectionStrings["constr"].ToString();
+
+            if (HttpContext.Current.Session["userid"] == null || HttpContext.Current.Session["uname"] == null || HttpContext.Current.Session["batchno"] == null)
+            {
+                return serializer.Serialize("Session expired. Please login again.");
+            }
+
+            string userId = Session["userid"].ToString();
+            string name = Session["uname"].ToString();
+            string batchNo = Session["batchno"].ToString();
+            string pollId = "poll1001";
+            string pollName = "Core Group Teams Allocation";
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    con.Open();
+
+                    // ❗ Check if already voted
+                    SqlCommand checkCmd = new SqlCommand("SELECT COUNT(*) FROM TB_Polls WHERE UserId = @uid AND PollId = @pid", con);
+                    checkCmd.Parameters.AddWithValue("@uid", userId);
+                    checkCmd.Parameters.AddWithValue("@pid", pollId);
+                    int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (count > 0)
+                    {
+                        return serializer.Serialize("already");
+                    }
+
+                    // ✅ Insert vote
+                    SqlCommand cmd = new SqlCommand(@"
+                INSERT INTO TB_Polls (UserId, Name, BatchNo, PollId, PollName, Vote1, Vote2, Vote3, Vote4, Vote5, Note)
+                VALUES (@uid, @name, @batch, @pid, @pname, @v1, @v2, @v3, @v4, @v5, @note)", con);
+
+                    cmd.Parameters.AddWithValue("@uid", userId);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@batch", batchNo);
+                    cmd.Parameters.AddWithValue("@pid", pollId);
+                    cmd.Parameters.AddWithValue("@pname", pollName);
+                    cmd.Parameters.AddWithValue("@v1", vote1);
+                    cmd.Parameters.AddWithValue("@v2", vote2);
+                    cmd.Parameters.AddWithValue("@v3", vote3);
+                    cmd.Parameters.AddWithValue("@v4", vote4);
+                    cmd.Parameters.AddWithValue("@v5", vote5);
+                    cmd.Parameters.AddWithValue("@note", note);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                return serializer.Serialize("success");
+            }
+            catch (Exception ex)
+            {
+                return serializer.Serialize("error: " + ex.Message);
+            }
+        }
+
+
+
+
         public class ProfessionClass
         {
             public string profession { get; set; }

@@ -1024,3 +1024,49 @@ $(document).ready(function () {
         submitOrUpdateBusiness(true);
     });
 });
+
+$(document).ready(function () {
+    $("#Savepollbtn").click(function (e) {
+        e.preventDefault();
+
+        const vote1 = $("#vote1").val();
+        const vote2 = $("#vote2").val();
+        const vote3 = $("#vote3").val();
+        const vote4 = $("#vote4").val();
+        const vote5 = $("#vote5").val();
+        const note = $("#pollnote").val();
+
+        const votes = [vote1, vote2, vote3, vote4, vote5];
+
+        // Remove "Select" and check for duplicates
+        const filteredVotes = votes.filter(v => v !== "0");
+        const uniqueVotes = [...new Set(filteredVotes)];
+
+        if (uniqueVotes.length !== filteredVotes.length) {
+            alert("❗ Each vote priority must be unique.");
+            return;
+        }
+
+        $.ajax({
+            url: "../WebService.asmx/savePollVotes",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ vote1, vote2, vote3, vote4, vote5, note }),
+            success: function (res) {
+                const result = JSON.parse(res.d);
+                if (result === "success") {
+                    alert("✅ Your vote has been submitted successfully!");
+                    location.reload();
+                } else if (result === "already") {
+                    alert("⚠️ You have already submitted your vote for this poll.");
+                } else {
+                    alert("❌ " + result);
+                }
+            },
+            error: function () {
+                alert("❌ Failed to submit your vote. Try again.");
+            }
+        });
+    });
+});
+
