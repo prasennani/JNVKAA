@@ -19,9 +19,9 @@
       <div id="preloader" class="show  position-fixed  translate-middle w-100 vh-100 top-50 start-50  align-items-center justify-content-center" style="z-index:5; background:rgb(255, 255, 255);display:none ;">
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
-    <script src="../js/batchadmin/editUser.js"></script>
-    <script src="../js/batchadmin/notification.js"></script>
-    <script src="../js/batchadmin/signout.js"></script>
+    <script src="../js/admin/editUser.js"></script>
+    <script src="../js/admin/notification.js"></script>
+    <script src="../js/admin/signout.js"></script>
     <div>
           <!--navigation bar-->
         <div class="navigation">
@@ -102,11 +102,347 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row col-md-12">
+                            <div class="container col-md-10">
+                                <div class="input-group mb-6 ">
+                                    <div class="input-group-text"><h6 id="acalldispo">Undailed</h6></div>
+                                    <select class="form-select form-control bg-light border-2" id="calldispo"
+                                            aria-label="Floating label select example">
+                                        <option selected>Change call dispo</option>
+                                        <option value="0">Un Answered</option>
+                                        <option value="1">User will Update</option>
+                                        <option value="2">Admin updated</option>
+                                        <option value="3">Call Back</option>
+                                    </select>
+                                    <button class="btn btn-outline-primary" id="changeCallDispoStaus">Change</button>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group mb-3 col-11 m-4">
+                            <label for="exampleFormControlTextarea1">Admin Notes</label>
+                            <textarea class="form-control bg-light border-2" id="adminnotes"
+                                      rows="4"></textarea>
+                        </div>
+
+
+                        <img src="../assets/imgs/profile pic.png"
+                             style="width: 300px; height: 300px; contain: cover;padding: 20px; border-radius: 50%;"
+                             class="img-fluid " id="imgprofile" alt="Preview Image">
+
+                        <button class="btn btn-outline-primary " style="margin-left: 70px;" id="del">Delete profile-pic</button>
+                        <div class="form-group px-4 m-3">
+                            <input type="file" class="form-control-file " accept="image/*" id="fileprofile"
+                                   onchange="validateFileType(event)">
+                        </div>
+                        <div class="row mb-2">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id=instaid
+                                       placeholder="https://www.instagram.com/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsI()">view</button>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="fbid"
+                                       placeholder="https://www.facebook.com/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsF()">view</button>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="lnkid"
+                                       placeholder="https://www.linkedin.com/in/">
+                                <button class="btn btn-outline-primary" onclick="getDetailsL()">view</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class=" form-floating">
+                                    <input type="datetime" class="form-control bg-light border-2" id="adminnoteddate"
+                                           placeholder="First Name" readonly>
+                                    <label for="name">Admin Updated on</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class=" form-floating">
+                                    <input type="datetime" class="form-control bg-light border-2" id="calldispodate"
+                                           placeholder="First Name" readonly>
+                                    <label for="name">Call Dispo Date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class=" form-floating">
+                                    <input type="datetime" class="form-control bg-light border-2" id="userupdatedon"
+                                           placeholder="First Name" readonly>
+                                    <label for="name">User Updated on</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class=" form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="userupdated"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Select</option>
+                                        <option value="1">Updated</option>
+                                        <option value="2">Not updated</option>
+                                    </select>
+                                    <label for="name">User updated</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="fname"
+                                           placeholder="First Name">
+                                    <label for="name">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="sname"
+                                           placeholder="Sur Name">
+                                    <label for="email">Last Name</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="gender"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Gender</option>
+                                        <option value="1">Male</option>
+                                        <option value="2">Female</option>
+                                    </select>
+                                    <label for="floatingSelect">Gender</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control bg-light border-2" id="dob"
+                                           placeholder="DOB">
+                                    <label for="name">Date Of Birth</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="maritalstatus"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Select</option>
+                                        <option value="1">Married</option>
+                                        <option value="2">Unmarried</option>
+                                    </select>
+                                    <label for="floatingSelect">Marital status</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="bloodgroup"
+                                            aria-label="Floating label select example">
+                                        <option selected value="0">Blood group</option>
+                                        <option value="1">O+</option>
+                                        <option value="2">O-</option>
+                                        <option value="3">A+</option>
+                                        <option value="4">A-</option>
+                                        <option value="5">B+</option>
+                                        <option value="6">B-</option>
+                                        <option value="7">AB+</option>
+                                        <option value="8">AB-</option>
+                                    </select>
+                                    <label for="floatingSelect">Blood Group</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="workingas"
+                                            aria-label="Floating label select example">
+                                        <option value="0" selected> Designation in JNVKAA</option>
+                                        <option value="1">User</option>
+                                        <option value="2">President</option>
+                                        <option value="3">Vice-president</option>
+                                        <option value="4">Treasurer</option>
+                                        <option value="5">Secretary</option>
+                                        <option value="6">Joint-Secretary</option>
+                                        <option value="7">Executive</option>
+                                        <option value="8">Volunteer</option>
+                                    </select>
+                                    <label for="floatingSelect">@JNVKAA</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="country_code"
+                                           placeholder="Country Code">
+                                    <label for="name">Code</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="phno"
+                                           placeholder="Mobile no">
+                                    <label for="name">Mobile No.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control bg-light border-2" id="email"
+                                           placeholder="Email  id">
+                                    <label for="name">Email Id</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control bg-light border-2" id="native"
+                                           placeholder="Email  id">
+                                    <label for="name">Native City</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="city"
+                                           placeholder="Current city">
+                                    <label for="name">Current City</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="ExpertIn"
+                                           placeholder="Expert In">
+                                    <label for="name">Expert In</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-control bg-light border-2" aria-label="Select Profession" id="profession">
+                                        <option value="0" selected disabled>Select Profession </option>
+                                        <!-- Add an option for "Other" -->
+                                        <option value="other">Other Profession</option>
+                                    </select>
+                                    <label for="email">Current profession</label>
+                                    <!-- Hidden input field for manual input -->
+
+
+                                </div>
+
+                                <div class="form-floating">
+                                    <!-- Hidden input field for manual input -->
+                                    <input type="text" class="form-control bg-light border-2" id="otherProfessionInput" style="display: none;" placeholder="Enter your profession">
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="workingin"
+                                           placeholder="Working Organization">
+                                    <label for="name">Working Org Name</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-control bg-light border-2" aria-label="Select Designation" id="designation">
+                                        <option value="0" selected disabled>Select Designation </option>
+                                        <!-- Add an option for "Other" -->
+                                        <option value="other">Other Designation</option>
+                                    </select>
+                                    <label for="email">Current designation</label>
+                                    <!-- Hidden input field for manual input -->
+
+
+                                </div>
+
+                                <div class="form-floating">
+                                    <!-- Hidden input field for manual input -->
+                                    <input type="text" class="form-control bg-light border-2" id="otherDesignationInput" style="display: none;" placeholder="Enter your designation">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select form-control bg-light border-2" id="lclass"
+                                            aria-label="Floating label select example">
+                                        <option value="0" selected>Last class in JNVK</option>
+                                        <option value="1">6</option>
+                                        <option value="2">7</option>
+                                        <option value="3">8</option>
+                                        <option value="4">9</option>
+                                        <option value="5">10</option>
+                                        <option value="6">11</option>
+                                        <option value="7">12</option>
+                                    </select>
+                                    <label for="floatingSelect">Last Class</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="batchNo"
+                                           placeholder="BatchNo">
+                                    <label for="name">Batch No</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-2" id="MediInsurP"
+                                           placeholder="Medical Insurance Provider">
+                                    <label for="name">Medical Insurance Company</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control bg-light border-2" id="dateExpiry"
+                                           placeholder="Medical Insurance Expiry">
+                                    <label for="name">Insurance exp Date</label>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="form-group mb-3 col-11 m-4">
+                                <label for="exampleFormControlTextarea1">Bio</label>
+                                <textarea class="form-control bg-light border-2" id="bio"
+                                          rows="4"></textarea>
+                            </div>
+
+
+
+
+
+                        </div>
 
                     </div>
 
+                    <div class="row justify-content-center">
+                        <!-- Add justify-content-center class to center align -->
+                        <div class="col-md-2">
+                            <!-- Adjust the column size as needed -->
+                            <button class="btn btn-outline-dark w-100 mb-3" id="Savebtn">
+                                <!-- Use w-100 class to make the button full width -->
+                                Save
+                            </button>
+                        </div>
+                    </div>
 
-                    
 
                     <!--  -->
                 </div>

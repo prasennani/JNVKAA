@@ -1,36 +1,33 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="batchadmin/editusers.html">
     <Files>
-      <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="3518" Column="1" IsPinned="True" />
-      <File FileName="users/batchmates.html" Line="37" Column="40" />
-      <File FileName="users/boardmembers.html" Line="37" Column="41" />
-      <File FileName="users/businesses.html" Line="39" Column="41" />
-      <File FileName="users/settings.html" Line="406" Column="120" />
-      <File FileName="js/users/settings.js" Line="1037" Column="30" />
+      <File FileName="Web.config" Line="4" Column="53" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="215" Column="17" IsPinned="True" />
+      <File FileName="batchadmin/editusers.html" Line="17" Column="1" />
+      <File FileName="admin/editusers.html" Line="515" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="JNVKAA">
-            <Node name="JNKVAA">
-              <Node name="css" expanded="True" />
-              <Node name="js" expanded="True">
-                <Node name="users" expanded="True" />
+          <Node name="JNVKAA" expanded="True">
+            <Node name="JNKVAA" expanded="True">
+              <Node name="admin" expanded="True" />
+              <Node name="batchadmin">
+                <Node name="editusers.html" selected="True" />
               </Node>
-              <Node name="Web.config" selected="True" />
-              <Node name="WebService.asmx" expanded="True" />
+              <Node name="js" expanded="True" />
+              <Node name="users" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>

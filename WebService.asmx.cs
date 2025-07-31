@@ -212,21 +212,7 @@ namespace JNKVAA
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.ExecuteNonQuery();
 
-                // Send email
-                //              using (SmtpClient client = new SmtpClient("smtp.mail.me.com", 587))
-                //            {
-                //              client.EnableSsl = true;
-                //          client.Credentials = new NetworkCredential("info@jnvkaa.org", "ghwe-dylz-ekuz-wfid");
-                //
-                //        using (MailMessage msg = new MailMessage("info@jnvkaa.org", email))
-                //            {
-                //            msg.Subject = "JNVKAA - OTP for Password Reset";
-                //        msg.Body = $"Your OTP is {otp}. It is valid for 10 minutes.";
-                //    client.Send(msg);
-                //    }
-                //     }
-
-                // Send email
+                
                 using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                 {
                     client.EnableSsl = true;
