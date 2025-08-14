@@ -1,18 +1,34 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Web.config">
+  <MonoDevelop.Ide.Workbench ActiveDocument="index.html">
     <Files>
       <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="215" Column="17" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="206" Column="1" IsPinned="True" />
       <File FileName="batchadmin/editusers.html" />
       <File FileName="admin/editusers.html" />
       <File FileName="login.html" />
+      <File FileName="index.html" Line="1" Column="1" />
+      <File FileName="signup.html" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="JNVKAA" expanded="True">
+            <Node name="JNKVAA" expanded="True">
+              <Node name="img" expanded="True">
+                <Node name="apple-touch icon.png" selected="True" />
+              </Node>
+              <Node name="WebService.asmx" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
 </Properties>
