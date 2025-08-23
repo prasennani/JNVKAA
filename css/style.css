@@ -180,7 +180,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #header-carousel .carousel-item {
         position: relative;
         min-height: 600px;
@@ -203,7 +203,7 @@
     }
     #header-carousel .carousel-item2 {
         position: relative;
-        min-height: 900px;
+        min-height: 1100px;
     }
     
     #header-carousel .carousel-item2 img {

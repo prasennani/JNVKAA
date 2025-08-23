@@ -1,34 +1,36 @@
 ﻿<Properties StartupConfiguration="{E5490BAD-7076-4FC4-AE5F-7A74582D7917}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.JNKVAA PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="index.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebService.asmx.cs">
     <Files>
-      <File FileName="Web.config" Line="45" Column="13" IsPinned="True" />
-      <File FileName="WebService.asmx.cs" Line="206" Column="1" IsPinned="True" />
-      <File FileName="batchadmin/editusers.html" />
-      <File FileName="admin/editusers.html" />
-      <File FileName="login.html" />
-      <File FileName="index.html" Line="1" Column="1" />
-      <File FileName="signup.html" Line="1" Column="1" />
+      <File FileName="Web.config" Line="7" Column="22" IsPinned="True" />
+      <File FileName="WebService.asmx.cs" Line="107" Column="69" IsPinned="True" />
+      <File FileName="signup.html" Line="220" Column="91" />
+      <File FileName="users/settings.html" Line="1" Column="1" />
+      <File FileName="js/users/settings.js" Line="300" Column="62" />
+      <File FileName="js/users/userProperty.js" Line="160" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="JNVKAA" expanded="True">
             <Node name="JNKVAA" expanded="True">
-              <Node name="img" expanded="True">
-                <Node name="apple-touch icon.png" selected="True" />
+              <Node name="js" expanded="True">
+                <Node name="users" expanded="True" />
               </Node>
-              <Node name="WebService.asmx" expanded="True" />
+              <Node name="users" expanded="True" />
+              <Node name="WebService.asmx" expanded="True">
+                <Node name="WebService.asmx.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
