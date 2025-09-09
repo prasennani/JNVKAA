@@ -3887,12 +3887,43 @@ New contact lead submitted.
             }
         }
 
+        [WebMethod]
+        public string GetGalleryFolders()
+        {
+            string rootPath = HttpContext.Current.Server.MapPath("~/img/gallery_images/");
+            var folders = Directory.GetDirectories(rootPath)
+                .Select(f => new {
+                    folderid = Path.GetFileName(f),
+                    foldername = Path.GetFileName(f)
+                }).ToList();
+
+            return new JavaScriptSerializer().Serialize(folders);
+        }
+
+        [WebMethod]
+        public string GetGalleryImages(string folderid)
+        {
+            string folderPath = HttpContext.Current.Server.MapPath("~/img/gallery_images/" + folderid);
+            if (!Directory.Exists(folderPath))
+                return new JavaScriptSerializer().Serialize(new { photo = "521" }); // not found
+
+            var files = Directory.GetFiles(folderPath)
+                .Where(f => f.EndsWith(".jpg") || f.EndsWith(".png") || f.EndsWith(".jpeg") || f.EndsWith(".webp") || f.EndsWith(".gif"))
+                .Select(f => new {
+                    photo = Path.GetFileName(f),
+                    imgUrl = "https://jnvkaa.org/img/gallery_images/" + folderid + "/" + Path.GetFileName(f)
+                }).ToList();
+
+            return new JavaScriptSerializer().Serialize(files);
+        }
+
 
         public class GalleryImageClass
         {
 
             public string photo { get; set; }
             public string imgId { get; set; }
+            public string imgUrl { get; set; }
 
 
         }
@@ -3927,7 +3958,8 @@ New contact lead submitted.
                         galleryClass = new GalleryImageClass();
                         galleryClass.photo = rdr["Photo"].ToString();
                         galleryClass.imgId = rdr["ImageId"].ToString();
-                       
+                        galleryClass.imgUrl = rdr["ImageURL"].ToString();
+
 
                         galleryList.Add(galleryClass);
                     }
