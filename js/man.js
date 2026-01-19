@@ -140,7 +140,7 @@
 // Populate dropdown options with numbers from 1 to 30
 $(document).ready(function () {
     var select = $('#txtbatchno');
-    for (var i = 1; i <= 30; i++) {
+    for (var i = 1; i <= 50; i++) {
         select.append('<option value="' + i + '">' + i + '</option>');
     }
 });
