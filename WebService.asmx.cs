@@ -216,9 +216,9 @@ namespace JNKVAA
                 using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                 {
                     client.EnableSsl = true;
-                    client.Credentials = new NetworkCredential("info@jnvkaa.org", "ksne nmis grxt aiwr");
+                    client.Credentials = new NetworkCredential("jnvvkaa@gmail.com", "qeayxyyaoeytypvw");
 
-                    using (MailMessage msg = new MailMessage("info@jnvkaa.org", email))
+                    using (MailMessage msg = new MailMessage("jnvvkaa@gmail.com", email))
                     {
                         msg.Subject = "JNVKAA - OTP for Password Reset";
                         msg.Body = $"Your OTP is {otp}. It is valid for 10 minutes.";
